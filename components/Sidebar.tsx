@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 
 export const NAV_ITEMS = [
   { id: 'about',    label: 'SOBRE MÍ' },
@@ -21,6 +21,15 @@ export default function Sidebar({
   onNavigate: (section: SectionId) => void
 }) {
   const buttons = useRef<Array<HTMLButtonElement | null>>([])
+  const toggleButton = useRef<HTMLButtonElement | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const activeLabel = NAV_ITEMS.find(item => item.id === activeSection)?.label
+
+  function closeMenu() {
+    setMenuOpen(false)
+    // En escritorio el botón compacto está oculto.
+    if (toggleButton.current?.getClientRects().length) toggleButton.current.focus()
+  }
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
     if (event.altKey || event.ctrlKey || event.metaKey) return
@@ -39,7 +48,28 @@ export default function Sidebar({
   }
 
   return (
-    <aside className="sidebar">
+    <aside
+      className={`sidebar${menuOpen ? ' menu-open' : ''}`}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape' && menuOpen) {
+          event.preventDefault()
+          closeMenu()
+        }
+      }}
+    >
+
+      <button
+        ref={toggleButton}
+        className="mobile-menu-toggle"
+        type="button"
+        aria-expanded={menuOpen}
+        aria-controls="portfolio-navigation"
+        onClick={() => setMenuOpen(open => !open)}
+      >
+        <span className="mobile-menu-brand">EDWARD <span>Lv 06</span></span>
+        <span className="mobile-menu-section">{activeLabel}</span>
+        <span className="mobile-menu-action">{menuOpen ? 'CERRAR ✕' : 'MENÚ ☰'}</span>
+      </button>
 
       <div className="sidebar-header">
         <div className="char-avatar">
@@ -85,7 +115,7 @@ export default function Sidebar({
         </div>
       </div>
 
-      <nav className="main-nav" aria-label="Secciones del portafolio" aria-describedby="nav-instructions">
+      <nav id="portfolio-navigation" className="main-nav" aria-label="Secciones del portafolio" aria-describedby="nav-instructions">
         <ul className="nav-list">
           {NAV_ITEMS.map((item, index) => (
             <li key={item.id}>
@@ -96,7 +126,10 @@ export default function Sidebar({
                 aria-current={activeSection === item.id ? 'true' : undefined}
                 aria-controls="section-content"
                 onKeyDown={(event) => handleKeyDown(event, index)}
-                onClick={() => onNavigate(item.id)}
+                onClick={() => {
+                  onNavigate(item.id)
+                  if (menuOpen) closeMenu()
+                }}
               >
                 <span className="nav-arrow" aria-hidden="true" />
                 <span className="nav-label">{item.label}</span>

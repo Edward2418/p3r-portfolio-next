@@ -73,6 +73,7 @@
     z-index: 2;
     display: flex;
     height: 100vh;
+    height: 100dvh;
     width: 100vw;
   }
 
@@ -80,7 +81,7 @@
   .sidebar {
     width: var(--sidebar-width);
     min-width: var(--sidebar-width);
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     padding: 2rem 0 1.5rem;
@@ -89,8 +90,11 @@
     border-right: 1px solid rgba(0,204,255,0.15);
     position: relative;
     z-index: 10;
-    overflow: visible;
+    overflow-y: auto;
+    flex-shrink: 0;
   }
+
+  .mobile-menu-toggle { display: none; }
 
   .sidebar-header {
     display: flex;
@@ -164,8 +168,8 @@
   .stat-max { font-size: 0.6rem; color: var(--white-dim); }
 
   /* ---- Menú ---- */
-  .main-nav { flex: 1; overflow: visible; padding: 0.5rem 0; }
-  .nav-list { list-style: none; display: flex; flex-direction: column; gap: 8px; overflow: visible; }
+  .main-nav { flex: 1 0 auto; padding: 2.5rem 0 1rem; }
+  .nav-list { list-style: none; display: flex; flex-direction: column; gap: 1.8rem; }
 
   .nav-item {
     width: 100%;
@@ -254,13 +258,14 @@
   .ctrl-hint { font-size: 0.7rem; color: var(--white-dim); letter-spacing: 0.05em; }
 
   /* ---- Área de contenido ---- */
-  .content-area { flex: 1; height: 100vh; overflow: hidden; position: relative; }
+  .content-area { flex: 1; min-width: 0; min-height: 0; height: 100%; overflow: hidden; position: relative; }
 
   /* ---- Secciones ---- */
   .section-container {
     padding: 3rem 3.5rem;
-    height: 100vh;
+    height: 100%;
     overflow-y: auto;
+    overflow-wrap: anywhere;
     position: relative;
   }
 
@@ -305,7 +310,7 @@
 
   .about-stats-layout {
     display: grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 240px minmax(0, 1fr);
     gap: 2.5rem;
     position: relative;
     z-index: 1;
@@ -407,6 +412,65 @@
 
   .section-enter {
     animation: p3r-enter 0.28s cubic-bezier(0, 0, 0.2, 1) forwards;
+  }
+
+  /* Portátiles y tablets: preservar espacio para la ficha. */
+  @media (max-width: 1100px) {
+    :root { --sidebar-width: 260px; }
+    .section-container { padding: 2rem; }
+    .about-stats-layout { grid-template-columns: 200px minmax(0, 1fr); gap: 1.5rem; }
+    .section-header { gap: 1rem; margin-bottom: 2rem; }
+    .section-title { font-size: 2.5rem; }
+    .next-exp-info { flex-wrap: wrap; gap: 0.4rem 1rem; }
+  }
+
+  /* Menú desplegable en el flujo: el contenido conserva su propio scroll. */
+  @media (max-width: 768px) {
+    .app-layout { flex-direction: column; }
+    .sidebar {
+      width: 100%;
+      min-width: 0;
+      height: auto;
+      max-height: 65dvh;
+      padding: 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--cyan-dim);
+    }
+    .sidebar-header, .sidebar > .stat-bars, .sidebar-footer { display: none; }
+    .mobile-menu-toggle {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.4rem 1rem;
+      width: 100%;
+      min-height: 64px;
+      flex-shrink: 0;
+      padding: 0.85rem 1rem;
+      border: 0;
+      background: var(--bg-dark);
+      color: white;
+      text-align: left;
+      cursor: pointer;
+      font-family: var(--font-title);
+    }
+    .mobile-menu-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: -3px; }
+    .mobile-menu-brand { font-size: 1.25rem; letter-spacing: 0.06em; }
+    .mobile-menu-brand span { color: var(--cyan); font-size: 0.8rem; }
+    .mobile-menu-section { color: var(--cyan); font-size: 0.85rem; }
+    .mobile-menu-action { margin-left: auto; font-size: 0.85rem; }
+    .main-nav { display: none; flex: none; padding: 0.5rem; }
+    .menu-open .main-nav { display: block; }
+    .nav-list { gap: 0.25rem; }
+    .nav-item { min-height: 48px; padding: 0.75rem 1rem; }
+    .nav-label, .nav-item.active .nav-label { font-size: 1.1rem; transform: skewX(-10deg); }
+    .nav-arrow { transform: none; }
+    .content-area { height: auto; }
+    .section-container { padding: 1.5rem 1rem 2rem; }
+    .section-title { font-size: clamp(1.75rem, 7vw, 2.5rem); }
+    .about-stats-layout { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+    .about-left-col { width: 100%; max-width: 360px; }
+    .about-name { font-size: 1.75rem; }
+    .about-lv-bg { top: 12rem; right: 1rem; }
   }
 }
 
