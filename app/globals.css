@@ -41,6 +41,8 @@
     padding: 1px 5px;
     font-size: 0.65rem;
   }
+
+  body { font-family: var(--font-menu); }
 }
 
 @layer components {

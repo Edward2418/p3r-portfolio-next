@@ -24,10 +24,12 @@ npm start     # Servir la compilación de producción
 - `app/page.tsx`: composición de la interfaz y estado de navegación.
 - `app/layout.tsx`: fuentes, idioma y metadatos.
 - `app/data/profile.ts`: perfil, avance académico y estadísticas decorativas.
-- `app/data/portfolio.ts`: habilidades, proyectos, intereses y trayectoria.
+- `app/data/portfolio.ts`: habilidades, intereses y trayectoria.
+- `app/data/projects.ts`: proyectos reales, tecnologías y enlaces; los filtros se generan desde estos datos.
 - `components/Sidebar.tsx`: navegación por clic, teclado y menú móvil.
 - `components/SectionTransition.tsx`: transición entre secciones basada en eventos CSS.
 - `components/ProgressBar.tsx`: barras reutilizables con valores accesibles y animación CSS.
+- `components/ProjectDialog.tsx`: detalle de proyecto con diálogo nativo, Escape y restauración de foco.
 - `components/sections/`: componentes de cada pantalla.
 - `app/globals.css`: estilos organizados en capas, responsive y movimiento reducido.
 
@@ -52,6 +54,6 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 
 ## Estado
 
-Base responsive, navegación, transiciones y ficha About implementadas. Skills, Social Link, Timeline y System tienen estructura; su presentación está en desarrollo. Proyectos tiene datos preparados y una pantalla provisional. Audio, personajes, CV y enlaces definitivos son etapas pendientes.
+Base responsive, navegación, transiciones, ficha About y Proyectos implementados. Proyectos muestra el portafolio real, filtros por tecnología y detalle con enlace a GitHub; sus estilos están aislados en CSS Modules. Skills, Social Link, Timeline y System tienen estructura; su presentación está en desarrollo. Audio, personajes, CV y otros enlaces definitivos son etapas pendientes.
 
 La inspiración visual en Persona 3 Reload es un homenaje personal; este proyecto no está afiliado a Atlus.

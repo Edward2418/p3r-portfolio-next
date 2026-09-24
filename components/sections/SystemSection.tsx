@@ -1,5 +1,5 @@
 import { ACADEMIC_PROGRESS, PLAYER_LEVEL, PROFILE } from '@/app/data/profile'
-import { PROJECTS } from '@/app/data/portfolio'
+import { PROJECTS } from '@/app/data/projects'
 import ProgressBar from '@/components/ProgressBar'
 
 export default function SystemSection() {
@@ -29,7 +29,7 @@ export default function SystemSection() {
             {[
               ['SEMESTRE',     `${PROFILE.academic.currentSemester}º de ${PROFILE.academic.totalSemesters} · En curso`],
               ['ESPECIALIDAD', PROFILE.specialty],
-              ['PROYECTOS',    `${PROJECTS.filter(project => project.status === 'Completado').length} completados`],
+              ['PROYECTOS',    `${PROJECTS.length} publicados · ${PROJECTS.filter(project => project.status === 'Completado').length} completados`],
               ['TECNOLOGÍAS',  'Java · SQL · HTML/CSS/JS · Kotlin'],
               ['ESTADO',       '◆ Disponible'],
             ].map(([label, val]) => (

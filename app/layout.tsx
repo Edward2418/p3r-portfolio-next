@@ -4,14 +4,15 @@ import './globals.css'
 const nunitoSans = Nunito_Sans({
   subsets: ['latin'],
   weight: 'variable',
+  axes: ['wdth'],
   style: ['normal', 'italic'],
-  variable: '--font-menu',
+  variable: '--font-menu-var',
 })
 
 const bebasNeue = Bebas_Neue({
   subsets: ['latin'],
   weight: '400',
-  variable: '--font-title',
+  variable: '--font-title-var',
 })
 
 export const metadata = {

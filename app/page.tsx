@@ -9,18 +9,14 @@ import SkillsSection      from '@/components/sections/SkillsSection'
 import SocialSection      from '@/components/sections/SocialSection'
 import TimelineSection    from '@/components/sections/TimelineSection'
 import SystemSection      from '@/components/sections/SystemSection'
+import ProjectsSection    from '@/components/sections/ProjectsSection'
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<SectionId>('about')
 
   const sections: Record<SectionId, React.ReactNode> = {
     about:    <AboutSection />,
-    projects: (
-      <div className="section-container">
-        <h1 className="section-title">PROYECTOS</h1>
-        <p style={{ color: 'var(--white-dim)', marginTop: '1rem' }}>Próximamente — Fase 3</p>
-      </div>
-    ),
+    projects: <ProjectsSection />,
     skills:   <SkillsSection />,
     social:   <SocialSection />,
     timeline: <TimelineSection />,

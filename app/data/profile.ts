@@ -21,8 +21,8 @@ export const PROFILE = {
   institution: 'TecNM · ITSH · Huauchinango, Pue.',
   specialty: 'Full-Stack y Videojuegos',
   academic: {
-    currentSemester: 6,
-    completedSemesters: 5,
+    currentSemester: 7,
+    completedSemesters: 6,
     totalSemesters: 8,
     graduationYear: 2027,
   },
