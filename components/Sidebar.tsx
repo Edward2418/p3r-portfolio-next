@@ -1,23 +1,43 @@
 'use client'
 
-import React from 'react'
+import React, { useRef } from 'react'
 
-const NAV_ITEMS = [
+export const NAV_ITEMS = [
   { id: 'about',    label: 'SOBRE MÍ' },
   { id: 'projects', label: 'PROYECTOS' },
   { id: 'skills',   label: 'SKILLS' },
   { id: 'social',   label: 'SOCIAL LINK' },
   { id: 'timeline', label: 'TIMELINE' },
   { id: 'resume',   label: 'SYSTEM' },
-]
+] as const
+
+export type SectionId = typeof NAV_ITEMS[number]['id']
 
 export default function Sidebar({
   activeSection,
   onNavigate
 }: {
-  activeSection: string
-  onNavigate: (section: string) => void
+  activeSection: SectionId
+  onNavigate: (section: SectionId) => void
 }) {
+  const buttons = useRef<Array<HTMLButtonElement | null>>([])
+
+  function handleKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
+    if (event.altKey || event.ctrlKey || event.metaKey) return
+
+    let nextIndex = index
+    switch (event.key) {
+      case 'ArrowDown': nextIndex = (index + 1) % NAV_ITEMS.length; break
+      case 'ArrowUp': nextIndex = (index - 1 + NAV_ITEMS.length) % NAV_ITEMS.length; break
+      case 'Home': nextIndex = 0; break
+      case 'End': nextIndex = NAV_ITEMS.length - 1; break
+      default: return
+    }
+
+    event.preventDefault()
+    buttons.current[nextIndex]?.focus()
+  }
+
   return (
     <aside className="sidebar">
 
@@ -65,22 +85,28 @@ export default function Sidebar({
         </div>
       </div>
 
-      <nav className="main-nav">
+      <nav className="main-nav" aria-label="Secciones del portafolio" aria-describedby="nav-instructions">
         <ul className="nav-list">
-          {NAV_ITEMS.map((item) => (
-            <li
-              key={item.id}
-              className={`nav-item ${activeSection === item.id ? 'active' : ''}`}
-              onClick={() => onNavigate(item.id)}
-            >
-              <span className="nav-arrow" />
-              <span className="nav-label">{item.label}</span>
+          {NAV_ITEMS.map((item, index) => (
+            <li key={item.id}>
+              <button
+                ref={(button) => { buttons.current[index] = button }}
+                type="button"
+                className={`nav-item ${activeSection === item.id ? 'active' : ''}`}
+                aria-current={activeSection === item.id ? 'true' : undefined}
+                aria-controls="section-content"
+                onKeyDown={(event) => handleKeyDown(event, index)}
+                onClick={() => onNavigate(item.id)}
+              >
+                <span className="nav-arrow" aria-hidden="true" />
+                <span className="nav-label">{item.label}</span>
+              </button>
             </li>
           ))}
         </ul>
       </nav>
 
-      <div className="sidebar-footer">
+      <div className="sidebar-footer" id="nav-instructions">
         <span className="ctrl-hint"><kbd>↑↓</kbd> Navegar</span>
         <span className="ctrl-hint"><kbd>↵</kbd> Confirmar</span>
       </div>
