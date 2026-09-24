@@ -54,6 +54,6 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 
 ## Estado
 
-Base responsive, navegación, transiciones, ficha About, Proyectos y Skills implementados. Proyectos muestra el portafolio real, filtros por tecnología y detalle con enlace a GitHub. Skills presenta Java, SQL/Bases de datos, HTML/CSS y JavaScript con porcentajes de autoevaluación y barras accesibles; comparte sus datos con About y System. Ambas secciones tienen estilos aislados en CSS Modules. Social Link implementado: lista seleccionable con teclado y ficha de detalle. Timeline y System tienen estructura; su presentación está en desarrollo. Audio, personajes, CV y otros enlaces definitivos son etapas pendientes.
+Base responsive, navegación, transiciones, ficha About, Proyectos y Skills implementados. Proyectos muestra el portafolio real, filtros por tecnología y detalle con enlace a GitHub. Skills presenta Java, SQL/Bases de datos, HTML/CSS y JavaScript con porcentajes de autoevaluación y barras accesibles; comparte sus datos con About y System. Ambas secciones tienen estilos aislados en CSS Modules. Social Link implementado: lista seleccionable con teclado y ficha de detalle. Timeline implementado con navegación por teclado y ficha de detalle animada. System tiene estructura; su presentación está en desarrollo. Audio, personajes, CV y otros enlaces definitivos son etapas pendientes.
 
 La inspiración visual en Persona 3 Reload es un homenaje personal; este proyecto no está afiliado a Atlus.
