@@ -1,0 +1,142 @@
+.section { isolation: isolate; }
+.watermark {
+  position: absolute;
+  top: 5rem;
+  right: 1rem;
+  z-index: -1;
+  font: italic 900 clamp(7rem, 22vw, 18rem) / 1 var(--font-menu);
+  font-variation-settings: 'wdth' 75;
+  color: rgb(0 204 255 / 5%);
+  user-select: none;
+  pointer-events: none;
+}
+.layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+  gap: 1.5rem;
+  max-width: 1150px;
+  align-items: start;
+}
+
+/* ---- Ficha del jugador ---- */
+.playerCard {
+  border: 1px solid rgb(0 204 255 / 35%);
+  background: linear-gradient(150deg, rgb(0 41 102 / 80%), rgb(0 13 26 / 96%));
+  box-shadow: 8px 8px 0 rgb(0 0 0 / 20%);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+}
+.avatarWrap { position: relative; width: fit-content; }
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 116px;
+  border: 1px solid var(--cyan);
+  background: linear-gradient(135deg, #002966, #001533);
+  color: var(--cyan);
+  font: 2.6rem var(--font-title);
+  clip-path: polygon(0 0, 100% 0, 100% 82%, 86% 100%, 0 100%);
+}
+.plvTag {
+  position: absolute;
+  top: -10px;
+  right: -26px;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 2px 8px;
+  border: 1px solid var(--cyan);
+  background: var(--bg-dark);
+}
+.plvTag span { font-size: 0.6rem; color: var(--white-dim); }
+.plvTag strong { font: 1.1rem var(--font-title); color: var(--cyan); }
+.playerInfo { margin-top: 1.25rem; }
+.playerName { font: italic 900 clamp(1.25rem, 3vw, 1.75rem) / 1.15 var(--font-menu); font-variation-settings: 'wdth' 75; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+.playerRole { margin-top: 0.5rem; color: var(--cyan); font-size: 0.9rem; font-weight: 600; }
+.playerInst { margin-top: 0.25rem; color: var(--white-dim); font-size: 0.78rem; }
+.divider { height: 1px; margin: 1.25rem 0; background: linear-gradient(90deg, var(--red-accent), var(--cyan) 45%, transparent); }
+.stats { margin: 0; display: flex; flex-direction: column; }
+.statRow { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid rgb(255 255 255 / 8%); }
+.statLabel { flex-shrink: 0; font: 0.72rem var(--font-title); letter-spacing: 0.14em; color: var(--cyan-dim); }
+.statValue { margin: 0; text-align: right; font-size: 0.82rem; color: white; overflow-wrap: anywhere; }
+.statActive { color: #22cc88; }
+.progressBlock { margin-top: 1.5rem; padding: 1rem; background: rgb(0 0 0 / 30%); border-left: 3px solid var(--cyan); }
+.progressLabel { display: flex; justify-content: space-between; gap: 1rem; font: 0.72rem var(--font-title); letter-spacing: 0.14em; color: var(--white-dim); }
+.progressLabel span:last-child { color: var(--cyan); }
+.progressTrack { height: 6px; margin-top: 0.65rem; background: rgb(255 255 255 / 12%); overflow: hidden; }
+.progressFill { height: 100%; background: linear-gradient(90deg, var(--red-accent), var(--cyan)); }
+.progressHint { margin-top: 0.55rem; font-size: 0.72rem; color: #ff6688; }
+
+/* ---- Acciones ---- */
+.actionsCol { min-width: 0; }
+.actionsHeader {
+  font: italic 900 clamp(1.1rem, 2.5vw, 1.4rem) / 1.2 var(--font-menu);
+  font-variation-settings: 'wdth' 75;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--cyan-dim);
+  color: var(--cyan);
+}
+.actions { list-style: none; margin: 1rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.85rem; }
+.actionCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgb(0 204 255 / 25%);
+  background: rgb(0 21 51 / 70%);
+  transition: border-color 160ms ease, background 160ms ease;
+}
+.actionCard:hover { border-color: var(--cyan); background: rgb(0 41 102 / 70%); }
+.actionPrimary { border-left: 5px solid var(--red-accent); }
+.actionIcon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1px solid var(--cyan-dim);
+  color: var(--cyan);
+  font: 1rem var(--font-title);
+  background: rgb(0 0 0 / 30%);
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%);
+}
+.actionInfo { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
+.actionTitle { color: white; font-size: 0.95rem; font-weight: 700; overflow-wrap: anywhere; }
+.actionDesc { color: var(--white-dim); font-size: 0.78rem; overflow-wrap: anywhere; }
+.actionBtn {
+  flex-shrink: 0;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  color: #000d1a;
+  background: var(--cyan);
+  text-decoration: none;
+  font: italic 900 0.85rem var(--font-menu);
+  transition: background 150ms ease;
+}
+.actionBtn:hover { background: white; }
+.actionBtn:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+.actionPending {
+  flex-shrink: 0;
+  padding: 0.45rem 0.8rem;
+  border: 1px dashed var(--cyan-dim);
+  color: var(--white-dim);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+.controlsHint { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.25rem; color: var(--white-dim); font-size: 0.72rem; }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px) {
+  .actionCard { flex-wrap: wrap; gap: 0.75rem; }
+  .actionInfo { order: 2; flex-basis: calc(100% - 56px); }
+  .actionBtn, .actionPending { order: 3; width: 100%; justify-content: center; text-align: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .actionCard { transition: none; }
+}
