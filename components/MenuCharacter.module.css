@@ -1,0 +1,114 @@
+/* Personaje del menú: se sitúa tras la barra lateral, que lo difumina. */
+.character {
+  position: fixed;
+  left: -30px;
+  bottom: 0;
+  z-index: 2;
+  width: 340px;
+  height: 88vh;
+  pointer-events: none;
+  opacity: 0;
+  animation: character-in 1s ease forwards;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.5s ease;
+}
+
+.dimmed .body {
+  opacity: 0.12;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  mix-blend-mode: luminosity;
+  filter:
+    brightness(1.15)
+    contrast(1.05)
+    drop-shadow(0 0 30px rgb(255 170 0 / 40%))
+    drop-shadow(0 0 80px rgb(255 100 0 / 20%));
+  animation: character-float 3.5s ease-in-out infinite;
+  user-select: none;
+}
+
+.halo {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(255 150 0 / 20%) 0%,
+    rgb(255 100 0 / 8%) 40%,
+    transparent 70%
+  );
+  animation: halo-pulse 3.5s ease-in-out infinite;
+}
+
+.groundGlow {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 160px;
+  height: 30px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgb(255 150 0 / 25%) 0%, transparent 70%);
+  filter: blur(8px);
+  animation: halo-pulse 3.5s ease-in-out infinite;
+}
+
+@keyframes character-in {
+  to { opacity: 0.85; }
+}
+
+@keyframes character-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes halo-pulse {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.7; }
+  50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+}
+
+/* En pantallas medianas el personaje se recoloca sobre el borde del menú. */
+@media (max-width: 1280px) {
+  .character {
+    width: 300px;
+    left: calc(var(--sidebar-width) - 70px);
+  }
+}
+
+@media (max-width: 768px) {
+  .character {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .character {
+    animation: none;
+    opacity: 0.85;
+  }
+  .body {
+    transition: none;
+  }
+  .image,
+  .halo,
+  .groundGlow {
+    animation: none;
+  }
+}

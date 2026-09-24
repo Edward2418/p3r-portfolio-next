@@ -13,6 +13,7 @@ import ProjectsSection    from '@/components/sections/ProjectsSection'
 import SoundControls      from '@/components/SoundControls'
 import SplashScreen       from '@/components/SplashScreen'
 import CustomCursor       from '@/components/CustomCursor'
+import MenuCharacter      from '@/components/MenuCharacter'
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<SectionId>('about')
@@ -33,6 +34,7 @@ export default function Home() {
       <SplashScreen />
       <SoundControls />
       <div className="app-layout">
+        <MenuCharacter dimmed={activeSection !== 'about'} />
         <Sidebar
           activeSection={activeSection}
           onNavigate={setActiveSection}
