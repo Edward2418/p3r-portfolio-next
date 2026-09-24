@@ -1,64 +1,95 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type CSSProperties, type KeyboardEvent } from 'react'
 import { SOCIAL_LINKS } from '@/app/data/portfolio'
+import styles from './SocialSection.module.css'
 
 export default function SocialSection() {
   const [active, setActive] = useState(SOCIAL_LINKS[0])
 
+  function handleKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
+    if (event.altKey || event.ctrlKey || event.metaKey) return
+
+    let nextIndex = index
+    switch (event.key) {
+      case 'ArrowDown': nextIndex = (index + 1) % SOCIAL_LINKS.length; break
+      case 'ArrowUp': nextIndex = (index - 1 + SOCIAL_LINKS.length) % SOCIAL_LINKS.length; break
+      case 'Home': nextIndex = 0; break
+      case 'End': nextIndex = SOCIAL_LINKS.length - 1; break
+      default: return
+    }
+
+    event.preventDefault()
+    const rows = event.currentTarget.parentElement?.querySelectorAll('button')
+    rows?.[nextIndex]?.focus()
+    setActive(SOCIAL_LINKS[nextIndex])
+  }
+
   return (
-    <section className="section-container">
+    <section className={`section-container ${styles.section}`} aria-labelledby="social-title">
+      <div className={styles.watermark} aria-hidden="true">LINK</div>
       <div className="section-header">
-        <h1 className="section-title">SOCIAL LINK</h1>
+        <h1 className="section-title" id="social-title">SOCIAL LINK</h1>
         <div className="section-line" />
       </div>
-      <div className="sl-layout">
-        <div className="sl-list">
-          {SOCIAL_LINKS.map((link) => (
-            <div
+
+      <div className={styles.layout}>
+        <nav className={styles.list} aria-label="Vínculos">
+          {SOCIAL_LINKS.map((link, index) => (
+            <button
               key={link.id}
-              className={`sl-row ${active.id === link.id ? 'active' : ''}`}
-              style={{ '--sl-color': link.color } as React.CSSProperties}
+              type="button"
+              className={`${styles.row} ${active.id === link.id ? styles.rowActive : ''}`}
+              style={{ '--sl-color': link.color } as CSSProperties}
+              aria-pressed={active.id === link.id}
+              onKeyDown={event => handleKeyDown(event, index)}
               onClick={() => setActive(link)}
             >
-              <div className="sl-row-icon">{link.icon}</div>
-              <div className="sl-row-info">
-                <span className="sl-row-name">{link.name}</span>
-                <span className="sl-row-arcana">{link.arcana}</span>
-              </div>
-              <div className="sl-row-rank">
-                {Array.from({ length: 10 }, (_, i) => i < link.rank ? '★' : '☆').join('')}
-              </div>
-            </div>
+              <span className={styles.rowIcon} aria-hidden="true">{link.icon}</span>
+              <span className={styles.rowInfo}>
+                <span className={styles.rowName}>{link.name}</span>
+                <span className={styles.rowArcana}>{link.arcana}</span>
+              </span>
+              <span className={styles.rowRank} aria-label={`Nivel de vínculo ${link.rank} de 10`}>
+                {Array.from({ length: 10 }, (_, i) =>
+                  <span key={i} className={i < link.rank ? styles.star : styles.starEmpty} aria-hidden="true">★</span>
+                )}
+              </span>
+            </button>
           ))}
-        </div>
+        </nav>
 
-        <div className="sl-detail">
-          <div
-            className="sl-card-detail"
-            style={{ '--sl-color-detail': active.color } as React.CSSProperties}
-          >
-            <div className="sl-info-col">
-              <div className="sl-detail-header">
-                <div className="sl-arcana-badge">{active.arcana}</div>
-                <h2 className="sl-detail-name">{active.name}</h2>
-                <p className="sl-detail-sub">{active.sub}</p>
-              </div>
-              <div className="sl-rank-row">
-                <div className="sl-rank-label">NIVEL DE VÍNCULO</div>
-                <div className="sl-rank-num">{active.rank}</div>
-                <div className="sl-stars">
-                  {Array.from({ length: 10 }, (_, i) => (
-                    <span key={i} className={`sl-star ${i >= active.rank ? 'empty' : ''}`}>★</span>
-                  ))}
-                </div>
-              </div>
-              <p className="sl-detail-desc">{active.desc}</p>
-              <div className="sl-detail-tags">
-                {active.tags.map(tag => <span key={tag} className="tag small">{tag}</span>)}
-              </div>
-              <blockquote className="sl-quote">{active.quote}</blockquote>
+        <div
+          className={styles.detail}
+          style={{ '--sl-color-detail': active.color } as CSSProperties}
+        >
+          <div className={styles.detailPanel}>
+            <div className={styles.detailHeader}>
+              <span className={styles.arcanaBadge}>{active.arcana}</span>
+              <p className={styles.detailSub}>{active.sub}</p>
+              <h2 className={styles.detailName}>{active.name}</h2>
             </div>
+
+            <div className={styles.rankBlock}>
+              <div className={styles.rankLabel}>NIVEL DE VÍNCULO</div>
+              <div className={styles.rankValue}>
+                <span className={styles.rankNum}>{active.rank}</span>
+                <span className={styles.rankMax}>/10</span>
+              </div>
+              <div className={styles.stars} aria-hidden="true">
+                {Array.from({ length: 10 }, (_, i) => (
+                  <span key={i} className={i < active.rank ? styles.star : styles.starEmpty}>★</span>
+                ))}
+              </div>
+            </div>
+
+            <p className={styles.detailDesc}>{active.desc}</p>
+
+            <div className={styles.tags} aria-label="Etiquetas">
+              {active.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
+            </div>
+
+            <blockquote className={styles.quote}>{active.quote}</blockquote>
           </div>
         </div>
       </div>
