@@ -1,0 +1,57 @@
+/* Solo se dibuja el cursor propio cuando hay puntero fino (ratón/tablet). */
+.cursor {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  opacity: 1;
+  transition: opacity 150ms ease;
+}
+
+.ring,
+.dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+}
+
+.ring {
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--cyan);
+  transition: width 150ms ease, height 150ms ease, border-color 150ms ease;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  background: var(--cyan);
+}
+
+.ringHover {
+  width: 44px;
+  height: 44px;
+  border-color: var(--red-accent);
+}
+
+.dotHover {
+  background: var(--red-accent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cursor {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring,
+  .dot {
+    transition: none;
+  }
+}

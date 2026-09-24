@@ -33,6 +33,7 @@ npm start     # Servir la compilación de producción
 - `components/ProjectDialog.tsx`: detalle de proyecto con diálogo nativo, Escape y restauración de foco.
 - `components/SoundControls.tsx`: precarga de audio y botón de silencio de la interfaz.
 - `components/SplashScreen.tsx`: pantalla de bienvenida una sola vez por sesión, cerrada con cualquier tecla o clic.
+- `components/CustomCursor.tsx`: cursor propio (anillo con retardo + punto) activo solo con puntero fino; el nativo queda oculto en `app/globals.css`.
 - `lib/sounds.ts`: efectos de sonido tipados, estado de silencio persistente y reproducción tolerante a fallos.
 - `public/audio/`: efectos de interfaz extraídos de Persona 3 Reload (CueSheet) y convertidos a MP3.
 - `components/sections/`: componentes de cada pantalla.
@@ -49,6 +50,7 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 - Home / End: primera o última opción.
 - En móvil: botón MENÚ para desplegar; Escape o seleccionar una opción para cerrar.
 - Botón SONIDO (esquina inferior derecha): silencia o reactiva los efectos; el estado se guarda en el navegador.
+- En escritorio, el cursor del sistema se sustituye por uno propio que se agranda sobre elementos interactivos.
 
 ## Flujo de trabajo
 
@@ -61,6 +63,6 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 
 ## Estado
 
-Las seis secciones cuentan con presentación: About, Proyectos, Skills, Social Link, Timeline y System, con navegación por teclado en las listas y estilos aislados en CSS Modules. Proyectos muestra el portafolio real con filtros y detalle enlazado a GitHub. Skills presenta Java, SQL/Bases de datos, HTML/CSS y JavaScript con porcentajes de autoevaluación y comparte esos datos con About y System. La interfaz reproduce efectos de sonido de Persona 3 Reload en menús, selecciones y cierres, con botón de silencio persistente; los navegadores solo permiten audio tras la primera interacción del usuario. La pantalla de inicio se muestra una vez por pestaña y anuncia la entrada con el sonido de apertura del menú. El CV y el enlace de LinkedIn aparecen como pendientes hasta agregar sus archivos o datos. Cursor personalizado, ilustración y otros enlaces definitivos son etapas pendientes.
+Las seis secciones cuentan con presentación: About, Proyectos, Skills, Social Link, Timeline y System, con navegación por teclado en las listas y estilos aislados en CSS Modules. Proyectos muestra el portafolio real con filtros y detalle enlazado a GitHub. Skills presenta Java, SQL/Bases de datos, HTML/CSS y JavaScript con porcentajes de autoevaluación y comparte esos datos con About y System. La interfaz reproduce efectos de sonido de Persona 3 Reload en menús, selecciones y cierres, con botón de silencio persistente; los navegadores solo permiten audio tras la primera interacción del usuario. La pantalla de inicio se muestra una vez por pestaña y anuncia la entrada con el sonido de apertura del menú, y en escritorio el cursor del sistema se sustituye por uno propio. El CV y el enlace de LinkedIn aparecen como pendientes hasta agregar sus archivos o datos. Ilustración de personaje y otros enlaces definitivos son etapas pendientes.
 
 La inspiración visual en Persona 3 Reload es un homenaje personal; este proyecto no está afiliado a Atlus.

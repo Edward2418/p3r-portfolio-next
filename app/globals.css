@@ -34,6 +34,12 @@
     color: white;
   }
 
+  /* Con puntero fino se oculta el cursor nativo porque la interfaz dibuja
+     el suyo (components/CustomCursor.tsx). En táctil no se aplica. */
+  @media (hover: hover) and (pointer: fine) {
+    html, html * { cursor: none; }
+  }
+
   kbd {
     background: var(--white-ghost);
     border: 1px solid rgba(255,255,255,0.2);
