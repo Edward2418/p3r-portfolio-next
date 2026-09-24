@@ -26,6 +26,7 @@ npm start     # Servir la compilación de producción
 - `app/data/profile.ts`: perfil, avance académico y estadísticas decorativas.
 - `app/data/portfolio.ts`: habilidades, intereses y trayectoria.
 - `app/data/projects.ts`: proyectos reales, tecnologías y enlaces; los filtros se generan desde estos datos.
+- `app/data/systemActions.ts`: acciones de contacto y estado de cada recurso (disponible o pendiente).
 - `components/Sidebar.tsx`: navegación por clic, teclado y menú móvil.
 - `components/SectionTransition.tsx`: transición entre secciones basada en eventos CSS.
 - `components/ProgressBar.tsx`: barras reutilizables con valores accesibles y animación CSS.
@@ -54,6 +55,6 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 
 ## Estado
 
-Base responsive, navegación, transiciones, ficha About, Proyectos y Skills implementados. Proyectos muestra el portafolio real, filtros por tecnología y detalle con enlace a GitHub. Skills presenta Java, SQL/Bases de datos, HTML/CSS y JavaScript con porcentajes de autoevaluación y barras accesibles; comparte sus datos con About y System. Ambas secciones tienen estilos aislados en CSS Modules. Social Link implementado: lista seleccionable con teclado y ficha de detalle. Timeline implementado con navegación por teclado y ficha de detalle animada. System tiene estructura; su presentación está en desarrollo. Audio, personajes, CV y otros enlaces definitivos son etapas pendientes.
+Todas las secciones cuentan con presentación: About, Proyectos, Skills, Social Link, Timeline y System, con navegación por teclado en las listas y estilos aislados en CSS Modules. Proyectos muestra el portafolio real con filtros y detalle enlazado a GitHub. Skills presenta Java, SQL/Bases de datos, HTML/CSS y JavaScript con porcentajes de autoevaluación y comparte esos datos con About y System. El CV y el enlace de LinkedIn aparecen como pendientes hasta agregar sus archivos o datos. Audio, personajes y otros enlaces definitivos son etapas pendientes.
 
 La inspiración visual en Persona 3 Reload es un homenaje personal; este proyecto no está afiliado a Atlus.

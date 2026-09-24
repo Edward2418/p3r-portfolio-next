@@ -1,71 +1,75 @@
 import { SKILLS } from '@/app/data/portfolio'
 import { ACADEMIC_PROGRESS, PLAYER_LEVEL, PLAYER_STATS, PROFILE } from '@/app/data/profile'
 import ProgressBar from '@/components/ProgressBar'
+import styles from './AboutSection.module.css'
 
 export default function AboutSection() {
   const { academic } = PROFILE
   const attributes = SKILLS.filter(skill => skill.attribute)
 
   return (
-    <section className="section-container" aria-labelledby="about-title">
-      <div className="about-lv-bg" aria-hidden="true">{PLAYER_LEVEL}</div>
+    <section className={`section-container ${styles.section}`} aria-labelledby="about-title">
+      <div className={styles.watermark} aria-hidden="true">{PLAYER_LEVEL}</div>
 
       <div className="section-header">
         <h1 className="section-title" id="about-title">SOBRE MÍ</h1>
         <div className="section-line" />
       </div>
 
-      <div className="about-stats-layout">
-        <div className="about-left-col">
-          <div className="about-avatar-wrap">
-            <div className="avatar-large-placeholder">{PROFILE.initials}</div>
-            <div className="about-plv">
-              <span className="about-plv-label">PLV</span>
-              <span className="about-plv-num">{PLAYER_LEVEL}</span>
+      <div className={styles.layout}>
+        <div className={styles.leftCol}>
+          <div className={styles.avatarWrap}>
+            <div className={styles.avatar}>{PROFILE.initials}</div>
+            <div className={styles.plv}>
+              <span className={styles.plvLabel}>PLV</span>
+              <span className={styles.plvNum}>{PLAYER_LEVEL}</span>
             </div>
           </div>
 
-          <div className="about-bars" aria-hidden="true">
+          <div className={styles.bars} aria-hidden="true">
             {PLAYER_STATS.map(stat => (
-              <div className="about-bar-row" key={stat.label}>
-                <span className={`about-bar-label ${stat.variant}`}>{stat.label}</span>
+              <div className={styles.barRow} key={stat.label}>
+                <span className={stat.variant === 'sp' ? `${styles.barLabel} ${styles.barLabelSp}` : styles.barLabel}>
+                  {stat.label}
+                </span>
                 <ProgressBar
                   label={stat.label} value={stat.value} max={stat.max}
-                  trackClassName="about-bar-track"
-                  fillClassName={`about-bar-fill ${stat.variant}-fill`}
+                  trackClassName={styles.barTrack}
+                  fillClassName={`${styles.barFill} ${stat.variant === 'sp' ? styles.spFill : styles.hpFill}`}
                 />
-                <span className={`about-bar-val ${stat.variant}`}>
-                  {stat.value}<span className="about-bar-max">/{stat.max}</span>
+                <span className={stat.variant === 'sp' ? `${styles.barValue} ${styles.barValueSp}` : styles.barValue}>
+                  {stat.value}<span className={styles.barMax}>/{stat.max}</span>
                 </span>
               </div>
             ))}
           </div>
 
-          <div className="about-attrs">
+          <div className={styles.attrs}>
             {attributes.map((skill, index) => (
-              <div key={skill.name} className="about-attr-row">
-                <span className="about-attr-name" aria-hidden="true">{skill.attribute}</span>
-                <span className="about-attr-skill">{skill.name}</span>
+              <div key={skill.name} className={styles.attrRow}>
+                <span className={styles.attrName} aria-hidden="true">{skill.attribute}</span>
+                <span className={styles.attrSkill}>{skill.name}</span>
                 <ProgressBar
-                  label={`Nivel personal de ${skill.name}`} value={skill.fill} role="meter" valueText={`${skill.fill} %`}
-                  trackClassName="about-attr-bar-wrap" fillClassName="about-attr-bar"
+                  label={`Nivel personal de ${skill.name}`} value={skill.fill} role="meter"
+                  valueText={`${skill.fill} %`}
+                  trackClassName={styles.attrTrack} fillClassName={styles.attrFill}
                   delay={index * 70}
                 />
-                <span className="about-attr-num" aria-hidden="true">{skill.fill}%</span>
+                <span className={styles.attrNum} aria-hidden="true">{skill.fill}%</span>
               </div>
             ))}
           </div>
-          <p className="about-stats-note">Niveles orientativos de aprendizaje · escala personal de 0 a 100.</p>
+          <p className={styles.statsNote}>Niveles orientativos de aprendizaje · escala personal de 0 a 100.</p>
         </div>
 
-        <div className="about-right-col">
-          <div className="about-identity">
-            <h2 className="about-name">{PROFILE.name}</h2>
-            <p className="about-role">{PROFILE.degree}</p>
-            <p className="about-institute">{PROFILE.institution}</p>
+        <div className={styles.rightCol}>
+          <div className={styles.identity}>
+            <h2 className={styles.name}>{PROFILE.name}</h2>
+            <p className={styles.role}>{PROFILE.degree}</p>
+            <p className={styles.institute}>{PROFILE.institution}</p>
           </div>
-          <div className="about-divider" />
-          <p className="about-bio">
+          <div className={styles.divider} />
+          <p className={styles.bio}>
             Estudiante de {academic.currentSemester}º semestre con especialidad en{' '}
             <strong>{PROFILE.specialty}</strong>.
             Apasionado del anime, los JRPGs y la construcción
@@ -73,20 +77,22 @@ export default function AboutSection() {
             que mueven la industria.
           </p>
 
-          <div className="about-next-exp">
-            <div className="next-exp-label">NEXT EXP · {ACADEMIC_PROGRESS}%</div>
+          <div className={styles.nextExp}>
+            <div className={styles.nextExpLabel}>NEXT EXP · {ACADEMIC_PROGRESS}%</div>
             <ProgressBar
               label="Progreso de carrera" value={academic.completedSemesters} max={academic.totalSemesters}
               valueText={`${academic.completedSemesters} de ${academic.totalSemesters} semestres completados`}
-              trackClassName="next-exp-track" fillClassName="next-exp-fill" delay={350}
+              trackClassName={styles.nextExpTrack} fillClassName={styles.nextExpFill} delay={350}
             />
-            <div className="next-exp-info">
-              <span className="next-exp-val">{academic.completedSemesters} de {academic.totalSemesters} semestres completados</span>
-              <span className="next-exp-goal">Meta: Titulación {academic.graduationYear}</span>
+            <div className={styles.nextExpInfo}>
+              <span className={styles.nextExpVal}>
+                {academic.completedSemesters} de {academic.totalSemesters} semestres completados
+              </span>
+              <span className={styles.nextExpGoal}>Meta: Titulación {academic.graduationYear}</span>
             </div>
           </div>
 
-          <div className="about-tags">
+          <div className={styles.tags}>
             {SKILLS.map(skill => <span key={skill.name} className="tag">{skill.name}</span>)}
           </div>
         </div>
