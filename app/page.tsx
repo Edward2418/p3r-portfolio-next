@@ -10,6 +10,7 @@ import SocialSection      from '@/components/sections/SocialSection'
 import TimelineSection    from '@/components/sections/TimelineSection'
 import SystemSection      from '@/components/sections/SystemSection'
 import ProjectsSection    from '@/components/sections/ProjectsSection'
+import SoundControls      from '@/components/SoundControls'
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<SectionId>('about')
@@ -26,6 +27,7 @@ export default function Home() {
   return (
     <>
       <Background />
+      <SoundControls />
       <div className="app-layout">
         <Sidebar
           activeSection={activeSection}

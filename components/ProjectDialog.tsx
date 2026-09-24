@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import type { Project } from '@/app/data/projects'
+import { playSound } from '@/lib/sounds'
 import styles from './sections/ProjectsSection.module.css'
 
 interface Props {
@@ -11,11 +12,15 @@ interface Props {
 
 export default function ProjectDialog({ project, onClose }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const closedByEscape = useRef(false)
 
   useEffect(() => {
     const dialog = dialogRef.current
     if (!dialog) return
-    if (project && !dialog.open) dialog.showModal()
+    if (project && !dialog.open) {
+      dialog.showModal()
+      playSound('confirm')
+    }
     if (!project && dialog.open) dialog.close()
   }, [project])
 
@@ -23,7 +28,13 @@ export default function ProjectDialog({ project, onClose }: Props) {
     <dialog
       ref={dialogRef} className={styles.dialog}
       aria-labelledby="project-dialog-title" aria-describedby="project-dialog-description"
-      onClose={onClose}
+      onKeyDown={event => { if (event.key === 'Escape') closedByEscape.current = true }}
+      onClose={() => {
+        // Escape ya reproduce el sonido de cancelación globalmente.
+        if (closedByEscape.current) closedByEscape.current = false
+        else playSound('close')
+        onClose()
+      }}
       onClick={event => {
         // Solo cerrar al pulsar fuera del panel, no en su contenido o padding.
         if (event.target !== event.currentTarget) return

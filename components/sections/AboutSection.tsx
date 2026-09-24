@@ -1,14 +1,39 @@
+'use client'
+
+import { useEffect, useRef } from 'react'
 import { SKILLS } from '@/app/data/portfolio'
 import { ACADEMIC_PROGRESS, PLAYER_LEVEL, PLAYER_STATS, PROFILE } from '@/app/data/profile'
+import { playSound } from '@/lib/sounds'
 import ProgressBar from '@/components/ProgressBar'
 import styles from './AboutSection.module.css'
+
+// El sonido de subida de nivel solo se reproduce una vez por sesión.
+let hasPlayedLevelUp = false
 
 export default function AboutSection() {
   const { academic } = PROFILE
   const attributes = SKILLS.filter(skill => skill.attribute)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    if (hasPlayedLevelUp) return
+    const node = sectionRef.current
+    if (!node || typeof IntersectionObserver === 'undefined') return
+
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some(entry => entry.isIntersecting)) return
+      hasPlayedLevelUp = true
+      observer.disconnect()
+      // Retardo para que coincida con la animación de las barras.
+      window.setTimeout(() => playSound('levelup'), 400)
+    }, { threshold: 0.25 })
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <section className={`section-container ${styles.section}`} aria-labelledby="about-title">
+    <section ref={sectionRef} className={`section-container ${styles.section}`} aria-labelledby="about-title">
       <div className={styles.watermark} aria-hidden="true">{PLAYER_LEVEL}</div>
 
       <div className="section-header">

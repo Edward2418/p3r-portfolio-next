@@ -31,6 +31,9 @@ npm start     # Servir la compilación de producción
 - `components/SectionTransition.tsx`: transición entre secciones basada en eventos CSS.
 - `components/ProgressBar.tsx`: barras reutilizables con valores accesibles y animación CSS.
 - `components/ProjectDialog.tsx`: detalle de proyecto con diálogo nativo, Escape y restauración de foco.
+- `components/SoundControls.tsx`: precarga de audio y botón de silencio de la interfaz.
+- `lib/sounds.ts`: efectos de sonido tipados, estado de silencio persistente y reproducción tolerante a fallos.
+- `public/audio/`: efectos de interfaz extraídos de Persona 3 Reload (CueSheet) y convertidos a MP3.
 - `components/sections/`: componentes de cada pantalla.
 - `app/globals.css`: estilos organizados en capas, responsive y movimiento reducido.
 
@@ -43,6 +46,7 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 - Enter o Espacio: confirmar.
 - Home / End: primera o última opción.
 - En móvil: botón MENÚ para desplegar; Escape o seleccionar una opción para cerrar.
+- Botón SONIDO (esquina inferior derecha): silencia o reactiva los efectos; el estado se guarda en el navegador.
 
 ## Flujo de trabajo
 
@@ -55,6 +59,6 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 
 ## Estado
 
-Todas las secciones cuentan con presentación: About, Proyectos, Skills, Social Link, Timeline y System, con navegación por teclado en las listas y estilos aislados en CSS Modules. Proyectos muestra el portafolio real con filtros y detalle enlazado a GitHub. Skills presenta Java, SQL/Bases de datos, HTML/CSS y JavaScript con porcentajes de autoevaluación y comparte esos datos con About y System. El CV y el enlace de LinkedIn aparecen como pendientes hasta agregar sus archivos o datos. Audio, personajes y otros enlaces definitivos son etapas pendientes.
+Las seis secciones cuentan con presentación: About, Proyectos, Skills, Social Link, Timeline y System, con navegación por teclado en las listas y estilos aislados en CSS Modules. Proyectos muestra el portafolio real con filtros y detalle enlazado a GitHub. Skills presenta Java, SQL/Bases de datos, HTML/CSS y JavaScript con porcentajes de autoevaluación y comparte esos datos con About y System. La interfaz reproduce efectos de sonido de Persona 3 Reload en menús, selecciones y cierres, con botón de silencio persistente; los navegadores solo permiten audio tras la primera interacción del usuario. El CV y el enlace de LinkedIn aparecen como pendientes hasta agregar sus archivos o datos. Pantalla de inicio, cursor personalizado, ilustración y otros enlaces definitivos son etapas pendientes.
 
 La inspiración visual en Persona 3 Reload es un homenaje personal; este proyecto no está afiliado a Atlus.

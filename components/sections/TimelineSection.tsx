@@ -2,6 +2,7 @@
 
 import { useState, type KeyboardEvent } from 'react'
 import { TIMELINE_EVENTS } from '@/app/data/portfolio'
+import { playSound } from '@/lib/sounds'
 import styles from './TimelineSection.module.css'
 
 export default function TimelineSection() {
@@ -22,6 +23,7 @@ export default function TimelineSection() {
     }
 
     event.preventDefault()
+    playSound('cursor')
     const rows = event.currentTarget.parentElement?.querySelectorAll('button')
     rows?.[nextIndex]?.focus()
     setActive(TIMELINE_EVENTS[nextIndex])
@@ -49,7 +51,11 @@ export default function TimelineSection() {
               ].filter(Boolean).join(' ')}
               aria-pressed={active.id === ev.id}
               onKeyDown={event => handleKeyDown(event, index)}
-              onClick={() => setActive(ev)}
+              onMouseEnter={() => playSound('cursor')}
+              onClick={() => {
+                playSound('confirm')
+                setActive(ev)
+              }}
             >
               <span className={styles.marker}>
                 <span className={styles.year}>{ev.year}</span>

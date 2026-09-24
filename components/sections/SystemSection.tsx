@@ -2,6 +2,7 @@ import { ACADEMIC_PROGRESS, PLAYER_LEVEL, PROFILE } from '@/app/data/profile'
 import { PROJECTS } from '@/app/data/projects'
 import { SKILLS } from '@/app/data/portfolio'
 import { SYSTEM_ACTIONS } from '@/app/data/systemActions'
+import { playSound } from '@/lib/sounds'
 import ProgressBar from '@/components/ProgressBar'
 import styles from './SystemSection.module.css'
 
@@ -67,7 +68,9 @@ export default function SystemSection() {
           <h2 className={styles.actionsHeader}>ACCIONES DISPONIBLES</h2>
           <ul className={styles.actions}>
             {SYSTEM_ACTIONS.map(action => (
-              <li key={action.title} className={action.primary ? `${styles.actionCard} ${styles.actionPrimary}` : styles.actionCard}>
+              <li key={action.title}
+                className={action.primary ? `${styles.actionCard} ${styles.actionPrimary}` : styles.actionCard}
+                onMouseEnter={() => playSound('cursor')}>
                 <span className={styles.actionIcon} aria-hidden="true">{action.icon}</span>
                 <span className={styles.actionInfo}>
                   <span className={styles.actionTitle}>{action.title}</span>
@@ -79,6 +82,7 @@ export default function SystemSection() {
                   <a
                     className={styles.actionBtn}
                     href={action.href}
+                    onClick={() => playSound('confirm')}
                     target={action.href?.startsWith('http') ? '_blank' : undefined}
                     rel={action.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
                   >

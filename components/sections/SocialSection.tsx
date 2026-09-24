@@ -2,6 +2,7 @@
 
 import { useState, type CSSProperties, type KeyboardEvent } from 'react'
 import { SOCIAL_LINKS } from '@/app/data/portfolio'
+import { playSound } from '@/lib/sounds'
 import styles from './SocialSection.module.css'
 
 export default function SocialSection() {
@@ -20,6 +21,7 @@ export default function SocialSection() {
     }
 
     event.preventDefault()
+    playSound('cursor')
     const rows = event.currentTarget.parentElement?.querySelectorAll('button')
     rows?.[nextIndex]?.focus()
     setActive(SOCIAL_LINKS[nextIndex])
@@ -43,7 +45,11 @@ export default function SocialSection() {
               style={{ '--sl-color': link.color } as CSSProperties}
               aria-pressed={active.id === link.id}
               onKeyDown={event => handleKeyDown(event, index)}
-              onClick={() => setActive(link)}
+              onMouseEnter={() => playSound('cursor')}
+              onClick={() => {
+                playSound('confirm')
+                setActive(link)
+              }}
             >
               <span className={styles.rowIcon} aria-hidden="true">{link.icon}</span>
               <span className={styles.rowInfo}>

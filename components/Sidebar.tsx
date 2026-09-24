@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from 'react'
 import { PLAYER_LEVEL, PLAYER_STATS, PROFILE } from '@/app/data/profile'
+import { playSound } from '@/lib/sounds'
 
 export const NAV_ITEMS = [
   { id: 'about',    label: 'SOBRE MÍ' },
@@ -45,6 +46,7 @@ export default function Sidebar({
     }
 
     event.preventDefault()
+    playSound('cursor')
     buttons.current[nextIndex]?.focus()
   }
 
@@ -65,7 +67,10 @@ export default function Sidebar({
         type="button"
         aria-expanded={menuOpen}
         aria-controls="portfolio-navigation"
-        onClick={() => setMenuOpen(open => !open)}
+        onClick={() => {
+          playSound('confirm')
+          setMenuOpen(open => !open)
+        }}
       >
         <span className="mobile-menu-brand">{PROFILE.displayName} <span>Lv {PLAYER_LEVEL}</span></span>
         <span className="mobile-menu-section">{activeLabel}</span>
@@ -116,7 +121,9 @@ export default function Sidebar({
                 aria-current={activeSection === item.id ? 'true' : undefined}
                 aria-controls="section-content"
                 onKeyDown={(event) => handleKeyDown(event, index)}
+                onMouseEnter={() => playSound('cursor')}
                 onClick={() => {
+                  playSound('confirm')
                   onNavigate(item.id)
                   if (menuOpen) closeMenu()
                 }}

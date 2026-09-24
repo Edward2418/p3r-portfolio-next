@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { PROJECTS, type Project } from '@/app/data/projects'
 import ProjectDialog from '@/components/ProjectDialog'
+import { playSound } from '@/lib/sounds'
 import styles from './ProjectsSection.module.css'
 
 const technologies = [...new Set(PROJECTS.flatMap(project => project.tags))]
@@ -26,7 +27,11 @@ export default function ProjectsSection() {
           <button
             key={technology ?? 'all'} type="button"
             className={styles.filter} aria-pressed={filter === technology}
-            onClick={() => setFilter(technology)}
+            onMouseEnter={() => playSound('cursor')}
+            onClick={() => {
+              playSound('confirm')
+              setFilter(technology)
+            }}
           >
             {technology ?? '◆ TODOS'}
           </button>
@@ -52,7 +57,9 @@ export default function ProjectsSection() {
               <ul className={styles.tags} aria-label="Tecnologías">
                 {project.tags.map(tag => <li key={tag}>{tag}</li>)}
               </ul>
-              <button className={styles.action} type="button" onClick={() => setSelected(project)}
+              <button className={styles.action} type="button"
+                onMouseEnter={() => playSound('cursor')}
+                onClick={() => setSelected(project)}
                 aria-haspopup="dialog" aria-label={`Ver detalle de ${project.title}`}>
                 VER DETALLE <span aria-hidden="true">↗</span>
               </button>
