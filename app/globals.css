@@ -358,10 +358,10 @@
   .about-attrs { display: flex; flex-direction: column; gap: 7px; padding-top: 0.5rem; border-top: 1px solid var(--white-ghost); }
   .about-attr-row { display: flex; align-items: center; gap: 8px; }
   .about-attr-name  { font-family: var(--font-title); font-size: 0.72rem; color: var(--cyan-dim); min-width: 28px; }
-  .about-attr-skill { font-size: 0.72rem; color: var(--white-dim); min-width: 72px; }
+  .about-attr-skill { font-size: 0.72rem; color: var(--white-dim); width: 76px; flex-shrink: 0; overflow-wrap: anywhere; }
   .about-attr-bar-wrap { flex: 1; height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
   .about-attr-bar { height: 100%; background: linear-gradient(90deg, var(--cyan-dim), var(--cyan)); border-radius: 2px; }
-  .about-attr-num { font-family: var(--font-title); font-size: 0.9rem; color: white; min-width: 24px; text-align: right; }
+  .about-attr-num { font-family: var(--font-title); font-size: 0.9rem; color: white; min-width: 30px; text-align: right; }
 
   .about-right-col { display: flex; flex-direction: column; gap: 1.2rem; padding-top: 0.5rem; }
   .about-identity  { display: flex; flex-direction: column; gap: 0.3rem; }

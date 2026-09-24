@@ -47,11 +47,11 @@ export default function AboutSection() {
                 <span className="about-attr-name" aria-hidden="true">{skill.attribute}</span>
                 <span className="about-attr-skill">{skill.name}</span>
                 <ProgressBar
-                  label={`Nivel personal de ${skill.name}`} value={skill.fill} role="meter"
+                  label={`Nivel personal de ${skill.name}`} value={skill.fill} role="meter" valueText={`${skill.fill} %`}
                   trackClassName="about-attr-bar-wrap" fillClassName="about-attr-bar"
                   delay={index * 70}
                 />
-                <span className="about-attr-num" aria-hidden="true">{skill.fill}</span>
+                <span className="about-attr-num" aria-hidden="true">{skill.fill}%</span>
               </div>
             ))}
           </div>

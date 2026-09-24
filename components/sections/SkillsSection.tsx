@@ -1,65 +1,45 @@
+import type { CSSProperties } from 'react'
 import { SKILLS } from '@/app/data/portfolio'
+import ProgressBar from '@/components/ProgressBar'
+import styles from './SkillsSection.module.css'
 
 export default function SkillsSection() {
-  const half = Math.ceil(SKILLS.length / 2)
-  const left  = SKILLS.slice(0, half)
-  const right = SKILLS.slice(half)
-
   return (
-    <section className="section-container">
-      <div className="skills-lv-bg" aria-hidden="true">SK</div>
+    <section className={`section-container ${styles.section}`} aria-labelledby="skills-title">
+      <div className={styles.watermark} aria-hidden="true">SK</div>
       <div className="section-header">
-        <h1 className="section-title">SKILLS</h1>
+        <h1 className="section-title" id="skills-title">SKILLS</h1>
         <div className="section-line" />
       </div>
-      <div className="skills-p3r-layout">
-        <SkillCol title="TÉCNICAS" icon="⚔" skills={left} />
-        <SkillCol title="HERRAMIENTAS" icon="🛡" skills={right} />
+
+      <div className={styles.panel}>
+        <div className={styles.panelHeader}>
+          <h2 className={styles.heading}>HABILIDADES TÉCNICAS</h2>
+          <span className={styles.total}>{String(SKILLS.length).padStart(2, '0')} SKILLS</span>
+        </div>
+        <ul className={styles.list}>
+          {SKILLS.map((skill, index) => (
+            <li
+              key={skill.name}
+              className={styles.row}
+              style={{ '--skill-color': skill.color } as CSSProperties}
+            >
+              <span className={styles.icon} aria-hidden="true">◆</span>
+              <h3 className={styles.name}>{skill.name}</h3>
+              <span className={styles.percentage} aria-hidden="true">
+                {skill.fill}<span>%</span>
+              </span>
+              <ProgressBar
+                label={`Nivel personal de ${skill.name}`}
+                role="meter" value={skill.fill} valueText={`${skill.fill} %`}
+                trackClassName={styles.track} fillClassName={styles.fill}
+                delay={index * 90}
+              />
+            </li>
+          ))}
+        </ul>
+        <p className={styles.note}>Porcentajes orientativos de autoevaluación personal.</p>
       </div>
     </section>
-  )
-}
-
-function SkillCol({ title, icon, skills }: {
-  title: string
-  icon: string
-  skills: typeof SKILLS
-}) {
-  return (
-    <div className="skills-col">
-      <div className="skills-col-header">
-        <span className="skills-col-icon">{icon}</span>
-        <span className="skills-col-title">{title}</span>
-      </div>
-      {skills.map((skill) => (
-        <div key={skill.name} className="skill-entry">
-          <div
-            className="skill-type-dot"
-            style={{ '--dot-color': skill.color } as React.CSSProperties}
-          />
-          <div className="skill-entry-info">
-            <span className="skill-entry-name">{skill.name}</span>
-            <span className="skill-entry-sub">{skill.sub}</span>
-          </div>
-          <div className="skill-entry-right">
-            <span
-              className="skill-entry-rank"
-              style={{ '--dot-color': skill.color } as React.CSSProperties}
-            >
-              Lv {skill.fill}
-            </span>
-            <div className="skill-entry-bar-wrap">
-              <div
-                className="skill-entry-bar"
-                style={{
-                  '--dot-color': skill.color,
-                  width: `${skill.fill}%`,
-                } as React.CSSProperties}
-              />
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
   )
 }
