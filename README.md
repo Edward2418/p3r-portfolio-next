@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# P3R Portfolio — Edward Negrete
 
-## Getting Started
+Portafolio personal inspirado en el menú de **Persona 3 Reload**. Proyecto de aprendizaje construido con Next.js 16, React 19, TypeScript y Tailwind CSS 4, con diseño personalizado en CSS.
 
-First, run the development server:
+## Desarrollo local
 
-```bash
+Requiere Node.js 20.9 o superior y npm.
+
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre la URL indicada en la terminal (normalmente http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm run lint   # ESLint
+npm run build  # Compilación y validación de TypeScript
+npm start     # Servir la compilación de producción
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Organización
 
-## Learn More
+- `app/page.tsx`: composición de la interfaz y estado de navegación.
+- `app/layout.tsx`: fuentes, idioma y metadatos.
+- `app/data/profile.ts`: perfil, avance académico y estadísticas decorativas.
+- `app/data/portfolio.ts`: habilidades, proyectos, intereses y trayectoria.
+- `components/Sidebar.tsx`: navegación por clic, teclado y menú móvil.
+- `components/SectionTransition.tsx`: transición entre secciones basada en eventos CSS.
+- `components/ProgressBar.tsx`: barras reutilizables con valores accesibles y animación CSS.
+- `components/sections/`: componentes de cada pantalla.
+- `app/globals.css`: estilos organizados en capas, responsive y movimiento reducido.
 
-To learn more about Next.js, take a look at the following resources:
+El progreso académico se calcula desde los **semestres completados**, no desde el semestre en curso. Las habilidades de About y Skills comparten sus valores. HP/SP son elementos decorativos y los niveles de habilidades representan una autoevaluación personal.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Controles
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Tab: acceder a los controles.
+- Flechas arriba/abajo dentro del menú: recorrer opciones.
+- Enter o Espacio: confirmar.
+- Home / End: primera o última opción.
+- En móvil: botón MENÚ para desplegar; Escape o seleccionar una opción para cerrar.
 
-## Deploy on Vercel
+## Flujo de trabajo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Revisar `git status` y definir una etapa de alcance concreto.
+2. Editar los datos en sus módulos compartidos; evitar duplicarlos en componentes.
+3. Mantener los tipos de TypeScript y usar elementos HTML accesibles.
+4. Ejecutar `npm run lint`, `npm run build` y `git diff --check`.
+5. Comprobar navegación, cambios rápidos de sección, scroll y menú a 390, 768 y 1280 px; revisar también movimiento reducido.
+6. Revisar el diff y crear un commit descriptivo por etapa (`feat:`, `fix:`, `refactor:` o `docs:`), antes de enviarlo al remoto.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Estado
+
+Base responsive, navegación, transiciones y ficha About implementadas. Skills, Social Link, Timeline y System tienen estructura; su presentación está en desarrollo. Proyectos tiene datos preparados y una pantalla provisional. Audio, personajes, CV y enlaces definitivos son etapas pendientes.
+
+La inspiración visual en Persona 3 Reload es un homenaje personal; este proyecto no está afiliado a Atlus.

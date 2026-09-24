@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useRef, useState } from 'react'
+import { PLAYER_LEVEL, PLAYER_STATS, PROFILE } from '@/app/data/profile'
 
 export const NAV_ITEMS = [
   { id: 'about',    label: 'SOBRE MÍ' },
@@ -66,53 +67,42 @@ export default function Sidebar({
         aria-controls="portfolio-navigation"
         onClick={() => setMenuOpen(open => !open)}
       >
-        <span className="mobile-menu-brand">EDWARD <span>Lv 06</span></span>
+        <span className="mobile-menu-brand">{PROFILE.displayName} <span>Lv {PLAYER_LEVEL}</span></span>
         <span className="mobile-menu-section">{activeLabel}</span>
         <span className="mobile-menu-action">{menuOpen ? 'CERRAR ✕' : 'MENÚ ☰'}</span>
       </button>
 
       <div className="sidebar-header">
         <div className="char-avatar">
-          <div className="avatar-placeholder">ED</div>
+          <div className="avatar-placeholder">{PROFILE.initials}</div>
           <div className="char-level">
             <span className="lv-text">Lv</span>
-            <span className="lv-num">6</span>
+            <span className="lv-num">{PROFILE.academic.currentSemester}</span>
           </div>
         </div>
         <div className="char-info">
-          <span className="char-name">EDWARD</span>
-          <span className="char-role">ISC · Sem 6</span>
+          <span className="char-name">{PROFILE.displayName}</span>
+          <span className="char-role">ISC · Sem {PROFILE.academic.currentSemester}</span>
           <span className="char-arcana">◈ Full-Stack</span>
         </div>
       </div>
 
-      <div className="stat-bars">
-        <div className="stat-row">
-          <span className="stat-label">HP</span>
-          <div className="stat-bar-wrap">
-            <div
-              className="stat-bar hp-bar"
-              style={{ '--fill': '85%' } as React.CSSProperties}
-            />
+      <div className="stat-bars" aria-hidden="true">
+        {PLAYER_STATS.map(stat => (
+          <div className="stat-row" key={stat.label}>
+            <span className={`stat-label ${stat.variant}`}>{stat.label}</span>
+            <div className="stat-bar-wrap">
+              <div
+                className={`stat-bar ${stat.variant}-bar`}
+                style={{ '--fill': `${stat.value / stat.max * 100}%` } as React.CSSProperties}
+              />
+            </div>
+            <div className="stat-numbers">
+              <span className={`stat-value ${stat.variant}`}>{stat.value}</span>
+              <span className="stat-max">/{stat.max}</span>
+            </div>
           </div>
-          <div className="stat-numbers">
-            <span className="stat-value">425</span>
-            <span className="stat-max">/500</span>
-          </div>
-        </div>
-        <div className="stat-row">
-          <span className="stat-label sp">SP</span>
-          <div className="stat-bar-wrap">
-            <div
-              className="stat-bar sp-bar"
-              style={{ '--fill': '60%' } as React.CSSProperties}
-            />
-          </div>
-          <div className="stat-numbers">
-            <span className="stat-value sp">182</span>
-            <span className="stat-max">/300</span>
-          </div>
-        </div>
+        ))}
       </div>
 
       <nav id="portfolio-navigation" className="main-nav" aria-label="Secciones del portafolio" aria-describedby="nav-instructions">

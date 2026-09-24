@@ -1,3 +1,7 @@
+import { ACADEMIC_PROGRESS, PLAYER_LEVEL, PROFILE } from '@/app/data/profile'
+import { PROJECTS } from '@/app/data/portfolio'
+import ProgressBar from '@/components/ProgressBar'
+
 export default function SystemSection() {
   return (
     <section className="section-container">
@@ -9,23 +13,23 @@ export default function SystemSection() {
       <div className="system-p3r-layout">
         <div className="system-player-card">
           <div className="sys-avatar-wrap">
-            <div className="sys-avatar">ED</div>
+            <div className="sys-avatar">{PROFILE.initials}</div>
             <div className="sys-plv-tag">
               <span className="sys-plv-lbl">PLV</span>
-              <span className="sys-plv-num">06</span>
+              <span className="sys-plv-num">{PLAYER_LEVEL}</span>
             </div>
           </div>
           <div className="sys-player-info">
-            <h2 className="sys-player-name">EDWARD NEGRETE BUSTOS</h2>
-            <p className="sys-player-role">Ing. en Sistemas Computacionales</p>
-            <p className="sys-player-inst">TecNM · ITSH · Huauchinango, Pue.</p>
+            <h2 className="sys-player-name">{PROFILE.name}</h2>
+            <p className="sys-player-role">{PROFILE.degree}</p>
+            <p className="sys-player-inst">{PROFILE.institution}</p>
           </div>
           <div className="sys-divider" />
           <div className="sys-stats-list">
             {[
-              ['SEMESTRE',     '6to de 8'],
-              ['ESPECIALIDAD', 'Full-Stack · Videojuegos'],
-              ['PROYECTOS',    '4 completados'],
+              ['SEMESTRE',     `${PROFILE.academic.currentSemester}º de ${PROFILE.academic.totalSemesters} · En curso`],
+              ['ESPECIALIDAD', PROFILE.specialty],
+              ['PROYECTOS',    `${PROJECTS.filter(project => project.status === 'Completado').length} completados`],
               ['TECNOLOGÍAS',  'Java · SQL · HTML/CSS/JS · Kotlin'],
               ['ESTADO',       '◆ Disponible'],
             ].map(([label, val]) => (
@@ -38,12 +42,11 @@ export default function SystemSection() {
           <div className="sys-progress-block">
             <div className="sys-progress-label">
               <span>PROGRESO DE CARRERA</span>
-              <span>75%</span>
+              <span>{ACADEMIC_PROGRESS}%</span>
             </div>
-            <div className="sys-progress-track">
-              <div className="sys-progress-fill" style={{ width: '75%' }} />
-            </div>
-            <div className="sys-progress-hint">Meta: Titulación 2027</div>
+            <ProgressBar label="Progreso de carrera" value={ACADEMIC_PROGRESS}
+              trackClassName="sys-progress-track" fillClassName="sys-progress-fill" />
+            <div className="sys-progress-hint">Meta: Titulación {PROFILE.academic.graduationYear}</div>
           </div>
         </div>
 

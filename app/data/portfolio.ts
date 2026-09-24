@@ -1,13 +1,20 @@
-// Todos los datos del portafolio en un solo lugar.
-// Cuando quieras actualizar información, solo editas aquí.
+import { PROFILE } from './profile'
 
-export const SKILLS = [
-  { name: 'Java',       sub: 'Orientado a objetos · Backend',  fill: 70, color: '#f97316' },
-  { name: 'SQL',        sub: 'Bases de datos · Consultas',     fill: 65, color: '#3b82f6' },
-  { name: 'Kotlin',     sub: 'Android · Apps móviles',         fill: 60, color: '#a855f7' },
-  { name: 'HTML/CSS/JS',sub: 'Frontend · Diseño web',          fill: 75, color: '#00ccff' },
+interface Skill {
+  name: string
+  sub: string
+  fill: number
+  color: string
+  attribute?: 'STR' | 'MAG' | 'END' | 'AGI' | 'LCK'
+}
+
+export const SKILLS: Skill[] = [
+  { name: 'Java',       sub: 'Orientado a objetos · Backend',  fill: 70, color: '#f97316', attribute: 'STR' },
+  { name: 'SQL',        sub: 'Bases de datos · Consultas',     fill: 65, color: '#3b82f6', attribute: 'MAG' },
+  { name: 'Kotlin',     sub: 'Android · Apps móviles',         fill: 60, color: '#a855f7', attribute: 'AGI' },
+  { name: 'HTML/CSS/JS',sub: 'Frontend · Diseño web',          fill: 75, color: '#00ccff', attribute: 'END' },
   { name: 'JavaScript', sub: 'DOM · Animaciones · Lógica',     fill: 55, color: '#22cc88' },
-  { name: 'Linux',      sub: 'Ubuntu Server · Terminal',       fill: 60, color: '#f59e0b' },
+  { name: 'Linux',      sub: 'Ubuntu Server · Terminal',       fill: 60, color: '#f59e0b', attribute: 'LCK' },
   { name: 'Git',        sub: 'Control de versiones · Deploy',  fill: 50, color: '#ec4899' },
   { name: 'Python',     sub: 'Scripts · Automatización',       fill: 45, color: '#64748b' },
 ]
@@ -177,10 +184,10 @@ export const TIMELINE_EVENTS = [
   {
     id: '4',
     year: 'HOY',
-    title: '6to Semestre · Activo',
+    title: `${PROFILE.academic.currentSemester}º Semestre · Activo`,
     sub: 'Full-Stack y Videojuegos',
     badge: 'ACTIVO',
-    fullTitle: '6to Semestre — Full-Stack y Videojuegos',
+    fullTitle: `${PROFILE.academic.currentSemester}º Semestre — ${PROFILE.specialty}`,
     institution: 'ITSH · Huauchinango, Puebla',
     desc: 'Especialidad en desarrollo Full-Stack y Videojuegos. Construyendo proyectos reales con HTML/CSS/JS, Java, SQL, Kotlin y Git.',
     tags: ['HTML/CSS/JS', 'Java', 'SQL', 'Git', 'Kotlin'],
@@ -189,7 +196,7 @@ export const TIMELINE_EVENTS = [
   },
   {
     id: '5',
-    year: '2027',
+    year: String(PROFILE.academic.graduationYear),
     title: 'Titulación',
     sub: 'Meta final',
     badge: 'META',

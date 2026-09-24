@@ -388,6 +388,14 @@
 
   .about-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 
+  .about-stats-note { color: var(--white-dim); font-size: 0.7rem; line-height: 1.6; }
+  .animated-bar-fill {
+    transform-origin: left;
+    animation: bar-fill-reveal 700ms ease-out var(--bar-delay, 0ms) both;
+  }
+  .sys-progress-track { height: 5px; background: var(--white-ghost); overflow: hidden; }
+  .sys-progress-fill { height: 100%; background: var(--cyan); }
+
   .tag {
     font-family: var(--font-title);
     font-size: 0.8rem;
@@ -474,7 +482,12 @@
   }
 }
 
-/* Keyframes fuera de @layer para máxima prioridad */
+@keyframes bar-fill-reveal {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Animaciones compartidas de navegación. */
 
 @keyframes p3r-exit {
   0% {
@@ -514,6 +527,7 @@
 
 /* Respeta preferencias de accesibilidad */
 @media (prefers-reduced-motion: reduce) {
+  .animated-bar-fill { animation: none; }
   .section-exit  { animation: p3r-exit-reduced  0.1s linear forwards; }
   .section-enter { animation: p3r-enter-reduced 0.1s linear forwards; }
 }
