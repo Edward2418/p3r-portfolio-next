@@ -107,12 +107,12 @@
 
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
 
-@media (max-width: 1100px) {
+@container portfolio (max-width: 900px) {
   .layout { grid-template-columns: 200px minmax(0, 1fr); gap: 1.5rem; }
   .nextExpInfo { flex-wrap: wrap; gap: 0.4rem 1rem; }
 }
 
-@media (max-width: 768px) {
+@container portfolio (max-width: 640px) {
   .layout { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
   .leftCol { width: 100%; max-width: 360px; }
   .name { font-size: 1.75rem; }

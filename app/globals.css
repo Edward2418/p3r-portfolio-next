@@ -269,7 +269,15 @@
   .ctrl-hint { font-size: 0.7rem; color: var(--white-dim); letter-spacing: 0.05em; }
 
   /* ---- Área de contenido ---- */
-  .content-area { flex: 1; min-width: 0; min-height: 0; height: 100%; overflow: hidden; position: relative; }
+  .content-area {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    container: portfolio / inline-size;
+  }
 
   /* ---- Secciones ---- */
   .section-container {
@@ -319,6 +327,13 @@
     color: var(--cyan);
     background: rgba(0,204,255,0.08);
     clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+
+  /* El espacio útil también depende del menú y la columna del personaje. */
+  @container portfolio (max-width: 900px) {
+    .section-container { padding: 2rem; }
+    .section-header { gap: 1rem; margin-bottom: 2rem; }
+    .section-title { font-size: 2.5rem; }
   }
 
   /* ---- Transiciones de sección ---- */

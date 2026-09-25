@@ -129,10 +129,10 @@
 .controlsHint { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.25rem; color: var(--white-dim); font-size: 0.72rem; }
 .srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
-@media (max-width: 900px) {
+@container portfolio (max-width: 900px) {
   .layout { grid-template-columns: minmax(0, 1fr); }
 }
-@media (max-width: 480px) {
+@container portfolio (max-width: 480px) {
   .actionCard { flex-wrap: wrap; gap: 0.75rem; }
   .actionInfo { order: 2; flex-basis: calc(100% - 56px); }
   .actionBtn, .actionPending { order: 3; width: 100%; justify-content: center; text-align: center; }
