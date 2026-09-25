@@ -13,6 +13,8 @@ npm run dev
 
 Abre la URL indicada en la terminal (normalmente http://localhost:3000).
 
+Durante el diseño usa `npm run dev`: actualiza los cambios automáticamente. `npm start` sirve la compilación de producción y debe reiniciarse después de una nueva compilación.
+
 ```sh
 npm run lint   # ESLint
 npm run build  # Compilación y validación de TypeScript
@@ -25,6 +27,9 @@ npm start     # Servir la compilación de producción
 - `app/page.tsx`: composición de la interfaz y estado de navegación.
 - `components/MainMenu.tsx`: pantalla principal con Oguri, selección por flechas/Home/End y apertura de las seis secciones. Volver restaura el foco en la última sección elegida.
 - `app/layout.tsx`: fuentes, idioma y metadatos.
+- `app/data/site.ts`: título, descripción y URL base del sitio.
+- `app/opengraph-image.tsx`: tarjeta PNG para compartir (1200 × 630), generada desde el perfil.
+- `app/icon.svg` y `app/favicon.ico`: identidad ED en formato vectorial y favicon compatible.
 - `app/data/profile.ts`: perfil, avance académico y estadísticas decorativas.
 - `app/data/portfolio.ts`: habilidades, intereses y trayectoria.
 - `app/data/projects.ts`: proyectos reales, tecnologías y enlaces; los filtros se generan desde estos datos.
@@ -68,6 +73,14 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 4. Ejecutar `npm run lint`, `npm run build` y `git diff --check`.
 5. Comprobar navegación, cambios rápidos de sección, scroll y menú a 390, 768 y 1280 px; revisar también movimiento reducido.
 6. Revisar el diff y crear un commit descriptivo por etapa (`feat:`, `fix:`, `refactor:` o `docs:`), antes de enviarlo al remoto.
+
+## Preparación del despliegue
+
+- Define `SITE_URL` con la dirección pública completa (por ejemplo, `https://tu-dominio.example`) antes de compilar para producción. Consulta `.env.example`.
+- Si no se define, se utiliza `VERCEL_PROJECT_PRODUCTION_URL` en Vercel y `http://localhost:3000` en local.
+- Al cambiar el dominio, vuelve a compilar: los metadatos se generan estáticamente.
+- Revisa `/opengraph-image`, `/icon.svg` y `/favicon.ico`. Los metadatos incluyen URL canónica, Open Graph y tarjeta grande para Twitter/X.
+- La vista previa real en redes se comprobará con una URL pública; localhost solo permite revisar los archivos y etiquetas.
 
 ## Estado
 
