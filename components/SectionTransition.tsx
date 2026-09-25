@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import type { SectionId } from './Sidebar'
 
 interface Props {
@@ -29,6 +29,21 @@ export default function SectionTransition({ sectionKey, children }: Props) {
 
   const { displayed, phase } = transition
 
+  // Respaldo si una animación se cancela o no emite animationend.
+  // Cada solicitud limpia el temporizador de la anterior.
+  useEffect(() => {
+    if (phase === 'idle') return
+    const timer = window.setTimeout(() => {
+      setTransition(current => {
+        if (current.requested !== sectionKey || current.phase !== phase) return current
+        return phase === 'exit'
+          ? { ...current, displayed: current.requested, phase: 'enter' }
+          : { ...current, phase: 'idle' }
+      })
+    }, 700)
+    return () => window.clearTimeout(timer)
+  }, [phase, sectionKey])
+
   return (
     <div
       id="section-content"
@@ -38,6 +53,7 @@ export default function SectionTransition({ sectionKey, children }: Props) {
       onAnimationEnd={(event) => {
         // Las animaciones internas de una sección no controlan la navegación.
         if (event.target !== event.currentTarget) return
+        if (!event.animationName.startsWith(`p3r-${phase}`)) return
         setTransition(current => current.phase === 'exit'
           ? { ...current, displayed: current.requested, phase: 'enter' }
           : { ...current, phase: 'idle' })

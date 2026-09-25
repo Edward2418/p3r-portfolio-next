@@ -47,6 +47,7 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 
 - Pantalla de inicio: activar «Entrar al portafolio» con clic, toque, Enter o Espacio; Escape también permite continuar. Tab mantiene el foco dentro del diálogo. Se muestra una vez por sesión de pestaña.
 - Tab: acceder a los controles.
+- «Saltar al contenido»: primer enlace al navegar con Tab, permite omitir el menú lateral.
 - Flechas arriba/abajo dentro del menú: recorrer opciones.
 - Enter o Espacio: confirmar.
 - Home / End: primera o última opción.
@@ -66,6 +67,8 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 ## Estado
 
 ### Interacción
+
+Las transiciones recuerdan el último destino solicitado y cuentan con un temporizador de respaldo si se cancela la animación. El audio se detiene al ocultar la pestaña, limita repeticiones de cursor a intervalos de 70 ms y limpia el sonido diferido de About al desmontar la sección. Comprobaciones aisladas con audio simulado: limitación de repeticiones, silencio, pestaña oculta y detención correctas; la revisión interactiva de navegación rápida y foco sigue pendiente en navegador.
 
 El splash bloquea el contenido de fondo mediante `showModal()` y mantiene ese bloqueo durante su transición de salida. Al entrar, enfoca el menú móvil o la sección activa de escritorio; con movimiento reducido cierra sin esperar la animación. Escape reproduce cancelación únicamente al cerrar un menú móvil o diálogo de proyecto. Pendiente de comprobación interactiva en navegador: entrada, foco, recarga de sesión y cierre de proyectos.
 

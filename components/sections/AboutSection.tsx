@@ -20,17 +20,24 @@ export default function AboutSection() {
     if (hasPlayedLevelUp) return
     const node = sectionRef.current
     if (!node || typeof IntersectionObserver === 'undefined') return
+    let timer: number | undefined
 
     const observer = new IntersectionObserver((entries) => {
       if (!entries.some(entry => entry.isIntersecting)) return
-      hasPlayedLevelUp = true
       observer.disconnect()
       // Retardo para que coincida con la animación de las barras.
-      window.setTimeout(() => playSound('levelup'), 400)
+      timer = window.setTimeout(() => {
+        if (document.hidden || document.querySelector('dialog[open]')) return
+        hasPlayedLevelUp = true
+        playSound('levelup')
+      }, 400)
     }, { threshold: 0.25 })
 
     observer.observe(node)
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+      window.clearTimeout(timer)
+    }
   }, [])
 
   return (

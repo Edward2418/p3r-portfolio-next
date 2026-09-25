@@ -29,6 +29,15 @@ const listeners = new Set<() => void>()
 
 let muted = false
 let hydrated = false
+let lastCursorAt = -Infinity
+
+/** Detener efectos pendientes al abandonar la pestaña o silenciar. */
+export function stopSounds() {
+  elements.forEach(audio => {
+    audio.pause()
+    audio.currentTime = 0
+  })
+}
 
 function hydrate() {
   if (hydrated || typeof window === 'undefined') return
@@ -66,11 +75,8 @@ export function setSoundMuted(next: boolean) {
   muted = next
   elements.forEach(audio => {
     audio.muted = next
-    if (next) {
-      audio.pause()
-      audio.currentTime = 0
-    }
   })
+  if (next) stopSounds()
   try {
     window.localStorage.setItem(STORAGE_KEY, next ? '1' : '0')
   } catch {
@@ -100,7 +106,12 @@ function getAudio(key: SoundKey): HTMLAudioElement | null {
  */
 export function playSound(key: SoundKey) {
   hydrate()
-  if (muted) return
+  if (muted || typeof document === 'undefined' || document.hidden) return
+  if (key === 'cursor') {
+    const now = performance.now()
+    if (now - lastCursorAt < 70) return
+    lastCursorAt = now
+  }
 
   const audio = getAudio(key)
   if (!audio) return

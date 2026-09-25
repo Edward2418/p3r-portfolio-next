@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { preloadSounds, setSoundMuted, useSoundMuted } from '@/lib/sounds'
+import { preloadSounds, setSoundMuted, stopSounds, useSoundMuted } from '@/lib/sounds'
 import styles from './SoundControls.module.css'
 
 /**
@@ -12,6 +12,15 @@ export default function SoundControls() {
 
   useEffect(() => {
     preloadSounds()
+
+    function handleVisibility() {
+      if (document.hidden) stopSounds()
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility)
+      stopSounds()
+    }
 
   }, [])
 

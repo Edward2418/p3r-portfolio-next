@@ -30,6 +30,7 @@ export default function Home() {
   return (
     <>
       <Background />
+      <a className="skip-link" href="#portfolio-main">Saltar al contenido</a>
       <CustomCursor />
       <SplashScreen />
       <SoundControls />
@@ -38,7 +39,7 @@ export default function Home() {
           activeSection={activeSection}
           onNavigate={setActiveSection}
         />
-        <main className="content-area">
+        <main id="portfolio-main" className="content-area" tabIndex={-1} aria-label="Contenido del portafolio">
           <SectionTransition sectionKey={activeSection}>
             {(displayed) => sections[displayed]}
           </SectionTransition>
