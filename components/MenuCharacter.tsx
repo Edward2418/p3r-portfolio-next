@@ -22,7 +22,7 @@ export default function MenuCharacter({ dimmed = false }: { dimmed?: boolean }) 
           alt=""
           width={607}
           height={900}
-          sizes="(max-width: 1439px) 0px, (min-width: 1800px) 360px, 20vw"
+          sizes="(max-width: 1439px) 0px, (min-width: 1917px) 460px, 24vw"
           draggable={false}
         />
         <span className={styles.groundGlow} />

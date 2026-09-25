@@ -69,6 +69,8 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 
 La composición interna de About, System, Social Link y Timeline responde al ancho del panel de contenido mediante consultas de contenedor (`portfolio`), descontando el menú y la ilustración lateral. La aprobación visual de esta fase sigue pendiente; lint y build no sustituyen la revisión en navegador.
 
+La revisión de capturas de escritorio motivó una ficha oscura para mejorar el contraste de About, límites de desbordamiento horizontal en Social Link y un encuadre ampliado de Oguri, recortado dentro de su columna con fondo diagonal. Estos ajustes requieren una nueva comprobación visual.
+
 La nueva iteración toma como referencia los menús principal, Social Link y estado del grupo de Persona 3 Reload: fondo azul eléctrico con luz cian superior, selección blanca con acento rojo y filas negras de corte diagonal. Aplicado al fondo, navegación, Social Link y Skills. La revisión visual a 390, 768 y 1280 px sigue pendiente de comprobación en navegador.
 
 El cursor personalizado se activa al mover el ratón; conserva el cursor nativo en diálogos y con movimiento reducido. Silenciar detiene también los efectos que ya se están reproduciendo.

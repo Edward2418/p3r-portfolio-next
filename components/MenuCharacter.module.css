@@ -1,9 +1,10 @@
 /* Columna decorativa en el flujo: nunca se superpone al menú o las fichas. */
 .character {
   position: relative;
-  flex: 0 0 min(20vw, 360px);
+  flex: 0 0 min(24vw, 460px);
   align-self: flex-end;
-  height: 85%;
+  height: calc(100% - 8rem);
+  overflow: hidden;
   isolation: isolate;
   pointer-events: none;
   opacity: 0;
@@ -20,15 +21,24 @@
   transition: opacity 0.5s ease;
 }
 
+.character::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(165deg, rgb(205 255 255 / 35%), rgb(13 32 137 / 10%) 70%);
+  clip-path: polygon(35% 0, 100% 0, 100% 100%, 0 100%);
+}
+
 .dimmed .body {
-  opacity: 0.45;
+  opacity: 0.65;
 }
 
 .image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: bottom center;
+  object-fit: cover;
+  object-position: 52% top;
   filter:
     brightness(1.05)
     contrast(1.05)

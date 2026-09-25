@@ -20,6 +20,10 @@
   gap: 2.5rem;
   position: relative;
   z-index: 1;
+  padding: clamp(1rem, 2cqw, 1.75rem);
+  background: linear-gradient(140deg, rgb(1 12 38 / 94%), rgb(5 28 86 / 90%));
+  border-top: 3px solid var(--cyan);
+  box-shadow: 8px 8px 0 rgb(0 9 65 / 25%);
 }
 
 .leftCol { display: flex; flex-direction: column; gap: 1.25rem; }
@@ -80,13 +84,13 @@
 .attrNum { font-family: var(--font-title); font-size: 0.9rem; color: white; min-width: 30px; text-align: right; }
 .statsNote { color: var(--white-dim); font-size: 0.7rem; line-height: 1.6; }
 
-.rightCol { display: flex; flex-direction: column; gap: 1.2rem; padding-top: 0.5rem; }
+.rightCol { display: flex; flex-direction: column; gap: 1.2rem; padding-top: 0.5rem; min-width: 0; }
 .identity { display: flex; flex-direction: column; gap: 0.3rem; }
 .name { font-family: var(--font-title); font-size: 2rem; letter-spacing: 0.08em; overflow-wrap: anywhere; }
 .role { font-size: 0.95rem; color: var(--cyan); font-weight: 600; }
 .institute { font-size: 0.78rem; color: var(--white-dim); }
 .divider { height: 1px; background: linear-gradient(90deg, #ff2244, #00ccff 40%, transparent); }
-.bio { font-size: 0.9rem; color: var(--white-dim); line-height: 1.8; }
+.bio { font-size: 1rem; color: #dcecff; line-height: 1.8; max-width: 65ch; }
 .bio strong { color: white; font-weight: 600; }
 
 .nextExp {
@@ -101,7 +105,7 @@
 .nextExpLabel { font-family: var(--font-title); font-size: 0.65rem; letter-spacing: 0.2em; color: var(--cyan-dim); }
 .nextExpTrack { height: 5px; background: rgba(255, 255, 255, 0.08); border-radius: 3px; overflow: hidden; }
 .nextExpFill { height: 100%; background: linear-gradient(90deg, #ff2244, #ff6644); box-shadow: 0 0 8px rgba(255, 34, 68, 0.5); }
-.nextExpInfo { display: flex; justify-content: space-between; }
+.nextExpInfo { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; justify-content: space-between; }
 .nextExpVal { font-size: 0.75rem; color: var(--white-dim); }
 .nextExpGoal { font-family: var(--font-title); font-size: 0.7rem; color: #ff2244; }
 
