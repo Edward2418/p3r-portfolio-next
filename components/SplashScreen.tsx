@@ -54,7 +54,7 @@ export default function SplashScreen() {
     leaveTimer.current = window.setTimeout(() => {
       dialogRef.current?.close()
       const navigation = document.querySelectorAll<HTMLButtonElement>(
-        '.mobile-menu-toggle, .nav-item[aria-current="true"]'
+        '[data-main-menu][data-selected="true"], .mobile-menu-toggle, .nav-item[aria-current="true"]'
       )
       Array.from(navigation).find(button => button.getClientRects().length)?.focus()
     }, delay)

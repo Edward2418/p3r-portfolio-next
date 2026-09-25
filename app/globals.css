@@ -283,6 +283,8 @@
 
   /* ---- Área de contenido ---- */
   .content-area {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     min-width: 0;
     min-height: 0;
@@ -291,6 +293,22 @@
     position: relative;
     container: portfolio / inline-size;
   }
+  .section-toolbar { flex-shrink: 0; padding: 0.75rem 1rem 0; }
+  .back-to-menu {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 44px;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--cyan);
+    background: #061541;
+    color: white;
+    font: italic 900 0.9rem var(--font-menu);
+    cursor: pointer;
+  }
+  .back-to-menu:hover { background: #123678; }
+  .back-to-menu:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+  .section-stage { flex: 1; min-height: 0; }
 
   /* ---- Secciones ---- */
   .section-container {

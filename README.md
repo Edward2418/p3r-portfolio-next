@@ -22,6 +22,7 @@ npm start     # Servir la compilación de producción
 ## Organización
 
 - `app/page.tsx`: composición de la interfaz y estado de navegación.
+- `components/MainMenu.tsx`: pantalla principal con Oguri, selección por flechas/Home/End y apertura de las seis secciones. Volver restaura el foco en la última sección elegida.
 - `app/layout.tsx`: fuentes, idioma y metadatos.
 - `app/data/profile.ts`: perfil, avance académico y estadísticas decorativas.
 - `app/data/portfolio.ts`: habilidades, intereses y trayectoria.
@@ -45,6 +46,9 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 
 ## Controles
 
+- Menú principal: clic/toque o Enter/Espacio para abrir una sección; flechas, Home y End para elegir.
+- Dentro de una sección: «Volver al menú» o Escape para regresar. Un diálogo abierto o el menú móvil desplegado atienden Escape primero.
+
 - Pantalla de inicio: activar «Entrar al portafolio» con clic, toque, Enter o Espacio; Escape también permite continuar. Tab mantiene el foco dentro del diálogo. Se muestra una vez por sesión de pestaña.
 - Tab: acceder a los controles.
 - «Saltar al contenido»: primer enlace al navegar con Tab, permite omitir el menú lateral.
@@ -67,6 +71,8 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 ## Estado
 
 ### Interacción
+
+Nueva composición: después del splash se presenta un menú principal independiente con el personaje y las seis opciones. Las fichas conservan navegación lateral directa y un botón de regreso. En móvil las opciones se muestran sobre una ilustración atenuada. La entrada enfoca el botón de regreso; al volver se enfoca la última sección elegida. Pendiente de revisión visual e interactiva de este recorrido.
 
 Las transiciones recuerdan el último destino solicitado y cuentan con un temporizador de respaldo si se cancela la animación. El audio se detiene al ocultar la pestaña, limita repeticiones de cursor a intervalos de 70 ms y limpia el sonido diferido de About al desmontar la sección. Comprobaciones aisladas con audio simulado: limitación de repeticiones, silencio, pestaña oculta y detención correctas; la revisión interactiva de navegación rápida y foco sigue pendiente en navegador.
 
