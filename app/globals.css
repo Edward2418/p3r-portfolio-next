@@ -309,6 +309,7 @@
   .back-to-menu:hover { background: #123678; }
   .back-to-menu:focus-visible { outline: 3px solid white; outline-offset: 3px; }
   .section-stage { flex: 1; min-height: 0; }
+  [data-scene-phase='reveal'] .section-stage { animation: scene-panel-enter 280ms ease-out both; }
 
   /* ---- Secciones ---- */
   .section-container {
@@ -481,7 +482,12 @@
 }
 
 /* Respeta preferencias de accesibilidad */
+@keyframes scene-panel-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 @media (prefers-reduced-motion: reduce) {
+  [data-scene-phase='reveal'] .section-stage { animation: none; }
   .animated-bar-fill { animation: none; }
   .section-exit  { animation: p3r-exit-reduced  0.1s linear forwards; }
   .section-enter { animation: p3r-enter-reduced 0.1s linear forwards; }

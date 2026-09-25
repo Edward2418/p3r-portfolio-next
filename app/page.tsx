@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import Background         from '@/components/Background'
 import Sidebar, { type SectionId } from '@/components/Sidebar'
 import SectionTransition  from '@/components/SectionTransition'
@@ -15,6 +15,8 @@ import SplashScreen       from '@/components/SplashScreen'
 import CustomCursor       from '@/components/CustomCursor'
 import MenuCharacter      from '@/components/MenuCharacter'
 import MainMenu from '@/components/MainMenu'
+import SceneTransition from '@/components/SceneTransition'
+import type { SceneView } from '@/lib/scene-transition'
 import { playSound } from '@/lib/sounds'
 
 export default function Home() {
@@ -23,15 +25,15 @@ export default function Home() {
   const focusRequested = useRef(false)
   const backButton = useRef<HTMLButtonElement>(null)
 
-  useEffect(() => {
+  const focusScene = useCallback((displayed: SceneView) => {
     if (!focusRequested.current) return
     focusRequested.current = false
-    if (view === 'menu') {
+    if (displayed === 'menu') {
       document.querySelector<HTMLButtonElement>(`[data-main-menu="${activeSection}"]`)?.focus()
     } else {
       backButton.current?.focus()
     }
-  }, [view, activeSection])
+  }, [activeSection])
 
   function openSection(section: SectionId) {
     playSound('confirm')
@@ -62,7 +64,8 @@ export default function Home() {
       <CustomCursor />
       <SplashScreen />
       <SoundControls />
-      {view === 'menu' ? (
+      <SceneTransition view={view} onReady={focusScene}>
+      {displayedView => displayedView === 'menu' ? (
         <MainMenu selected={activeSection} onSelect={setActiveSection} onOpen={openSection} />
       ) : (
         <div className="app-layout" onKeyDown={event => {
@@ -90,6 +93,7 @@ export default function Home() {
           <MenuCharacter dimmed={activeSection !== 'about'} />
         </div>
       )}
+      </SceneTransition>
     </>
   )
 }

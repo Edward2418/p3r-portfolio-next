@@ -16,6 +16,7 @@ Abre la URL indicada en la terminal (normalmente http://localhost:3000).
 ```sh
 npm run lint   # ESLint
 npm run build  # Compilación y validación de TypeScript
+npm test       # Pruebas de transiciones (Node.js 22.18+ o 24+)
 npm start     # Servir la compilación de producción
 ```
 
@@ -71,6 +72,8 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 ## Estado
 
 ### Interacción
+
+El recorrido menú ↔ ficha utiliza `SceneTransition`: barrido diagonal de cobertura (220 ms), cambio de escena y revelado (300 ms), con entrada coordinada de ilustración/opciones o del panel. Durante el cambio el contenido queda inerte y el foco se restaura al terminar. Movimiento reducido omite el barrido. Un identificador por fase evita avances duplicados por eventos tardíos y temporizadores de respaldo. La máquina de estados tiene pruebas con `node:test`; el ritmo visual queda pendiente de revisión en navegador.
 
 Nueva composición: después del splash se presenta un menú principal independiente con el personaje y las seis opciones. Las fichas conservan navegación lateral directa y un botón de regreso. En móvil las opciones se muestran sobre una ilustración atenuada. La entrada enfoca el botón de regreso; al volver se enfoca la última sección elegida. Pendiente de revisión visual e interactiva de este recorrido.
 

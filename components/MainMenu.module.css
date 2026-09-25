@@ -53,6 +53,16 @@
 .number { font: 0.85rem var(--font-title); letter-spacing: 0.08em; opacity: 0.75; }
 .description { margin-top: 1.5rem; padding: 0.75rem 1rem; color: white; background: #061541; border-left: 3px solid var(--cyan); line-height: 1.6; min-height: 4.75rem; }
 .help { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; font-size: 0.85rem; }
+:global([data-scene-phase='reveal']) .portrait { animation: portrait-enter 280ms ease-out both; }
+:global([data-scene-phase='reveal']) .menu { animation: menu-enter 280ms ease-out both; }
+@keyframes portrait-enter {
+  from { transform: translateX(-24px); }
+  to { transform: translateX(0); }
+}
+@keyframes menu-enter {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
 @media (max-width: 768px) {
   .scene { padding-top: 1rem; }
   .wordmark { width: 45%; opacity: 0.15; }
@@ -63,4 +73,6 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .option { transition: none; }
+  :global([data-scene-phase='reveal']) .portrait,
+  :global([data-scene-phase='reveal']) .menu { animation: none; }
 }
