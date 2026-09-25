@@ -4,8 +4,8 @@ import Image from 'next/image'
 import styles from './MenuCharacter.module.css'
 
 /**
- * Ilustración de Oguri Cap detrás del menú, como el personaje del menú
- * principal de Persona 3 Reload. Es decorativa: se atenúa fuera de la
+ * Ilustración de Oguri Cap en una columna propia a la derecha del contenido.
+ * Es decorativa: se atenúa fuera de la
  * sección About para no competir con el texto.
  */
 export default function MenuCharacter({ dimmed = false }: { dimmed?: boolean }) {
@@ -22,7 +22,8 @@ export default function MenuCharacter({ dimmed = false }: { dimmed?: boolean }) 
           alt=""
           width={607}
           height={900}
-          sizes="(max-width: 768px) 0px, 340px"
+          sizes="(max-width: 1439px) 0px, (min-width: 1800px) 360px, 20vw"
+          draggable={false}
         />
         <span className={styles.groundGlow} />
       </div>

@@ -34,7 +34,6 @@ export default function Home() {
       <SplashScreen />
       <SoundControls />
       <div className="app-layout">
-        <MenuCharacter dimmed={activeSection !== 'about'} />
         <Sidebar
           activeSection={activeSection}
           onNavigate={setActiveSection}
@@ -44,6 +43,7 @@ export default function Home() {
             {(displayed) => sections[displayed]}
           </SectionTransition>
         </main>
+        <MenuCharacter dimmed={activeSection !== 'about'} />
       </div>
     </>
   )

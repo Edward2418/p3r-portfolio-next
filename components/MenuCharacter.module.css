@@ -1,11 +1,10 @@
-/* Personaje del menú: se sitúa tras la barra lateral, que lo difumina. */
+/* Columna decorativa en el flujo: nunca se superpone al menú o las fichas. */
 .character {
-  position: fixed;
-  left: -30px;
-  bottom: 0;
-  z-index: 2;
-  width: 340px;
-  height: 88vh;
+  position: relative;
+  flex: 0 0 min(20vw, 360px);
+  align-self: flex-end;
+  height: 85%;
+  isolation: isolate;
   pointer-events: none;
   opacity: 0;
   animation: character-in 1s ease forwards;
@@ -22,7 +21,7 @@
 }
 
 .dimmed .body {
-  opacity: 0.12;
+  opacity: 0.45;
 }
 
 .image {
@@ -30,18 +29,17 @@
   height: 100%;
   object-fit: contain;
   object-position: bottom center;
-  mix-blend-mode: luminosity;
   filter:
-    brightness(1.15)
+    brightness(1.05)
     contrast(1.05)
-    drop-shadow(0 0 30px rgb(255 170 0 / 40%))
-    drop-shadow(0 0 80px rgb(255 100 0 / 20%));
+    drop-shadow(0 0 24px rgb(70 255 245 / 35%));
   animation: character-float 3.5s ease-in-out infinite;
   user-select: none;
 }
 
 .halo {
   position: absolute;
+  z-index: -1;
   bottom: 15%;
   left: 50%;
   width: 200px;
@@ -50,8 +48,8 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgb(255 150 0 / 20%) 0%,
-    rgb(255 100 0 / 8%) 40%,
+    rgb(80 255 245 / 30%) 0%,
+    rgb(0 180 255 / 12%) 40%,
     transparent 70%
   );
   animation: halo-pulse 3.5s ease-in-out infinite;
@@ -65,7 +63,7 @@
   height: 30px;
   transform: translateX(-50%);
   border-radius: 50%;
-  background: radial-gradient(ellipse, rgb(255 150 0 / 25%) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgb(80 255 245 / 30%) 0%, transparent 70%);
   filter: blur(8px);
   animation: halo-pulse 3.5s ease-in-out infinite;
 }
@@ -84,15 +82,8 @@
   50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
 }
 
-/* En pantallas medianas el personaje se recoloca sobre el borde del menú. */
-@media (max-width: 1280px) {
-  .character {
-    width: 300px;
-    left: calc(var(--sidebar-width) - 70px);
-  }
-}
-
-@media (max-width: 768px) {
+/* Mantener espacio de lectura en portátiles, tablets y móviles. */
+@media (max-width: 1439px) {
   .character {
     display: none;
   }

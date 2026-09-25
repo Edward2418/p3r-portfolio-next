@@ -34,7 +34,7 @@ npm start     # Servir la compilación de producción
 - `components/SoundControls.tsx`: precarga de audio y botón de silencio de la interfaz.
 - `components/SplashScreen.tsx`: pantalla de bienvenida una sola vez por sesión, cerrada con cualquier tecla o clic.
 - `components/CustomCursor.tsx`: cursor propio (anillo con retardo + punto) activo solo con puntero fino; el nativo queda oculto en `app/globals.css`.
-- `components/MenuCharacter.tsx`: ilustración decorativa tras el menú, atenuada fuera de la sección About.
+- `components/MenuCharacter.tsx`: ilustración decorativa en columna propia a la derecha (desde 1440 px), atenuada fuera de About. En pantallas menores se oculta para conservar el ancho de lectura.
 - `public/img/`: imágenes del sitio (ilustración de Oguri Cap).
 - `lib/sounds.ts`: efectos de sonido tipados, estado de silencio persistente y reproducción tolerante a fallos.
 - `public/audio/`: efectos de interfaz extraídos de Persona 3 Reload (CueSheet) y convertidos a MP3.
