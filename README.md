@@ -69,6 +69,8 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 
 Fase 2, About y System: ambas fichas comparten `components/sections/ProfilePanel.module.css` para el panel oscuro y el encabezado blanco con acento rojo. Las estadísticas usan filas negras diagonales y etiquetas ampliadas; System conserva los enlaces pendientes y muestra Tab como control para recorrer sus acciones. Pendiente de revisión visual de esta iteración.
 
+Fase 2, Proyectos y Timeline: títulos claros con cortes diagonales, selección blanca con acento rojo y paneles oscuros. Los filtros de proyectos conservan su estado visible al pasar el ratón; el diálogo comparte el tratamiento visual de las tarjetas. Timeline amplía fechas y subtítulos y alinea el eje con los marcadores. Los ajustes compactos se basan en el ancho del panel; el diálogo usa el ancho de ventana. Pendiente de revisión visual.
+
 La composición interna de About, System, Social Link y Timeline responde al ancho del panel de contenido mediante consultas de contenedor (`portfolio`), descontando el menú y la ilustración lateral. La aprobación visual de esta fase sigue pendiente; lint y build no sustituyen la revisión en navegador.
 
 La revisión de capturas de escritorio motivó una ficha oscura para mejorar el contraste de About, límites de desbordamiento horizontal en Social Link y un encuadre ampliado de Oguri, recortado dentro de su columna con fondo diagonal. Estos ajustes requieren una nueva comprobación visual.
