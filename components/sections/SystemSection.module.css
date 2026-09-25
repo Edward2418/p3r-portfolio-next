@@ -20,10 +20,7 @@
 
 /* ---- Ficha del jugador ---- */
 .playerCard {
-  border: 1px solid rgb(0 204 255 / 35%);
-  background: linear-gradient(150deg, rgb(0 41 102 / 80%), rgb(0 13 26 / 96%));
-  box-shadow: 8px 8px 0 rgb(0 0 0 / 20%);
-  padding: clamp(1.25rem, 3vw, 1.75rem);
+  container: player / inline-size;
 }
 .avatarWrap { position: relative; width: fit-content; }
 .avatar {
@@ -55,26 +52,36 @@
 .playerRole { margin-top: 0.5rem; color: var(--cyan); font-size: 0.9rem; font-weight: 600; }
 .playerInst { margin-top: 0.25rem; color: var(--white-dim); font-size: 0.78rem; }
 .divider { height: 1px; margin: 1.25rem 0; background: linear-gradient(90deg, var(--red-accent), var(--cyan) 45%, transparent); }
-.stats { margin: 0; display: flex; flex-direction: column; }
-.statRow { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid rgb(255 255 255 / 8%); }
-.statLabel { flex-shrink: 0; font: 0.72rem var(--font-title); letter-spacing: 0.14em; color: var(--cyan-dim); }
-.statValue { margin: 0; text-align: right; font-size: 0.82rem; color: white; overflow-wrap: anywhere; }
+.stats { margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+.statRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.4rem;
+  padding: 0.85rem 1rem;
+  background: #030912;
+  border-left: 2px solid var(--cyan);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+.statLabel { font: 0.9rem var(--font-title); letter-spacing: 0.12em; color: var(--cyan); }
+.statValue { margin: 0; font-size: 0.95rem; line-height: 1.5; color: white; overflow-wrap: anywhere; }
 .statActive { color: #22cc88; }
 .progressBlock { margin-top: 1.5rem; padding: 1rem; background: rgb(0 0 0 / 30%); border-left: 3px solid var(--cyan); }
-.progressLabel { display: flex; justify-content: space-between; gap: 1rem; font: 0.72rem var(--font-title); letter-spacing: 0.14em; color: var(--white-dim); }
+.progressLabel { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem; font: 0.9rem var(--font-title); letter-spacing: 0.1em; color: var(--white-dim); }
 .progressLabel span:last-child { color: var(--cyan); }
 .progressTrack { height: 6px; margin-top: 0.65rem; background: rgb(255 255 255 / 12%); overflow: hidden; }
 .progressFill { height: 100%; background: linear-gradient(90deg, var(--red-accent), var(--cyan)); }
-.progressHint { margin-top: 0.55rem; font-size: 0.72rem; color: #ff6688; }
+.progressHint { margin-top: 0.55rem; font-size: 0.85rem; color: #ff819a; }
 
 /* ---- Acciones ---- */
 .actionsCol { min-width: 0; }
 .actionsHeader {
   font: italic 900 clamp(1.1rem, 2.5vw, 1.4rem) / 1.2 var(--font-menu);
   font-variation-settings: 'wdth' 75;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--cyan-dim);
-  color: var(--cyan);
+  padding: 1rem 1.5rem 1rem 1rem;
+  border-left: 5px solid var(--red-accent);
+  background: #f5fcff;
+  color: #060d24;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
 }
 .actions { list-style: none; margin: 1rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.85rem; }
 .actionCard {
@@ -84,10 +91,10 @@
   min-width: 0;
   padding: 0.9rem 1rem;
   border: 1px solid rgb(0 204 255 / 25%);
-  background: rgb(0 21 51 / 70%);
+  background: #030912;
   transition: border-color 160ms ease, background 160ms ease;
 }
-.actionCard:hover { border-color: var(--cyan); background: rgb(0 41 102 / 70%); }
+.actionCard:has(a):hover, .actionCard:focus-within { border-color: var(--cyan); background: #092654; }
 .actionPrimary { border-left: 5px solid var(--red-accent); }
 .actionIcon {
   display: grid;
@@ -103,10 +110,10 @@
 }
 .actionInfo { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
 .actionTitle { color: white; font-size: 0.95rem; font-weight: 700; overflow-wrap: anywhere; }
-.actionDesc { color: var(--white-dim); font-size: 0.78rem; overflow-wrap: anywhere; }
+.actionDesc { color: #c6deef; font-size: 0.85rem; line-height: 1.5; overflow-wrap: anywhere; }
 .actionBtn {
   flex-shrink: 0;
-  min-height: 40px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   padding: 0.5rem 1rem;
@@ -123,7 +130,7 @@
   padding: 0.45rem 0.8rem;
   border: 1px dashed var(--cyan-dim);
   color: var(--white-dim);
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   letter-spacing: 0.06em;
 }
 .controlsHint { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.25rem; color: var(--white-dim); font-size: 0.72rem; }
@@ -131,6 +138,9 @@
 
 @container portfolio (max-width: 900px) {
   .layout { grid-template-columns: minmax(0, 1fr); }
+}
+@container player (min-width: 460px) {
+  .statRow { grid-template-columns: 120px minmax(0, 1fr); align-items: baseline; }
 }
 @container portfolio (max-width: 480px) {
   .actionCard { flex-wrap: wrap; gap: 0.75rem; }

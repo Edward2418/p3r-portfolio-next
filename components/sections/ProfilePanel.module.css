@@ -1,0 +1,25 @@
+.panel {
+  min-width: 0;
+  padding: clamp(1rem, 2cqw, 1.75rem);
+  border-top: 3px solid var(--cyan);
+  background: linear-gradient(140deg, rgb(1 12 38 / 94%), rgb(5 28 86 / 90%));
+  box-shadow: 8px 8px 0 rgb(0 9 65 / 25%);
+}
+
+.identity {
+  padding: 1rem 1.5rem 1rem 1rem;
+  background: #f5fcff;
+  border-left: 5px solid var(--red-accent);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+}
+
+.identity h2 {
+  color: #060d24;
+  font: italic 900 clamp(1.4rem, 2.4cqw, 2rem) / 1.15 var(--font-menu);
+  font-variation-settings: 'wdth' 75;
+  letter-spacing: -0.025em;
+  overflow-wrap: anywhere;
+}
+
+.identity p { color: #25445c; font-size: 0.85rem; line-height: 1.5; }
+.identity p:first-of-type { color: #075078; font-size: 0.95rem; font-weight: 700; }

@@ -5,6 +5,7 @@ import { SYSTEM_ACTIONS } from '@/app/data/systemActions'
 import { playSound } from '@/lib/sounds'
 import ProgressBar from '@/components/ProgressBar'
 import styles from './SystemSection.module.css'
+import profileStyles from './ProfilePanel.module.css'
 
 const STATS: Array<[string, string]> = [
   ['SEMESTRE', `${PROFILE.academic.currentSemester}º de ${PROFILE.academic.totalSemesters} · En curso`],
@@ -24,7 +25,7 @@ export default function SystemSection() {
       </div>
 
       <div className={styles.layout}>
-        <div className={styles.playerCard}>
+        <div className={`${styles.playerCard} ${profileStyles.panel}`}>
           <div className={styles.avatarWrap}>
             <div className={styles.avatar}>{PROFILE.initials}</div>
             <div className={styles.plvTag}>
@@ -33,7 +34,7 @@ export default function SystemSection() {
             </div>
           </div>
 
-          <div className={styles.playerInfo}>
+          <div className={`${styles.playerInfo} ${profileStyles.identity}`}>
             <h2 className={styles.playerName}>{PROFILE.name}</h2>
             <p className={styles.playerRole}>{PROFILE.degree}</p>
             <p className={styles.playerInst}>{PROFILE.institution}</p>
@@ -96,7 +97,7 @@ export default function SystemSection() {
             ))}
           </ul>
           <div className={styles.controlsHint}>
-            <span><kbd>↑↓</kbd> Navegar</span>
+            <span><kbd>Tab</kbd> Recorrer enlaces</span>
             <span><kbd>↵</kbd> Seleccionar</span>
           </div>
         </div>

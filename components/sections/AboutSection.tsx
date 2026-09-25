@@ -6,6 +6,7 @@ import { ACADEMIC_PROGRESS, PLAYER_LEVEL, PLAYER_STATS, PROFILE } from '@/app/da
 import { playSound } from '@/lib/sounds'
 import ProgressBar from '@/components/ProgressBar'
 import styles from './AboutSection.module.css'
+import profileStyles from './ProfilePanel.module.css'
 
 // El sonido de subida de nivel solo se reproduce una vez por sesión.
 let hasPlayedLevelUp = false
@@ -41,7 +42,7 @@ export default function AboutSection() {
         <div className="section-line" />
       </div>
 
-      <div className={styles.layout}>
+      <div className={`${styles.layout} ${profileStyles.panel}`}>
         <div className={styles.leftCol}>
           <div className={styles.avatarWrap}>
             <div className={styles.avatar}>{PROFILE.initials}</div>
@@ -88,7 +89,7 @@ export default function AboutSection() {
         </div>
 
         <div className={styles.rightCol}>
-          <div className={styles.identity}>
+          <div className={`${styles.identity} ${profileStyles.identity}`}>
             <h2 className={styles.name}>{PROFILE.name}</h2>
             <p className={styles.role}>{PROFILE.degree}</p>
             <p className={styles.institute}>{PROFILE.institution}</p>

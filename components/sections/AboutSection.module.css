@@ -20,10 +20,6 @@
   gap: 2.5rem;
   position: relative;
   z-index: 1;
-  padding: clamp(1rem, 2cqw, 1.75rem);
-  background: linear-gradient(140deg, rgb(1 12 38 / 94%), rgb(5 28 86 / 90%));
-  border-top: 3px solid var(--cyan);
-  box-shadow: 8px 8px 0 rgb(0 9 65 / 25%);
 }
 
 .leftCol { display: flex; flex-direction: column; gap: 1.25rem; }
@@ -59,15 +55,15 @@
 
 .bars { display: flex; flex-direction: column; gap: 6px; }
 .barRow { display: flex; align-items: center; gap: 8px; }
-.barLabel { font-family: var(--font-title); font-size: 0.8rem; color: #22cc88; min-width: 20px; }
+.barLabel { font-family: var(--font-title); font-size: 1rem; color: #45e8ae; min-width: 20px; }
 .barLabelSp { color: #ffcc22; }
 .barTrack { flex: 1; height: 7px; background: rgba(255, 255, 255, 0.08); border-radius: 3px; overflow: hidden; }
 .barFill { height: 100%; border-radius: 3px; }
 .hpFill { background: linear-gradient(90deg, #1a9960, #22cc88); box-shadow: 0 0 8px rgba(34, 204, 136, 0.5); }
 .spFill { background: linear-gradient(90deg, #cc9900, #ffcc22); box-shadow: 0 0 8px rgba(255, 204, 34, 0.5); }
-.barValue { font-family: var(--font-title); font-size: 0.95rem; color: #22cc88; min-width: 60px; text-align: right; }
+.barValue { font-family: var(--font-title); font-size: 1.25rem; color: #45e8ae; min-width: 60px; text-align: right; }
 .barValueSp { color: #ffcc22; }
-.barMax { font-size: 0.6rem; color: var(--white-dim); }
+.barMax { font-size: 0.75rem; color: var(--white-dim); }
 
 .attrs {
   display: flex;
@@ -76,13 +72,22 @@
   padding-top: 0.5rem;
   border-top: 1px solid var(--white-ghost);
 }
-.attrRow { display: flex; align-items: center; gap: 8px; }
-.attrName { font-family: var(--font-title); font-size: 0.72rem; color: var(--cyan-dim); min-width: 28px; }
-.attrSkill { font-size: 0.72rem; color: var(--white-dim); width: 76px; flex-shrink: 0; overflow-wrap: anywhere; }
-.attrTrack { flex: 1; height: 4px; background: rgba(255, 255, 255, 0.06); border-radius: 2px; overflow: hidden; }
+.attrRow {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.45rem 0.5rem;
+  padding: 0.7rem 1rem 0.7rem 0.6rem;
+  background: #030912;
+  border-left: 2px solid var(--cyan);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+.attrName { font-family: var(--font-title); font-size: 0.85rem; color: var(--cyan); }
+.attrSkill { font-size: 0.85rem; color: #e1f3ff; overflow-wrap: anywhere; }
+.attrTrack { grid-column: 2 / -1; grid-row: 2; height: 5px; background: rgb(255 255 255 / 16%); overflow: hidden; }
 .attrFill { height: 100%; background: linear-gradient(90deg, var(--cyan-dim), var(--cyan)); border-radius: 2px; }
-.attrNum { font-family: var(--font-title); font-size: 0.9rem; color: white; min-width: 30px; text-align: right; }
-.statsNote { color: var(--white-dim); font-size: 0.7rem; line-height: 1.6; }
+.attrNum { grid-column: 3; grid-row: 1; font-family: var(--font-title); font-size: 1.15rem; color: white; text-align: right; }
+.statsNote { color: var(--white-dim); font-size: 0.8rem; line-height: 1.6; }
 
 .rightCol { display: flex; flex-direction: column; gap: 1.2rem; padding-top: 0.5rem; min-width: 0; }
 .identity { display: flex; flex-direction: column; gap: 0.3rem; }
@@ -102,12 +107,12 @@
   border: 1px solid rgba(0, 204, 255, 0.12);
   background: rgba(0, 0, 0, 0.25);
 }
-.nextExpLabel { font-family: var(--font-title); font-size: 0.65rem; letter-spacing: 0.2em; color: var(--cyan-dim); }
+.nextExpLabel { font-family: var(--font-title); font-size: 0.9rem; letter-spacing: 0.12em; color: var(--cyan); }
 .nextExpTrack { height: 5px; background: rgba(255, 255, 255, 0.08); border-radius: 3px; overflow: hidden; }
 .nextExpFill { height: 100%; background: linear-gradient(90deg, #ff2244, #ff6644); box-shadow: 0 0 8px rgba(255, 34, 68, 0.5); }
 .nextExpInfo { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; justify-content: space-between; }
 .nextExpVal { font-size: 0.75rem; color: var(--white-dim); }
-.nextExpGoal { font-family: var(--font-title); font-size: 0.7rem; color: #ff2244; }
+.nextExpGoal { font-family: var(--font-title); font-size: 0.85rem; color: #ff819a; }
 
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
 
