@@ -41,7 +41,7 @@ npm start     # Servir la compilación de producción
 - `components/SoundControls.tsx`: precarga de audio y botón de silencio de la interfaz.
 - `components/SplashScreen.tsx`: bienvenida modal nativa una vez por sesión, con botón de entrada y foco dirigido al menú al terminar.
 - `components/CustomCursor.tsx`: cursor propio (anillo con retardo + punto) activo solo con puntero fino; el nativo queda oculto en `app/globals.css`.
-- `components/MenuCharacter.tsx`: ilustración decorativa en columna propia a la derecha (desde 1440 px), atenuada fuera de About. En pantallas menores se oculta para conservar el ancho de lectura.
+- `components/OguriPortrait.tsx`: ilustración animada exclusiva de la ficha de Oguri en Social Link, con pausa, detección de visibilidad y movimiento reducido.
 - `public/img/`: imágenes del sitio (ilustración de Oguri Cap).
 - `lib/sounds.ts`: efectos de sonido tipados, estado de silencio persistente y reproducción tolerante a fallos.
 - `public/audio/`: efectos de interfaz extraídos de Persona 3 Reload (CueSheet) y convertidos a MP3.
@@ -102,12 +102,20 @@ Fase 2, Proyectos y Timeline: títulos claros con cortes diagonales, selección 
 
 La composición interna de About, System, Social Link y Timeline responde al ancho del panel de contenido mediante consultas de contenedor (`portfolio`), descontando el menú y la ilustración lateral. La aprobación visual de esta fase sigue pendiente; lint y build no sustituyen la revisión en navegador.
 
-La revisión de capturas de escritorio motivó una ficha oscura para mejorar el contraste de About, límites de desbordamiento horizontal en Social Link y un encuadre ampliado de Oguri, recortado dentro de su columna con fondo diagonal. Estos ajustes requieren una nueva comprobación visual.
+La revisión de capturas de escritorio motivó una ficha oscura para mejorar el contraste de About y límites de desbordamiento horizontal en Social Link. Por decisión de diseño, se retiró la columna global de personaje: Oguri permanece en el menú principal y aparece dentro de su propia ficha en Social Link.
+
+### Social Link: primera ficha ilustrada
+
+La ficha de Oguri utiliza los cinco fotogramas proporcionados por Edward, convertidos a WebP sin pérdida conservando los lienzos de 1031 × 1526. Un sprite de 5155 × 1526 (aproximadamente 3.85 MB) reproduce un bucle de ida y vuelta de 3.2 segundos; el póster pesa aproximadamente 746 KB. La secuencia solo se solicita cuando la ficha entra en pantalla y no está activo el movimiento reducido. El póster permanece visible hasta que el sprite termina de decodificarse; ante un error se conserva la imagen fija.
+
+La animación se pausa con su botón, al salir de vista o al ocultar la pestaña. Movimiento reducido muestra el póster y elimina el barrido de entrada. En paneles amplios, ilustración y texto comparten dos columnas; en tamaños menores se apilan. Los otros vínculos conservan sus fichas de texto hasta disponer de sus recursos. Revisar visualmente el bucle, sus bordes y la composición móvil antes de extender el patrón.
+
+Verificado en Brave headless local: secuencia en reproducción, pausa que congela el tiempo, reanudación, pausa por intersección, imagen fija con movimiento reducido, ausencia de desbordamiento horizontal a 1440 × 1000 y 390 × 844, retirada de Oguri al seleccionar Leon o About y conservación de su imagen original en el menú principal. La aprobación estética del movimiento sigue pendiente del usuario.
 
 La nueva iteración toma como referencia los menús principal, Social Link y estado del grupo de Persona 3 Reload: fondo azul eléctrico con luz cian superior, selección blanca con acento rojo y filas negras de corte diagonal. Aplicado al fondo, navegación, Social Link y Skills. La revisión visual a 390, 768 y 1280 px sigue pendiente de comprobación en navegador.
 
 El cursor personalizado se activa al mover el ratón; conserva el cursor nativo en diálogos y con movimiento reducido. Silenciar detiene también los efectos que ya se están reproduciendo.
 
-Las seis secciones cuentan con presentación: About, Proyectos, Skills, Social Link, Timeline y System, con navegación por teclado en las listas y estilos aislados en CSS Modules. Proyectos muestra el portafolio real con filtros y detalle enlazado a GitHub. Skills presenta Java, SQL/Bases de datos, HTML/CSS y JavaScript con porcentajes de autoevaluación y comparte esos datos con About y System. La interfaz reproduce efectos de sonido de Persona 3 Reload en menús, selecciones y cierres, con botón de silencio persistente; los navegadores solo permiten audio tras la primera interacción del usuario. La pantalla de inicio se muestra una vez por pestaña y anuncia la entrada con el sonido de apertura del menú, y en escritorio el cursor del sistema se sustituye por uno propio. La ilustración de Oguri Cap acompaña el menú y se atenúa fuera de About. El CV y el enlace de LinkedIn aparecen como pendientes hasta agregar sus archivos u otros datos definitivos.
+Las seis secciones cuentan con presentación: About, Proyectos, Skills, Social Link, Timeline y System, con navegación por teclado en las listas y estilos aislados en CSS Modules. Proyectos muestra el portafolio real con filtros y detalle enlazado a GitHub. Skills presenta Java, SQL/Bases de datos, HTML/CSS y JavaScript con porcentajes de autoevaluación y comparte esos datos con About y System. La interfaz reproduce efectos de sonido de Persona 3 Reload en menús, selecciones y cierres, con botón de silencio persistente; los navegadores solo permiten audio tras la primera interacción del usuario. La pantalla de inicio se muestra una vez por pestaña y anuncia la entrada con el sonido de apertura del menú, y en escritorio el cursor del sistema se sustituye por uno propio. Oguri aparece en el menú principal y exclusivamente en su ficha dentro de Social Link. El CV y el enlace de LinkedIn aparecen como pendientes hasta agregar sus archivos u otros datos definitivos.
 
 La inspiración visual en Persona 3 Reload es un homenaje personal; este proyecto no está afiliado a Atlus.

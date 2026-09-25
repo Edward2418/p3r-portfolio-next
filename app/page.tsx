@@ -13,7 +13,6 @@ import ProjectsSection    from '@/components/sections/ProjectsSection'
 import SoundControls      from '@/components/SoundControls'
 import SplashScreen       from '@/components/SplashScreen'
 import CustomCursor       from '@/components/CustomCursor'
-import MenuCharacter      from '@/components/MenuCharacter'
 import MainMenu from '@/components/MainMenu'
 import SceneTransition from '@/components/SceneTransition'
 import type { SceneView } from '@/lib/scene-transition'
@@ -90,7 +89,6 @@ export default function Home() {
               </SectionTransition>
             </div>
           </main>
-          <MenuCharacter dimmed={activeSection !== 'about'} />
         </div>
       )}
       </SceneTransition>

@@ -1,0 +1,54 @@
+.portrait {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding: 2.5rem 1rem 3.5rem;
+  overflow: hidden;
+  background: linear-gradient(155deg, #0e447e, #091a47);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(150deg, #d8f9ff, #599bcb);
+  clip-path: polygon(35% 0, 100% 0, 70% 100%, 0 100%);
+}
+.caption { position: absolute; top: 1rem; left: 1rem; font: 0.85rem var(--font-title); letter-spacing: 0.14em; color: white; background: #061541; padding: 0.3rem 0.6rem; z-index: 1; }
+.canvas { position: relative; width: min(100%, 390px); aspect-ratio: 1031 / 1526; }
+.poster { display: block; width: 100%; height: 100%; object-fit: contain; }
+.sprite { position: absolute; inset: 0; display: none; background-size: 500% 100%; background-repeat: no-repeat; }
+.portrait[data-ready='true'][data-reduced='false'] .sprite {
+  display: block;
+  background-image: url('/img/social/oguri/idle-sheet.webp');
+  animation: oguri-idle 3.2s steps(1, end) infinite;
+  animation-play-state: paused;
+}
+.portrait[data-ready='true'][data-reduced='false'] .poster { visibility: hidden; }
+.portrait[data-running='true'][data-paused='false'] .sprite { animation-play-state: running; }
+.controls { position: absolute; bottom: 0.75rem; right: 1rem; left: 1rem; display: flex; justify-content: flex-end; }
+.pause { display: none; min-height: 44px; padding: 0.6rem 0.9rem; border: 1px solid #81fff3; background: #061541; color: white; font: 0.85rem var(--font-title); letter-spacing: 0.1em; cursor: pointer; }
+.pause:hover { background: #123678; }
+.pause:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+.staticLabel { padding: 0.5rem; background: #061541; color: #d8f9ff; font: 0.75rem var(--font-title); letter-spacing: 0.1em; }
+.portrait[data-ready='true'][data-reduced='false'] .pause { display: inline-block; }
+.portrait[data-ready='true'][data-reduced='false'] .staticLabel { display: none; }
+/* Ida y vuelta evita saltar directamente del quinto al primer fotograma. */
+@keyframes oguri-idle {
+  0%, 100% { background-position: 0% 0; }
+  12.5%, 87.5% { background-position: 25% 0; }
+  25%, 75% { background-position: 50% 0; }
+  37.5%, 62.5% { background-position: 75% 0; }
+  50% { background-position: 100% 0; }
+}
+@container social-card (max-width: 640px) {
+  .canvas { width: min(100%, 260px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portrait .sprite { display: none !important; animation: none !important; }
+  .portrait .poster { visibility: visible !important; }
+  .portrait .pause { display: none !important; }
+  .portrait .staticLabel { display: inline !important; }
+}

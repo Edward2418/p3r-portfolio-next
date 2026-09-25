@@ -15,9 +15,9 @@
 }
 .layout {
   display: grid;
-  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  grid-template-columns: minmax(250px, 310px) minmax(0, 1fr);
   gap: 1.5rem;
-  max-width: 1200px;
+  max-width: 1540px;
   width: 100%;
   min-width: 0;
   align-items: start;
@@ -82,12 +82,25 @@
 .starEmpty { color: rgb(255 255 255 / 25%); }
 
 .detail {
+  position: relative;
+  container: social-card / inline-size;
   min-width: 0;
   border: 1px solid color-mix(in srgb, var(--sl-color-detail) 55%, transparent);
-  background: linear-gradient(145deg, rgb(0 41 102 / 70%), rgb(0 13 26 / 95%));
+  background: linear-gradient(145deg, #082a59, #000d1a);
   box-shadow: 8px 8px 0 rgb(0 0 0 / 20%);
 }
-.detailPanel { min-width: 0; padding: clamp(1.25rem, 3vw, 2rem); }
+.detail::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(110deg, #061541 60%, var(--sl-color-detail) 60% 65%, #bdfaff 65%);
+  animation: social-sweep 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.illustratedDetail { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr); }
+.textDetail { min-width: 0; }
+.detailPanel { min-width: 0; padding: clamp(1rem, 3cqw, 2rem); animation: social-content-enter 320ms ease-out both; }
 .detailHeader { border-bottom: 1px solid rgb(255 255 255 / 15%); padding-bottom: 1rem; }
 .arcanaBadge {
   display: inline-block;
@@ -101,15 +114,30 @@
 .detailSub { margin-top: 0.85rem; color: var(--sl-color-detail); font-size: 0.8rem; letter-spacing: 0.06em; }
 .detailName {
   margin-top: 0.35rem;
-  color: white;
-  font: italic 900 clamp(1.6rem, 4vw, 2.5rem) / 1.1 var(--font-menu);
+  padding: 0.65rem 1rem;
+  background: #f5fcff;
+  color: #061541;
+  border-left: 4px solid var(--sl-color-detail);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  font: italic 900 clamp(1.6rem, 4cqw, 2.5rem) / 1.1 var(--font-menu);
   font-variation-settings: 'wdth' 75;
   letter-spacing: -0.04em;
   overflow-wrap: anywhere;
 }
+@keyframes social-sweep {
+  from { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  to { clip-path: polygon(110% 0, 110% 0, 100% 100%, 100% 100%); }
+}
+@keyframes social-content-enter {
+  from { opacity: 0; transform: translateX(14px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@container social-card (max-width: 640px) {
+  .illustratedDetail { grid-template-columns: minmax(0, 1fr); }
+}
 .rankBlock {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: baseline;
   gap: 0.25rem 1rem;
   margin: 1.25rem 0;
@@ -121,7 +149,7 @@
 .rankValue { font-family: var(--font-title); }
 .rankNum { font-size: 2.4rem; color: var(--sl-color-detail); }
 .rankMax { font-size: 1rem; color: var(--white-dim); }
-.stars { display: flex; flex-wrap: wrap; gap: 1px; font-size: clamp(0.85rem, 2vw, 1.15rem); }
+.stars { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 1px; font-size: clamp(0.85rem, 2vw, 1.15rem); }
 .detailDesc { color: #d0e4f4; font-size: 0.95rem; line-height: 1.8; }
 .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.25rem 0; }
 .quote {
@@ -143,6 +171,8 @@
   .detailPanel { padding: 1rem; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .detail::after { display: none; animation: none; }
+  .detailPanel { animation: none; }
   .row { transition: none; }
   .row:hover { transform: none; }
 }
