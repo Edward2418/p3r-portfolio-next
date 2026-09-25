@@ -21,9 +21,8 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  border-left: 3px solid var(--red-accent);
-  padding-left: 0.75rem;
+  gap: 0.8rem;
+  padding: 0.5rem;
 }
 .row {
   display: flex;
@@ -33,19 +32,26 @@
   min-height: 64px;
   padding: 0.65rem 0.85rem;
   border: 1px solid transparent;
-  background: rgb(0 21 51 / 70%);
-  color: white;
+  background: #030912;
+  color: #81fff3;
+  border-right: 7px solid #64fff2;
+  transform: skewX(-6deg);
+  box-shadow: 5px 5px 0 rgb(0 7 67 / 55%);
   text-align: left;
   cursor: pointer;
   transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
 }
-.row:hover { border-color: var(--sl-color); transform: translateX(4px); }
+.row:hover { border-color: var(--sl-color); transform: translateX(4px) skewX(-6deg); }
 .row:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 .rowActive {
-  border-color: var(--sl-color);
-  background: linear-gradient(100deg, color-mix(in srgb, var(--sl-color) 25%, #001533), #000d1a);
-  box-shadow: inset 4px 0 0 var(--sl-color);
+  border-color: var(--red-accent);
+  background: white;
+  color: #050915;
+  box-shadow: 5px 5px 0 var(--red-accent);
 }
+.rowActive .rowArcana { color: #263a53; }
+.rowActive .star { color: #142749; text-shadow: none; }
+.rowActive .starEmpty { color: #8792a3; }
 .rowIcon {
   display: grid;
   place-items: center;
@@ -61,7 +67,7 @@
 }
 .rowInfo { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
 .rowName {
-  font: italic 900 1rem / 1.2 var(--font-menu);
+  font: italic 900 1.15rem / 1.2 var(--font-menu);
   font-variation-settings: 'wdth' 75;
   overflow-wrap: anywhere;
 }

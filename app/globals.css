@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Activar solo cuando el cursor propio ya tiene una posición válida.
+   Los diálogos nativos están en la capa superior: allí usamos el nativo. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html[data-custom-cursor]:not(:has(dialog[open])),
+  html[data-custom-cursor]:not(:has(dialog[open])) * {
+    cursor: none !important;
+  }
+}
+
 @layer base {
   :root {
     --bg-dark:       #000d1a;
@@ -34,11 +43,6 @@
     color: white;
   }
 
-  /* Con puntero fino se oculta el cursor nativo porque la interfaz dibuja
-     el suyo (components/CustomCursor.tsx). En táctil no se aplica. */
-  @media (hover: hover) and (pointer: fine) {
-    html, html * { cursor: none; }
-  }
 
   kbd {
     background: var(--white-ghost);
@@ -56,7 +60,9 @@
   .bg-layer {
     position: fixed;
     inset: 0;
-    background: linear-gradient(160deg, var(--bg-dark) 0%, var(--bg-mid) 45%, var(--bg-light) 100%);
+    background:
+      radial-gradient(ellipse at 65% -12%, #6ffff1 0%, transparent 48%),
+      linear-gradient(180deg, #10bde4 0%, #1668c8 28%, #153db7 62%, #100b91 100%);
     filter: url(#wave-distort);
     transform: scale(1.05);
     z-index: 0;
@@ -93,8 +99,7 @@
     display: flex;
     flex-direction: column;
     padding: 2rem 0 1.5rem;
-    background: rgba(0,3,10,0.65);
-    backdrop-filter: blur(16px);
+    background: linear-gradient(160deg, rgb(0 22 70 / 38%), rgb(0 5 44 / 80%));
     border-right: 1px solid rgba(0,204,255,0.15);
     position: relative;
     z-index: 10;
@@ -212,7 +217,7 @@
     font-variation-settings: "wdth" 75;
     letter-spacing: var(--menu-letter);
     font-size: 1.1rem;
-    color: var(--cyan-dim);
+    color: #81fff3;
     display: inline-block;
     transform: rotate(var(--menu-angle));
     transform-origin: left center;
@@ -235,13 +240,11 @@
 
   .nav-item.active .nav-label {
     font-size: 1.6rem;
-    color: white;
-    text-shadow:
-      0 0  4px rgba(255,255,255,0.9),
-      0 0  8px rgba(0,204,255,0.8),
-      0 0 16px rgba(0,204,255,0.6),
-      0 0 32px rgba(0,204,255,0.35),
-      0 0 64px rgba(0,204,255,0.15);
+    color: #080b19;
+    text-shadow: none;
+    background: white;
+    padding: 0.25rem 0.85rem;
+    box-shadow: 5px 5px 0 var(--red-accent);
   }
 
   .nav-item.active .nav-arrow { opacity: 1; }
@@ -250,7 +253,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(255,34,68,0.12) 0%, rgba(0,204,255,0.04) 60%, transparent 100%);
+    background: linear-gradient(90deg, rgba(255,34,68,0.24) 0%, transparent 85%);
     border-left: 3px solid var(--red-accent);
   }
 

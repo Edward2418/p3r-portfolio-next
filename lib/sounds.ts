@@ -64,6 +64,13 @@ export function useSoundMuted(): boolean {
 export function setSoundMuted(next: boolean) {
   hydrate()
   muted = next
+  elements.forEach(audio => {
+    audio.muted = next
+    if (next) {
+      audio.pause()
+      audio.currentTime = 0
+    }
+  })
   try {
     window.localStorage.setItem(STORAGE_KEY, next ? '1' : '0')
   } catch {
@@ -81,6 +88,7 @@ function getAudio(key: SoundKey): HTMLAudioElement | null {
   const definition = SOUNDS[key]
   const audio = new Audio(definition.src)
   audio.volume = definition.volume
+  audio.muted = muted
   audio.preload = 'auto'
   elements.set(key, audio)
   return audio

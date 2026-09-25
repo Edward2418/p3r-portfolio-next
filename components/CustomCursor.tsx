@@ -18,7 +18,7 @@ export default function CustomCursor() {
 
   useEffect(() => {
     const fine = window.matchMedia('(hover: hover) and (pointer: fine)')
-    if (!fine.matches) return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
 
     const maybeRing = ringRef.current
     const maybeDot = dotRef.current
@@ -51,8 +51,18 @@ export default function CustomCursor() {
     }
 
     function handlePointerMove(event: PointerEvent) {
+      if (!fine.matches || reduced.matches || event.pointerType === 'touch' || document.querySelector('dialog[open]')) {
+        hide()
+        return
+      }
+      const firstMove = !document.documentElement.hasAttribute('data-custom-cursor')
       targetX = event.clientX
       targetY = event.clientY
+      if (firstMove) {
+        ringX = targetX
+        ringY = targetY
+      }
+      document.documentElement.setAttribute('data-custom-cursor', '')
       dot.style.opacity = '1'
       ring.style.opacity = '1'
       place()
@@ -65,27 +75,32 @@ export default function CustomCursor() {
       if (!frame) frame = window.requestAnimationFrame(tick)
     }
 
-    function handlePointerOut(event: PointerEvent) {
-      if (event.relatedTarget !== null) return
+    function hide() {
+      document.documentElement.removeAttribute('data-custom-cursor')
       dot.style.opacity = '0'
       ring.style.opacity = '0'
+      if (frame) window.cancelAnimationFrame(frame)
+      frame = 0
     }
 
-    function handlePointerOver(event: PointerEvent) {
+    function handlePointerOut(event: PointerEvent) {
       if (event.relatedTarget !== null) return
-      dot.style.opacity = '1'
-      ring.style.opacity = '1'
+      hide()
     }
 
     window.addEventListener('pointermove', handlePointerMove, { passive: true })
     document.documentElement.addEventListener('pointerout', handlePointerOut)
-    document.documentElement.addEventListener('pointerover', handlePointerOver)
+    window.addEventListener('blur', hide)
+    fine.addEventListener('change', hide)
+    reduced.addEventListener('change', hide)
 
     return () => {
       window.removeEventListener('pointermove', handlePointerMove)
       document.documentElement.removeEventListener('pointerout', handlePointerOut)
-      document.documentElement.removeEventListener('pointerover', handlePointerOver)
-      if (frame) window.cancelAnimationFrame(frame)
+      window.removeEventListener('blur', hide)
+      fine.removeEventListener('change', hide)
+      reduced.removeEventListener('change', hide)
+      hide()
     }
   }, [])
 
