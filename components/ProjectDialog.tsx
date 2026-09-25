@@ -28,11 +28,10 @@ export default function ProjectDialog({ project, onClose }: Props) {
     <dialog
       ref={dialogRef} className={styles.dialog}
       aria-labelledby="project-dialog-title" aria-describedby="project-dialog-description"
-      onKeyDown={event => { if (event.key === 'Escape') closedByEscape.current = true }}
+      onCancel={() => { closedByEscape.current = true }}
       onClose={() => {
-        // Escape ya reproduce el sonido de cancelación globalmente.
-        if (closedByEscape.current) closedByEscape.current = false
-        else playSound('close')
+        playSound(closedByEscape.current ? 'cancel' : 'close')
+        closedByEscape.current = false
         onClose()
       }}
       onClick={event => {

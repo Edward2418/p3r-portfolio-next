@@ -32,7 +32,7 @@ npm start     # Servir la compilación de producción
 - `components/ProgressBar.tsx`: barras reutilizables con valores accesibles y animación CSS.
 - `components/ProjectDialog.tsx`: detalle de proyecto con diálogo nativo, Escape y restauración de foco.
 - `components/SoundControls.tsx`: precarga de audio y botón de silencio de la interfaz.
-- `components/SplashScreen.tsx`: pantalla de bienvenida una sola vez por sesión, cerrada con cualquier tecla o clic.
+- `components/SplashScreen.tsx`: bienvenida modal nativa una vez por sesión, con botón de entrada y foco dirigido al menú al terminar.
 - `components/CustomCursor.tsx`: cursor propio (anillo con retardo + punto) activo solo con puntero fino; el nativo queda oculto en `app/globals.css`.
 - `components/MenuCharacter.tsx`: ilustración decorativa en columna propia a la derecha (desde 1440 px), atenuada fuera de About. En pantallas menores se oculta para conservar el ancho de lectura.
 - `public/img/`: imágenes del sitio (ilustración de Oguri Cap).
@@ -45,7 +45,7 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 
 ## Controles
 
-- Pantalla de inicio: cualquier tecla, clic o toque entra al portafolio (una vez por sesión).
+- Pantalla de inicio: activar «Entrar al portafolio» con clic, toque, Enter o Espacio; Escape también permite continuar. Tab mantiene el foco dentro del diálogo. Se muestra una vez por sesión de pestaña.
 - Tab: acceder a los controles.
 - Flechas arriba/abajo dentro del menú: recorrer opciones.
 - Enter o Espacio: confirmar.
@@ -64,6 +64,10 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 6. Revisar el diff y crear un commit descriptivo por etapa (`feat:`, `fix:`, `refactor:` o `docs:`), antes de enviarlo al remoto.
 
 ## Estado
+
+### Interacción
+
+El splash bloquea el contenido de fondo mediante `showModal()` y mantiene ese bloqueo durante su transición de salida. Al entrar, enfoca el menú móvil o la sección activa de escritorio; con movimiento reducido cierra sin esperar la animación. Escape reproduce cancelación únicamente al cerrar un menú móvil o diálogo de proyecto. Pendiente de comprobación interactiva en navegador: entrada, foco, recarga de sesión y cierre de proyectos.
 
 ### Dirección visual de referencia
 

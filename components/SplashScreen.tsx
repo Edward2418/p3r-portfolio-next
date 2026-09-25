@@ -8,8 +8,6 @@ import styles from './SplashScreen.module.css'
 const SEEN_KEY = 'p3r-portfolio:splash-seen'
 const LEAVE_MS = 700
 
-type Phase = 'shown' | 'leaving' | 'hidden'
-
 function alreadySeen(): boolean {
   try {
     return window.sessionStorage.getItem(SEEN_KEY) === '1'
@@ -28,60 +26,46 @@ function remember() {
 
 /**
  * Pantalla de bienvenida estilo P3R. Se muestra una vez por sesión y se
- * cierra con cualquier tecla, clic o toque, reproduciendo el sonido de
+ * cierra con el botón de entrada o Escape, reproduciendo el sonido de
  * apertura del menú del juego.
  */
 export default function SplashScreen() {
-  const [phase, setPhase] = useState<Phase>('shown')
-  const enabled = useRef(false)
-  const buttonRef = useRef<HTMLButtonElement>(null)
+  const [leaving, setLeaving] = useState(false)
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const entering = useRef(false)
   const leaveTimer = useRef<number | undefined>(undefined)
 
   useEffect(() => {
-    function leave() {
-      if (!enabled.current) return
-      enabled.current = false
-      setPhase('leaving')
-      remember()
-      playSound('open')
-      leaveTimer.current = window.setTimeout(() => setPhase('hidden'), LEAVE_MS)
-    }
-
-    function handleKeyDown(event: KeyboardEvent) {
-      // Las teclas modificadoras pulsadas solas no deben cerrar el splash.
-      if (['Shift', 'Control', 'Alt', 'Meta'].includes(event.key)) return
-      leave()
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    window.addEventListener('pointerdown', leave)
-
-    // Se resuelve tras el hidrata para evitar desajustes con el HTML del servidor.
-    const readyTimer = window.setTimeout(() => {
-      if (alreadySeen()) {
-        setPhase('hidden')
-        return
-      }
-      enabled.current = true
-      buttonRef.current?.focus()
-    }, 0)
-
+    const dialog = dialogRef.current
+    if (!alreadySeen() && dialog && !dialog.open) dialog.showModal()
     return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-      window.removeEventListener('pointerdown', leave)
-      window.clearTimeout(readyTimer)
       if (leaveTimer.current) window.clearTimeout(leaveTimer.current)
+      dialog?.close()
     }
   }, [])
 
-  if (phase === 'hidden') return null
+  function enter() {
+    if (entering.current) return
+    entering.current = true
+    setLeaving(true)
+    remember()
+    playSound('open')
+    const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : LEAVE_MS
+    leaveTimer.current = window.setTimeout(() => {
+      dialogRef.current?.close()
+      const navigation = document.querySelectorAll<HTMLButtonElement>(
+        '.mobile-menu-toggle, .nav-item[aria-current="true"]'
+      )
+      Array.from(navigation).find(button => button.getClientRects().length)?.focus()
+    }, delay)
+  }
 
   return (
-    <div
-      className={phase === 'leaving' ? `${styles.splash} ${styles.leaving}` : styles.splash}
-      role="dialog"
-      aria-modal="true"
+    <dialog
+      ref={dialogRef}
+      className={leaving ? `${styles.splash} ${styles.leaving}` : styles.splash}
       aria-label="Pantalla de bienvenida"
+      onCancel={event => { event.preventDefault(); enter() }}
     >
       <div className={styles.bg} aria-hidden="true" />
       <div className={styles.bigText} aria-hidden="true">PORTFOLIO</div>
@@ -91,9 +75,9 @@ export default function SplashScreen() {
         <h1 className={styles.name}>{PROFILE.name.toUpperCase()}</h1>
         <p className={styles.role}>{PROFILE.degree}</p>
         <p className={styles.specialty}>{PROFILE.specialty}</p>
-        <button ref={buttonRef} type="button" className={styles.prompt}>
+        <button type="button" className={styles.prompt} onClick={enter} aria-disabled={leaving}>
           <span className={styles.promptKey} aria-hidden="true">◀</span>
-          <span>PULSA CUALQUIER TECLA PARA ENTRAR</span>
+          <span>ENTRAR AL PORTAFOLIO</span>
           <span className={styles.promptKey} aria-hidden="true">▶</span>
         </button>
       </div>
@@ -104,6 +88,6 @@ export default function SplashScreen() {
           ISC · ITSH · Sem {PROFILE.academic.currentSemester} de {PROFILE.academic.totalSemesters}
         </span>
       </div>
-    </div>
+    </dialog>
   )
 }

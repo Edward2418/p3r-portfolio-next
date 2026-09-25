@@ -1,6 +1,15 @@
 .splash {
   position: fixed;
   inset: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  color: white;
+  background: #000d1a;
   z-index: 9500;
   display: flex;
   flex-direction: column;
@@ -9,10 +18,11 @@
   overflow: hidden;
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
+.splash:not([open]) { display: none; }
+.splash::backdrop { background: #000d1a; }
 
 .leaving {
   opacity: 0;
-  pointer-events: none;
   transform: scale(1.02);
 }
 

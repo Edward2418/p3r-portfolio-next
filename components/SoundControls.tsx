@@ -1,12 +1,11 @@
 'use client'
 
 import { useEffect } from 'react'
-import { playSound, preloadSounds, setSoundMuted, useSoundMuted } from '@/lib/sounds'
+import { preloadSounds, setSoundMuted, useSoundMuted } from '@/lib/sounds'
 import styles from './SoundControls.module.css'
 
 /**
- * Control global de audio: precarga los efectos, reproduce el sonido de
- * cancelación con Escape y expone el botón de silencio de la interfaz.
+ * Control global de audio: precarga los efectos y expone el botón de silencio.
  */
 export default function SoundControls() {
   const muted = useSoundMuted()
@@ -14,12 +13,6 @@ export default function SoundControls() {
   useEffect(() => {
     preloadSounds()
 
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') playSound('cancel')
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
   return (

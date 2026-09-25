@@ -56,6 +56,7 @@ export default function Sidebar({
       onKeyDown={(event) => {
         if (event.key === 'Escape' && menuOpen) {
           event.preventDefault()
+          playSound('cancel')
           closeMenu()
         }
       }}
