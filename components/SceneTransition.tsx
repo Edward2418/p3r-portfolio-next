@@ -1,17 +1,18 @@
 'use client'
 
 import { useCallback, useEffect, useState, type ReactNode } from 'react'
-import { transitionScene, type SceneState, type SceneView } from '@/lib/scene-transition'
+import { transitionScene, type SceneState } from '@/lib/scene-transition'
 import styles from './SceneTransition.module.css'
 
-interface Props {
-  view: SceneView
-  onReady: (view: SceneView) => void
-  children: (displayed: SceneView) => ReactNode
+interface Props<View extends string> {
+  view: View
+  onReady?: (view: View) => void
+  variant?: 'screen' | 'panel'
+  children: (displayed: View) => ReactNode
 }
 
-export default function SceneTransition({ view, onReady, children }: Props) {
-  const [scene, setScene] = useState<SceneState>({
+export default function SceneTransition<View extends string>({ view, onReady, children, variant = 'screen' }: Props<View>) {
+  const [scene, setScene] = useState<SceneState<View>>({
     requested: view, displayed: view, phase: 'idle', version: 0,
   })
 
@@ -23,7 +24,7 @@ export default function SceneTransition({ view, onReady, children }: Props) {
 
   useEffect(() => {
     if (scene.phase === 'idle') {
-      onReady(scene.displayed)
+      onReady?.(scene.displayed)
       return
     }
     // Respaldo si se cancela la animación; sin espera con movimiento reducido.
@@ -34,7 +35,7 @@ export default function SceneTransition({ view, onReady, children }: Props) {
 
   const busy = scene.phase !== 'idle'
   return (
-    <div className={styles.stage} aria-busy={busy}>
+    <div className={variant === 'panel' ? `${styles.stage} ${styles.panel}` : styles.stage} aria-busy={busy}>
       <div className={styles.content} data-scene-phase={scene.phase} inert={busy}>
         {children(scene.displayed)}
       </div>

@@ -112,6 +112,8 @@ La animación se pausa con su botón, al salir de vista o al ocultar la pestaña
 
 Verificado en Brave headless local: secuencia en reproducción, pausa que congela el tiempo, reanudación, pausa por intersección, imagen fija con movimiento reducido, ausencia de desbordamiento horizontal a 1440 × 1000 y 390 × 844, retirada de Oguri al seleccionar Leon o About y conservación de su imagen original en el menú principal. La aprobación estética del movimiento sigue pendiente del usuario.
 
+Al cambiar de vínculo, `SceneTransition` en modo panel mantiene la ficha anterior durante la cobertura y revela la última selección solicitada. La lista sigue disponible durante el barrido, pero el detalle permanece inerte hasta finalizar. La misma máquina de estados se reutiliza para el menú principal y las fichas; sus pruebas incluyen selecciones rápidas de vínculos.
+
 La nueva iteración toma como referencia los menús principal, Social Link y estado del grupo de Persona 3 Reload: fondo azul eléctrico con luz cian superior, selección blanca con acento rojo y filas negras de corte diagonal. Aplicado al fondo, navegación, Social Link y Skills. La revisión visual a 390, 768 y 1280 px sigue pendiente de comprobación en navegador.
 
 El cursor personalizado se activa al mover el ratón; conserva el cursor nativo en diálogos y con movimiento reducido. Silenciar detiene también los efectos que ya se están reproduciendo.

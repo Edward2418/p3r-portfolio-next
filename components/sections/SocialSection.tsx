@@ -3,7 +3,8 @@
 import { useState, type CSSProperties, type KeyboardEvent } from 'react'
 import { SOCIAL_LINKS } from '@/app/data/portfolio'
 import { playSound } from '@/lib/sounds'
-import OguriPortrait from '@/components/OguriPortrait'
+import SceneTransition from '@/components/SceneTransition'
+import SocialLinkDetail from '@/components/SocialLinkDetail'
 import styles from './SocialSection.module.css'
 
 export default function SocialSection() {
@@ -67,45 +68,9 @@ export default function SocialSection() {
           ))}
         </nav>
 
-        <article
-          key={active.id}
-          id="social-detail"
-          aria-labelledby="social-detail-name"
-          className={styles.detail}
-          style={{ '--sl-color-detail': active.color } as CSSProperties}
-        >
-          <div className={active.id === 'oguri' ? styles.illustratedDetail : styles.textDetail}>
-            {active.id === 'oguri' && <OguriPortrait />}
-            <div className={styles.detailPanel}>
-              <div className={styles.detailHeader}>
-                <span className={styles.arcanaBadge}>{active.arcana}</span>
-                <p className={styles.detailSub}>{active.sub}</p>
-                <h2 className={styles.detailName} id="social-detail-name">{active.name}</h2>
-              </div>
-
-              <div className={styles.rankBlock}>
-                <div className={styles.rankLabel}>NIVEL DE VÍNCULO</div>
-                <div className={styles.rankValue}>
-                  <span className={styles.rankNum}>{active.rank}</span>
-                  <span className={styles.rankMax}>/10</span>
-                </div>
-                <div className={styles.stars} aria-hidden="true">
-                  {Array.from({ length: 10 }, (_, i) => (
-                    <span key={i} className={i < active.rank ? styles.star : styles.starEmpty}>★</span>
-                  ))}
-                </div>
-              </div>
-
-              <p className={styles.detailDesc}>{active.desc}</p>
-
-              <div className={styles.tags} aria-label="Etiquetas">
-                {active.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
-              </div>
-
-              <blockquote className={styles.quote}>{active.quote}</blockquote>
-            </div>
-          </div>
-        </article>
+        <SceneTransition view={active.id} variant="panel">
+          {id => <SocialLinkDetail link={SOCIAL_LINKS.find(link => link.id === id) ?? SOCIAL_LINKS[0]} />}
+        </SceneTransition>
       </div>
     </section>
   )

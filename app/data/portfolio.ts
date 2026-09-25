@@ -77,6 +77,8 @@ export const SOCIAL_LINKS = [
   },
 ]
 
+export type SocialLink = typeof SOCIAL_LINKS[number]
+
 export const TIMELINE_EVENTS = [
   {
     id: '1',

@@ -1,15 +1,15 @@
 export type SceneView = 'menu' | 'section'
-export interface SceneState {
-  requested: SceneView
-  displayed: SceneView
+export interface SceneState<View extends string = SceneView> {
+  requested: View
+  displayed: View
   phase: 'idle' | 'cover' | 'reveal'
   version: number
 }
-export type SceneAction =
-  | { type: 'request'; view: SceneView }
+export type SceneAction<View extends string = SceneView> =
+  | { type: 'request'; view: View }
   | { type: 'advance'; version: number }
 
-export function transitionScene(state: SceneState, action: SceneAction): SceneState {
+export function transitionScene<View extends string>(state: SceneState<View>, action: SceneAction<View>): SceneState<View> {
   if (action.type === 'request') {
     if (action.view === state.requested) return state
     return { ...state, requested: action.view, phase: 'cover', version: state.version + 1 }

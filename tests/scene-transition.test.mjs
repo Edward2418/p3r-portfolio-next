@@ -43,3 +43,15 @@ test('repeated requests do not restart the transition', () => {
   const idle = initial()
   assert.strictEqual(advance(idle), idle)
 })
+
+test('Social Link keeps the outgoing card until covered and resolves rapid selections', () => {
+  const oguri = { requested: 'oguri', displayed: 'oguri', phase: 'idle', version: 0 }
+  const leon = transitionScene(oguri, { type: 'request', view: 'leon' })
+  const persona = transitionScene(leon, { type: 'request', view: 'p3r' })
+  const mario = transitionScene(persona, { type: 'request', view: 'smg' })
+  assert.equal(mario.displayed, 'oguri')
+  assert.strictEqual(transitionScene(mario, { type: 'advance', version: leon.version }), mario)
+  const revealed = advance(mario)
+  assert.equal(revealed.displayed, 'smg')
+  assert.equal(advance(revealed).phase, 'idle')
+})
