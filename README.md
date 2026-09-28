@@ -106,7 +106,7 @@ La revisión de capturas de escritorio motivó una ficha oscura para mejorar el 
 
 ### Social Link: primera ficha ilustrada
 
-**Versión actual — video provisional:** se utiliza `Oguri_Idle.mp4`, proporcionado por Edward, convertido a `idle-video.webm` con transparencia VP9 (540 × 960, 24 fps, 9.5 s, 2.66 MB). Se eliminó la pista de audio y se recortaron los primeros 0.5 s para evitar la introducción de fondo negro antes del croma verde. El póster correspondiente pesa 62 KB. El video reemplaza la secuencia de cinco imágenes descrita más abajo; esos recursos se conservan como antecedentes y ya no se solicitan en la ficha.
+**Versión actual — video elegido por Edward:** se utiliza `gemini_generated_video_2c36ce23.mp4` en sustitución de `Oguri_Idle.mp4`, convertido a `idle-video.webm` con transparencia VP9 (540 × 960, 24 fps, 10 s, 1.83 MB). Se eliminó la pista de audio y se conservó la duración completa, ya que este archivo comienza directamente con fondo verde. El póster correspondiente pesa 54 KB. El video reemplaza la secuencia de cinco imágenes descrita más abajo; esos recursos se conservan como antecedentes y ya no se solicitan en la ficha.
 
 El video se carga al entrar en vista, se repite con `loop` y conserva Pausar/Reanudar. Se detiene fuera de vista y al ocultar la pestaña. Movimiento reducido muestra el póster sin iniciar la descarga del video. Los errores de reproducción conservan la imagen fija. La continuidad estética de la unión, los bordes del recorte y la compatibilidad de transparencia fuera de Chromium siguen pendientes de revisión; no se presenta como un bucle perfecto ni como una animación de 30/60 fps.
 
