@@ -106,6 +106,14 @@ La revisión de capturas de escritorio motivó una ficha oscura para mejorar el 
 
 ### Social Link: primera ficha ilustrada
 
+**Versión actual — video provisional:** se utiliza `Oguri_Idle.mp4`, proporcionado por Edward, convertido a `idle-video.webm` con transparencia VP9 (540 × 960, 24 fps, 9.5 s, 2.66 MB). Se eliminó la pista de audio y se recortaron los primeros 0.5 s para evitar la introducción de fondo negro antes del croma verde. El póster correspondiente pesa 62 KB. El video reemplaza la secuencia de cinco imágenes descrita más abajo; esos recursos se conservan como antecedentes y ya no se solicitan en la ficha.
+
+El video se carga al entrar en vista, se repite con `loop` y conserva Pausar/Reanudar. Se detiene fuera de vista y al ocultar la pestaña. Movimiento reducido muestra el póster sin iniciar la descarga del video. Los errores de reproducción conservan la imagen fija. La continuidad estética de la unión, los bordes del recorte y la compatibilidad de transparencia fuera de Chromium siguen pendientes de revisión; no se presenta como un bucle perfecto ni como una animación de 30/60 fps.
+
+Verificación de esta integración en Brave headless: transparencia del fondo, avance real del video, pausa/reanudación, reinicio al finalizar, pausa fuera de vista, movimiento reducido y ausencia de desbordamiento a 1440 y 390 px. El menú principal conserva su ilustración original.
+
+#### Antecedente: sprite de cinco fotogramas
+
 La ficha de Oguri utiliza los cinco fotogramas proporcionados por Edward. Se conserva un maestro WebP sin pérdida de 5155 × 1526 (aproximadamente 3.85 MB), pero la animación descarga una variante de 401 KB o 1.13 MB según el ancho mostrado y la densidad de pantalla: reducciones aproximadas del 90 % y 71 % respecto al maestro. Las variantes usan WebP calidad 90, alfa 100 y redimensionado por fotograma; mantienen el encuadre y el bucle de ida y vuelta de 3.2 segundos. El póster original pesa aproximadamente 746 KB. La secuencia solo se solicita cuando la ficha entra en pantalla y no está activo el movimiento reducido. El póster permanece visible hasta que el sprite termina de decodificarse; ante un error se conserva la imagen fija o la variante previamente cargada. Al ampliar el panel se puede subir de resolución sin sustituir la imagen antes de decodificarla.
 
 La animación se pausa con su botón, al salir de vista o al ocultar la pestaña. Movimiento reducido muestra el póster y elimina el barrido de entrada. En paneles amplios, ilustración y texto comparten dos columnas; en tamaños menores se apilan. Los otros vínculos conservan sus fichas de texto hasta disponer de sus recursos. Revisar visualmente el bucle, sus bordes y la composición móvil antes de extender el patrón.
@@ -120,13 +128,13 @@ La optimización también se comprobó en Brave headless: selección inicial de 
 
 | Fase | Estado y criterio de cierre |
 | --- | --- |
-| A — Primera ficha de Oguri | Implementación y optimización verificadas funcionalmente. Pendiente de aprobación de ritmo, bordes, encuadre y composición móvil por Edward. |
+| A — Primera ficha de Oguri | Encuadre del panel aprobado. Video proporcionado por Edward integrado como versión provisional, sin audio y con croma retirado. Pulido del bucle definitivo diferido; revisar esta integración en móvil y escritorio. |
 | B — Completar Social Link | Obtener y elegir recursos de Leon, Persona 3 Reload, Resident Evil y Super Mario Galaxy; integrar las cinco fichas con presentación coherente y textos confirmados. |
 | C — Contenido y pulido global | Confirmar Timeline y perfil, incorporar CV y LinkedIn si se incluyen, preparar capturas del proyecto y unificar detalles visuales. Puede avanzar mientras se obtienen imágenes. |
 | D — Validación integral | Recorrer las seis secciones en móvil y escritorio; verificar teclado, foco, diálogos, audio, movimiento reducido y rendimiento, y conservar comprobaciones críticas reproducibles. |
 | E — Publicación | Elegir alojamiento y URL, configurar `SITE_URL`, verificar enlaces y tarjetas sociales en producción y cerrar el README con capturas y enlace público. |
 
-Se distingue entre implementación, verificación funcional y aprobación visual. La siguiente decisión es aprobar la ficha de Oguri o concretar sus ajustes antes de extender su presentación a otros vínculos.
+Se distingue entre implementación, verificación funcional y aprobación visual. Con el video provisional de Oguri podemos avanzar a los recursos de los otros vínculos y al contenido profesional sin esperar nuevas generaciones.
 
 La nueva iteración toma como referencia los menús principal, Social Link y estado del grupo de Persona 3 Reload: fondo azul eléctrico con luz cian superior, selección blanca con acento rojo y filas negras de corte diagonal. Aplicado al fondo, navegación, Social Link y Skills. La revisión visual a 390, 768 y 1280 px sigue pendiente de comprobación en navegador.
 

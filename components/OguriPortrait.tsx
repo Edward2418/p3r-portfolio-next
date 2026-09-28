@@ -4,71 +4,85 @@ import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import styles from './OguriPortrait.module.css'
 
-const POSTER = '/img/social/oguri/poster.webp'
-const SPRITES = {
-  480: '/img/social/oguri/idle-480.webp',
-  960: '/img/social/oguri/idle-960.webp',
-} as const
+const POSTER = '/img/social/oguri/video-poster.webp'
+const VIDEO = '/img/social/oguri/idle-video.webm'
 
-/** Cinco fotogramas sobre un único lienzo: evita parpadeos al cambiar de imagen. */
+/** Video sin pista de audio; el póster permanece hasta la primera reproducción. */
 export default function OguriPortrait() {
   const root = useRef<HTMLDivElement>(null)
+  const video = useRef<HTMLVideoElement>(null)
   const [paused, setPaused] = useState(false)
+  const pausedRef = useRef(false)
+  const syncPlayback = useRef<(() => void) | null>(null)
 
   useEffect(() => {
     const node = root.current
-    if (!node) return
+    const media = video.current
+    if (!node || !media) return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
     let visible = false
     let disposed = false
-    let loadedWidth = 0
-    let requestedWidth = 0
-    let version = 0
+    let failed = false
 
     function update() {
-      if (disposed || !node) return
+      if (disposed || !node || !media) return
       node.dataset.reduced = String(reduced.matches)
-      node.dataset.running = String(visible && !document.hidden && !reduced.matches)
-      if (!visible || document.hidden || reduced.matches) return
-      const canvas = node.querySelector<HTMLElement>('[role="img"]')
-      const pixels = (canvas?.getBoundingClientRect().width ?? 390) * window.devicePixelRatio
-      const width = pixels <= 480 ? 480 : 960
-      // Solo subir de resolución: evitar nuevas descargas al reducir la ventana.
-      if (width <= loadedWidth || width <= requestedWidth) return
-      requestedWidth = width
-      const requestVersion = ++version
-      const image = new window.Image()
-      image.src = SPRITES[width]
-      void image.decode().then(() => {
-        if (disposed || requestVersion !== version) return
-        node.style.setProperty('--oguri-sprite', `url("${SPRITES[width]}")`)
-        loadedWidth = width
-        node.dataset.ready = 'true'
-      }).catch(() => {
-        // Conservar la imagen fija o la variante previamente decodificada.
-        if (!disposed && requestVersion === version) requestedWidth = loadedWidth
+      const running = visible && !document.hidden && !reduced.matches && !pausedRef.current && !failed
+      if (!running) {
+        media.pause()
+        return
+      }
+      if (!media.getAttribute('src')) media.src = VIDEO
+      void media.play().catch(() => {
+        if (disposed || media.error || !visible || document.hidden || reduced.matches || pausedRef.current) return
+        // Un bloqueo de autoplay permite reintentar mediante el botón.
+        pausedRef.current = true
+        setPaused(true)
       })
     }
 
+    function onPlaying() {
+      if (!node) return
+      node.dataset.ready = 'true'
+      node.dataset.running = 'true'
+    }
+    function onPause() {
+      if (node) node.dataset.running = 'false'
+    }
+    function onError() {
+      failed = true
+      if (node) {
+        node.dataset.ready = 'false'
+        node.dataset.failed = 'true'
+      }
+      media?.pause()
+    }
+
+    syncPlayback.current = update
     const observer = new IntersectionObserver(entries => {
       visible = entries.some(entry => entry.isIntersecting)
       update()
     }, { threshold: 0.1 })
     observer.observe(node)
-    const resize = new ResizeObserver(update)
-    resize.observe(node)
-    window.addEventListener('resize', update)
+    media.addEventListener('playing', onPlaying)
+    media.addEventListener('pause', onPause)
+    media.addEventListener('error', onError)
     reduced.addEventListener('change', update)
     document.addEventListener('visibilitychange', update)
     update()
 
     return () => {
       disposed = true
+      syncPlayback.current = null
       observer.disconnect()
-      resize.disconnect()
-      window.removeEventListener('resize', update)
       reduced.removeEventListener('change', update)
       document.removeEventListener('visibilitychange', update)
+      media.removeEventListener('playing', onPlaying)
+      media.removeEventListener('pause', onPause)
+      media.removeEventListener('error', onError)
+      media.pause()
+      media.removeAttribute('src')
+      media.load()
     }
   }, [])
 
@@ -77,13 +91,18 @@ export default function OguriPortrait() {
       <div className={styles.backdrop} aria-hidden="true" />
       <p className={styles.caption} aria-hidden="true">THE STAR / OGURI CAP</p>
       <div className={styles.canvas} role="img" aria-label="Oguri Cap, de Uma Musume: Pretty Derby">
-        <Image src={POSTER} alt="" width={1031} height={1526}
+        <Image src={POSTER} alt="" width={540} height={960}
           className={styles.poster} unoptimized draggable={false} />
-        <div className={styles.sprite} aria-hidden="true" />
+        <video ref={video} className={styles.video} muted loop playsInline preload="none"
+          aria-hidden="true" disablePictureInPicture />
       </div>
       <div className={styles.controls}>
         <button type="button" className={styles.pause} aria-pressed={paused}
-          aria-label="Pausar animación de Oguri" onClick={() => setPaused(value => !value)}>
+          aria-label="Pausar animación de Oguri" onClick={() => {
+            pausedRef.current = !pausedRef.current
+            setPaused(pausedRef.current)
+            syncPlayback.current?.()
+          }}>
           {paused ? '▶ REANUDAR' : 'Ⅱ PAUSAR'}
         </button>
         <span className={styles.staticLabel}>ILUSTRACIÓN ESTÁTICA</span>

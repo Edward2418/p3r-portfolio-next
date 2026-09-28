@@ -17,3 +17,18 @@ Archivos originales en orden: `Imagen de ChatGPT 25 sept 2026, 11_08_37 a.m.-1.p
 - La secuencia se carga al entrar en pantalla y solo se reproduce tras decodificarse. Se pausa fuera de vista, al ocultar la pestaña y mediante el control de pausa. Movimiento reducido muestra el póster.
 
 La consistencia de movimiento y los bordes dependen de los fotogramas generados; requieren revisión visual. El menú principal sigue utilizando su ilustración anterior.
+# Video provisional actual
+
+- Fuente: `C:\Users\Edward\Downloads\Oguri_Idle.mp4`, proporcionado por Edward. Original intacto: H.264, 720 × 1280, 24 fps, 10 s y audio AAC.
+- `idle-video.webm`: VP9 con alfa, 540 × 960, 24 fps, 9.5 s, 2661694 bytes; sin pista de audio.
+- `video-poster.webp`: primer fotograma procesado, 540 × 960, 61602 bytes.
+- Se omiten los primeros 0.5 s porque el clip comienza con fondo negro antes del verde. Croma RGB aproximado `#149E50`, similitud 0.18 y mezcla 0.04. No se interpolaron fotogramas ni se fabricó una unión por fundido.
+- Conversión reproducible con FFmpeg 6.1.1:
+
+```sh
+ffmpeg -ss 0.5 -i Oguri_Idle.mp4 -map 0:v:0 -an -vf "scale=540:960,format=rgba,colorkey=0x149E50:0.18:0.04,format=yuva420p" -c:v libvpx-vp9 -crf 32 -b:v 0 -deadline good -cpu-used 3 -auto-alt-ref 0 idle-video.webm
+```
+
+El póster usa el mismo escalado y croma sobre el fotograma de 0.5 s, codificado con Sharp en WebP calidad 90 y alfa 100. El recorte conserva limitaciones del video generado: algunos bordes de color, silueta cortada lateralmente y variaciones de pose. `loop` repite el clip, pero no garantiza una unión imperceptible. Transparencia verificada en Brave; otros motores requieren revisión.
+
+Los sprites siguientes son recursos de la iteración anterior, conservados como referencia; el componente actual no los descarga.
