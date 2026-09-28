@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import type { Project } from '@/app/data/projects'
 import { playSound } from '@/lib/sounds'
 import styles from './sections/ProjectsSection.module.css'
@@ -60,6 +61,19 @@ export default function ProjectDialog({ project, onClose }: Props) {
           <ul className={styles.highlights}>
             {project.highlights.map(highlight => <li key={highlight}>{highlight}</li>)}
           </ul>
+          {project.screenshots.length > 0 && (
+            <section className={styles.gallery} aria-labelledby="project-gallery-title">
+              <h3 className={styles.detailHeading} id="project-gallery-title">CAPTURAS DEL PROYECTO</h3>
+              {project.screenshots.map(screenshot => (
+                <figure className={styles.screenshot} key={screenshot.src}>
+                  <Image src={screenshot.src} alt={screenshot.alt}
+                    width={screenshot.width} height={screenshot.height}
+                    sizes="(max-width: 760px) 100vw, 680px" />
+                  <figcaption>{screenshot.caption}</figcaption>
+                </figure>
+              ))}
+            </section>
+          )}
           <a className={styles.action} href={project.github} target="_blank" rel="noopener noreferrer">
             VER EN GITHUB <span aria-hidden="true">↗</span>
             <span className={styles.srOnly}> (abre en otra pestaña)</span>

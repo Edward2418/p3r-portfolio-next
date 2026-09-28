@@ -2,6 +2,16 @@
 
 Portafolio personal inspirado en el menú de **Persona 3 Reload**. Proyecto de aprendizaje construido con Next.js 16, React 19, TypeScript y Tailwind CSS 4, con diseño personalizado en CSS.
 
+## Capturas
+
+Capturas reales de la versión local a 1440 × 1000, tomadas el 28/09/2026 con movimiento reducido. La ficha de Proyectos utiliza estas mismas imágenes en su portada y en el detalle.
+
+Galería verificada en Brave headless a 1440 y 390 px: carga de portada y capturas, scroll del diálogo, ausencia de desbordamiento horizontal y cierre con Escape restaurando el foco en «Ver detalle». Lint y build completados.
+
+![Menú principal con Oguri y las seis secciones del portafolio](public/img/projects/p3r-portfolio/menu.webp)
+
+![Social Link con la ficha de Oguri y la lista de personajes y videojuegos](public/img/projects/p3r-portfolio/social.webp)
+
 ## Desarrollo local
 
 Requiere Node.js 20.9 o superior y npm.
@@ -32,7 +42,7 @@ npm start     # Servir la compilación de producción
 - `app/icon.svg` y `app/favicon.ico`: identidad ED en formato vectorial y favicon compatible.
 - `app/data/profile.ts`: perfil, avance académico y estadísticas decorativas.
 - `app/data/portfolio.ts`: habilidades, intereses y trayectoria.
-- `app/data/projects.ts`: proyectos reales, tecnologías y enlaces; los filtros se generan desde estos datos.
+- `app/data/projects.ts`: proyectos reales, tecnologías, enlaces y capturas tipadas; los filtros se generan desde estos datos.
 - `app/data/systemActions.ts`: acciones de contacto y estado de cada recurso (disponible o pendiente).
 - `components/Sidebar.tsx`: navegación por clic, teclado y menú móvil.
 - `components/SectionTransition.tsx`: transición entre secciones basada en eventos CSS.
@@ -130,7 +140,7 @@ La optimización también se comprobó en Brave headless: selección inicial de 
 | --- | --- |
 | A — Primera ficha de Oguri | Encuadre del panel aprobado. Video proporcionado por Edward integrado como versión provisional, sin audio y con croma retirado. Pulido del bucle definitivo diferido; revisar esta integración en móvil y escritorio. |
 | B — Completar Social Link | Obtener y elegir recursos de Leon, Persona 3 Reload, Resident Evil y Super Mario Galaxy; integrar las cinco fichas con presentación coherente y textos confirmados. |
-| C — Contenido y pulido global | Confirmar Timeline y perfil, incorporar CV y LinkedIn si se incluyen, preparar capturas del proyecto y unificar detalles visuales. Puede avanzar mientras se obtienen imágenes. |
+| C — Contenido y pulido global | Capturas reales incorporadas en la tarjeta, el diálogo de proyecto y este README. Pendiente confirmar Timeline y perfil, incorporar CV y LinkedIn si se incluyen, y completar el pulido visual. |
 | D — Validación integral | Recorrer las seis secciones en móvil y escritorio; verificar teclado, foco, diálogos, audio, movimiento reducido y rendimiento, y conservar comprobaciones críticas reproducibles. |
 | E — Publicación | Elegir alojamiento y URL, configurar `SITE_URL`, verificar enlaces y tarjetas sociales en producción y cerrar el README con capturas y enlace público. |
 

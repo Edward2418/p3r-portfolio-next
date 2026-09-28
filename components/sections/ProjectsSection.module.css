@@ -60,6 +60,11 @@
   transition: border-color 180ms ease, transform 180ms ease;
 }
 .card:hover, .card:focus-within { border-color: var(--cyan); transform: translateY(-3px); }
+.cover { display: block; width: 100%; height: auto; border-bottom: 2px solid var(--cyan); }
+.gallery { display: grid; gap: 1rem; margin-bottom: 2rem; min-width: 0; }
+.screenshot { margin: 0; border: 1px solid var(--cyan-dim); background: #030912; }
+.screenshot img { display: block; width: 100%; height: auto; }
+.screenshot figcaption { padding: 0.75rem 1rem; color: #d0e4f4; font-size: 0.85rem; line-height: 1.5; }
 .art {
   height: 210px;
   padding: 1.5rem;

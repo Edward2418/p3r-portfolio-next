@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { PROJECTS, type Project } from '@/app/data/projects'
 import ProjectDialog from '@/components/ProjectDialog'
 import { playSound } from '@/lib/sounds'
@@ -44,11 +45,15 @@ export default function ProjectsSection() {
       <div className={styles.grid}>
         {visible.map((project, index) => (
           <article className={styles.card} key={project.id}>
-            <div className={styles.art} aria-hidden="true">
+            {project.screenshots[0] ? (
+              <Image src={project.screenshots[0].src} alt={project.screenshots[0].alt}
+                width={project.screenshots[0].width} height={project.screenshots[0].height}
+                sizes="(max-width: 768px) 100vw, 700px" className={styles.cover} />
+            ) : <div className={styles.art} aria-hidden="true">
               <span className={styles.artNumber}>{String(index + 1).padStart(2, '0')}</span>
               <span className={styles.artTitle}>PERSONAL<br />PROJECT</span>
               <span className={styles.artCaption}>CODE / DESIGN / RELOAD</span>
-            </div>
+            </div>}
             <div className={styles.cardBody}>
               <p className={styles.eyebrow}>{project.type}</p>
               <h2 className={styles.title}>{project.title}</h2>

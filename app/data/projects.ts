@@ -1,3 +1,11 @@
+interface ProjectScreenshot {
+  src: string
+  alt: string
+  caption: string
+  width: number
+  height: number
+}
+
 export interface Project {
   id: string
   title: string
@@ -8,6 +16,7 @@ export interface Project {
   status: 'En desarrollo' | 'Completado'
   github: string
   highlights: string[]
+  screenshots: ProjectScreenshot[]
 }
 
 export const PROJECTS: Project[] = [
@@ -20,11 +29,28 @@ export const PROJECTS: Project[] = [
     tags: ['Next.js', 'React', 'TypeScript', 'CSS'],
     status: 'En desarrollo',
     github: 'https://github.com/Edward2418/p3r-portfolio-next',
+    screenshots: [
+      {
+        src: '/img/projects/p3r-portfolio/menu.webp',
+        alt: 'Menú principal del portafolio con Oguri a la izquierda y seis opciones de navegación sobre fondo azul.',
+        caption: 'Menú principal · navegación por pantallas',
+        width: 1440,
+        height: 1000,
+      },
+      {
+        src: '/img/projects/p3r-portfolio/social.webp',
+        alt: 'Social Link con la lista de personajes y videojuegos junto a la ficha ilustrada de Oguri.',
+        caption: 'Social Link · ficha de Oguri Cap',
+        width: 1440,
+        height: 1000,
+      },
+    ],
     highlights: [
       'Migración de HTML y JavaScript a componentes React.',
       'Menú responsive con navegación por teclado.',
       'Datos tipados y barras accesibles con movimiento reducido.',
       'Estética P3R con tipografía inclinada y transiciones CSS.',
+      'Video de personaje con transparencia, pausa y carga diferida.',
     ],
   },
 ]
