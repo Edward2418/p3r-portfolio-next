@@ -100,19 +100,33 @@ Fase 2, About y System: ambas fichas comparten `components/sections/ProfilePanel
 
 Fase 2, Proyectos y Timeline: títulos claros con cortes diagonales, selección blanca con acento rojo y paneles oscuros. Los filtros de proyectos conservan su estado visible al pasar el ratón; el diálogo comparte el tratamiento visual de las tarjetas. Timeline amplía fechas y subtítulos y alinea el eje con los marcadores. Los ajustes compactos se basan en el ancho del panel; el diálogo usa el ancho de ventana. Pendiente de revisión visual.
 
-La composición interna de About, System, Social Link y Timeline responde al ancho del panel de contenido mediante consultas de contenedor (`portfolio`), descontando el menú y la ilustración lateral. La aprobación visual de esta fase sigue pendiente; lint y build no sustituyen la revisión en navegador.
+La composición interna de About, System, Social Link y Timeline responde al ancho del panel de contenido mediante consultas de contenedor (`portfolio`), descontando el menú lateral. La aprobación visual de esta fase sigue pendiente; lint y build no sustituyen la revisión en navegador.
 
 La revisión de capturas de escritorio motivó una ficha oscura para mejorar el contraste de About y límites de desbordamiento horizontal en Social Link. Por decisión de diseño, se retiró la columna global de personaje: Oguri permanece en el menú principal y aparece dentro de su propia ficha en Social Link.
 
 ### Social Link: primera ficha ilustrada
 
-La ficha de Oguri utiliza los cinco fotogramas proporcionados por Edward, convertidos a WebP sin pérdida conservando los lienzos de 1031 × 1526. Un sprite de 5155 × 1526 (aproximadamente 3.85 MB) reproduce un bucle de ida y vuelta de 3.2 segundos; el póster pesa aproximadamente 746 KB. La secuencia solo se solicita cuando la ficha entra en pantalla y no está activo el movimiento reducido. El póster permanece visible hasta que el sprite termina de decodificarse; ante un error se conserva la imagen fija.
+La ficha de Oguri utiliza los cinco fotogramas proporcionados por Edward. Se conserva un maestro WebP sin pérdida de 5155 × 1526 (aproximadamente 3.85 MB), pero la animación descarga una variante de 401 KB o 1.13 MB según el ancho mostrado y la densidad de pantalla: reducciones aproximadas del 90 % y 71 % respecto al maestro. Las variantes usan WebP calidad 90, alfa 100 y redimensionado por fotograma; mantienen el encuadre y el bucle de ida y vuelta de 3.2 segundos. El póster original pesa aproximadamente 746 KB. La secuencia solo se solicita cuando la ficha entra en pantalla y no está activo el movimiento reducido. El póster permanece visible hasta que el sprite termina de decodificarse; ante un error se conserva la imagen fija o la variante previamente cargada. Al ampliar el panel se puede subir de resolución sin sustituir la imagen antes de decodificarla.
 
 La animación se pausa con su botón, al salir de vista o al ocultar la pestaña. Movimiento reducido muestra el póster y elimina el barrido de entrada. En paneles amplios, ilustración y texto comparten dos columnas; en tamaños menores se apilan. Los otros vínculos conservan sus fichas de texto hasta disponer de sus recursos. Revisar visualmente el bucle, sus bordes y la composición móvil antes de extender el patrón.
 
 Verificado en Brave headless local: secuencia en reproducción, pausa que congela el tiempo, reanudación, pausa por intersección, imagen fija con movimiento reducido, ausencia de desbordamiento horizontal a 1440 × 1000 y 390 × 844, retirada de Oguri al seleccionar Leon o About y conservación de su imagen original en el menú principal. La aprobación estética del movimiento sigue pendiente del usuario.
 
 Al cambiar de vínculo, `SceneTransition` en modo panel mantiene la ficha anterior durante la cobertura y revela la última selección solicitada. La lista sigue disponible durante el barrido, pero el detalle permanece inerte hasta finalizar. La misma máquina de estados se reutiliza para el menú principal y las fichas; sus pruebas incluyen selecciones rápidas de vínculos.
+
+La optimización también se comprobó en Brave headless: selección inicial de 480, subida a 960 con mayor densidad y conservación de la variante decodificada al reducir la ventana. Lint y build pasaron. Estas comprobaciones funcionales no sustituyen la aprobación estética de las variantes comprimidas.
+
+### Siguientes fases
+
+| Fase | Estado y criterio de cierre |
+| --- | --- |
+| A — Primera ficha de Oguri | Implementación y optimización verificadas funcionalmente. Pendiente de aprobación de ritmo, bordes, encuadre y composición móvil por Edward. |
+| B — Completar Social Link | Obtener y elegir recursos de Leon, Persona 3 Reload, Resident Evil y Super Mario Galaxy; integrar las cinco fichas con presentación coherente y textos confirmados. |
+| C — Contenido y pulido global | Confirmar Timeline y perfil, incorporar CV y LinkedIn si se incluyen, preparar capturas del proyecto y unificar detalles visuales. Puede avanzar mientras se obtienen imágenes. |
+| D — Validación integral | Recorrer las seis secciones en móvil y escritorio; verificar teclado, foco, diálogos, audio, movimiento reducido y rendimiento, y conservar comprobaciones críticas reproducibles. |
+| E — Publicación | Elegir alojamiento y URL, configurar `SITE_URL`, verificar enlaces y tarjetas sociales en producción y cerrar el README con capturas y enlace público. |
+
+Se distingue entre implementación, verificación funcional y aprobación visual. La siguiente decisión es aprobar la ficha de Oguri o concretar sus ajustes antes de extender su presentación a otros vínculos.
 
 La nueva iteración toma como referencia los menús principal, Social Link y estado del grupo de Persona 3 Reload: fondo azul eléctrico con luz cian superior, selección blanca con acento rojo y filas negras de corte diagonal. Aplicado al fondo, navegación, Social Link y Skills. La revisión visual a 390, 768 y 1280 px sigue pendiente de comprobación en navegador.
 

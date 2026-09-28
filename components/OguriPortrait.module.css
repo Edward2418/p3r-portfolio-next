@@ -22,7 +22,7 @@
 .sprite { position: absolute; inset: 0; display: none; background-size: 500% 100%; background-repeat: no-repeat; }
 .portrait[data-ready='true'][data-reduced='false'] .sprite {
   display: block;
-  background-image: url('/img/social/oguri/idle-sheet.webp');
+  background-image: var(--oguri-sprite);
   animation: oguri-idle 3.2s steps(1, end) infinite;
   animation-play-state: paused;
 }
