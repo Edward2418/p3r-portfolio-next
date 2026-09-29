@@ -32,6 +32,36 @@ npm test       # Pruebas de transiciones (Node.js 22.18+ o 24+)
 npm start     # Servir la compilación de producción
 ```
 
+## Pruebas de navegador
+
+Las pruebas E2E usan Playwright contra una compilación de producción. El comando compila y abre su propio servidor en el puerto **3100**, sin reutilizar el servidor de desarrollo de 3000.
+
+```sh
+npx playwright install chromium
+npm run test:e2e
+```
+
+Se prueban viewports de 1280 × 800, 768 × 1024 y 390 × 844. Cobertura:
+
+- Entrada desde el splash, selección con Home/End, seis secciones y regreso con foco restaurado.
+- Límites horizontales del contenido en los tres tamaños.
+- Galería del proyecto, scroll, cierre con Escape y foco de vuelta al botón.
+- Menú compacto: apertura, Escape y selección de sección.
+- Silencio persistente tras recargar y splash una sola vez por sesión.
+- Movimiento reducido sin solicitud del video de Oguri.
+- Video: reproducción, pausa real, reanudación, repetición y retirada al seleccionar a Leon.
+
+Si ya tienes un navegador Chromium instalado, puedes indicar su ejecutable. Ejemplo en PowerShell:
+
+```powershell
+$env:PLAYWRIGHT_EXECUTABLE_PATH = 'C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe'
+npm run test:e2e
+```
+
+Los fallos guardan capturas y trazas en `test-results/` (excluido de Git). Para inspeccionar una traza: `npx playwright show-trace <ruta-al-trace.zip>`. En equipos con recursos limitados, usa `npm run test:e2e -- --workers 1`.
+
+Verificación del 29/09/2026 en Brave local: 14 casos aplicables aprobados entre la ejecución inicial y la repetición de dos recorridos que excedieron el límite inicial; un caso de menú compacto se omite en escritorio. El recorrido de seis secciones dispone de 90 segundos. La descarga del Chromium de Playwright falló por timeout, por eso esta ejecución utilizó Brave. Quedan pendientes otros motores, dispositivos físicos, medición de rendimiento y revisión estética completa.
+
 ## Organización
 
 - `app/page.tsx`: composición de la interfaz y estado de navegación.
@@ -139,9 +169,9 @@ La optimización también se comprobó en Brave headless: selección inicial de 
 | Fase | Estado y criterio de cierre |
 | --- | --- |
 | A — Primera ficha de Oguri | Encuadre del panel aprobado. Video proporcionado por Edward integrado como versión provisional, sin audio y con croma retirado. Pulido del bucle definitivo diferido; revisar esta integración en móvil y escritorio. |
-| B — Completar Social Link | Obtener y elegir recursos de Leon, Persona 3 Reload, Resident Evil y Super Mario Galaxy; integrar las cinco fichas con presentación coherente y textos confirmados. |
+| B — Completar Social Link | Imágenes de Leon, Persona 3 Reload, Resident Evil y Super Mario Galaxy aplazadas por Edward; se conservan las fichas de texto. |
 | C — Contenido y pulido global | Capturas reales incorporadas en la tarjeta, el diálogo de proyecto y este README. Pendiente confirmar Timeline y perfil, incorporar CV y LinkedIn si se incluyen, y completar el pulido visual. |
-| D — Validación integral | Recorrer las seis secciones en móvil y escritorio; verificar teclado, foco, diálogos, audio, movimiento reducido y rendimiento, y conservar comprobaciones críticas reproducibles. |
+| D — Validación integral | Pruebas Playwright incorporadas para navegación, foco, diálogos, menú móvil, silencio persistente y video/movimiento reducido en tres tamaños. Pendientes otros motores, dispositivos físicos y medición de rendimiento. |
 | E — Publicación | Elegir alojamiento y URL, configurar `SITE_URL`, verificar enlaces y tarjetas sociales en producción y cerrar el README con capturas y enlace público. |
 
 Se distingue entre implementación, verificación funcional y aprobación visual. Con el video provisional de Oguri podemos avanzar a los recursos de los otros vínculos y al contenido profesional sin esperar nuevas generaciones.
