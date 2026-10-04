@@ -62,6 +62,15 @@ Los fallos guardan capturas y trazas en `test-results/` (excluido de Git). Para 
 
 Verificación del 29/09/2026 en Brave local: 14 casos aplicables aprobados entre la ejecución inicial y la repetición de dos recorridos que excedieron el límite inicial; un caso de menú compacto se omite en escritorio. El recorrido de seis secciones dispone de 90 segundos. La descarga del Chromium de Playwright falló por timeout, por eso esta ejecución utilizó Brave. Quedan pendientes otros motores, dispositivos físicos, medición de rendimiento y revisión estética completa.
 
+## Revisión de dependencias — 04/10/2026
+
+- Next.js y `eslint-config-next` actualizados de 16.2.7 a **16.3.8**; dependencias transitivas corregidas mediante `npm audit fix`, sin `--force`.
+- Auditoría inicial: 13 entradas vulnerables (una crítica, once altas y una moderada).
+- `npm audit --omit=dev`: **0 vulnerabilidades conocidas** en las dependencias de producción según la auditoría de esta fecha.
+- `npm audit`: quedan **5 entradas altas** en una misma cadena de desarrollo: `eslint-config-next` → `@next/eslint-plugin-next` → `fast-glob` → `micromatch` → `braces`. La solución automática propone retroceder a `eslint-config-next@14.2.35`; se mantiene la versión alineada con Next 16 y queda pendiente una corrección compatible de esa cadena.
+- Verificación posterior: lint, compilación de producción, seis pruebas unitarias y 14 casos E2E aprobados en Brave con un worker. Un caso de menú compacto se omite en escritorio. Esta ejecución completa reemplaza los resultados parciales del 29/09 para la versión actual.
+- Pendientes de esta fase: medición de rendimiento, otros motores de navegador y comprobación en dispositivos físicos.
+
 ## Organización
 
 - `app/page.tsx`: composición de la interfaz y estado de navegación.
