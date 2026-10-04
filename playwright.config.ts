@@ -18,6 +18,10 @@ export default defineConfig({
     { name: 'desktop', use: { viewport: { width: 1280, height: 800 } } },
     { name: 'tablet', use: { viewport: { width: 768, height: 1024 } } },
     { name: 'mobile', use: { viewport: { width: 390, height: 844 } } },
+    ...(process.env.E2E_CROSS_BROWSER ? [
+      { name: 'firefox', use: { browserName: 'firefox' as const, viewport: { width: 1280, height: 800 }, launchOptions: {} } },
+      { name: 'webkit', use: { browserName: 'webkit' as const, viewport: { width: 390, height: 844 }, launchOptions: {} } },
+    ] : []),
   ],
   webServer: {
     command: 'npm run build && npm run start -- --port 3100',

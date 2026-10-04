@@ -91,6 +91,17 @@ test('Oguri playback, pause, loop and exclusive portrait', async ({ page }) => {
   const video = page.locator('#social-detail video')
   await video.scrollIntoViewIfNeeded()
   await expect.poll(() => video.evaluate(node => (node as HTMLVideoElement).currentTime)).toBeGreaterThan(0.1)
+  // El punto corresponde al fondo vacío del recurso, no a la silueta.
+  const alpha = await video.evaluate(node => {
+    const media = node as HTMLVideoElement
+    const canvas = document.createElement('canvas')
+    canvas.width = media.videoWidth
+    canvas.height = media.videoHeight
+    const context = canvas.getContext('2d')!
+    context.drawImage(media, 0, 0)
+    return context.getImageData(500, 10, 1, 1).data[3]
+  })
+  expect(alpha, 'El fondo del video debe conservar transparencia').toBe(0)
   const pause = page.getByRole('button', { name: 'Pausar animación de Oguri' })
   await pause.click()
   const time = await video.evaluate(node => (node as HTMLVideoElement).currentTime)

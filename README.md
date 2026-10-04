@@ -71,6 +71,10 @@ Verificación del 29/09/2026 en Brave local: 14 casos aplicables aprobados entre
 - Verificación posterior: lint, compilación de producción, seis pruebas unitarias y 14 casos E2E aprobados en Brave con un worker. Un caso de menú compacto se omite en escritorio. Esta ejecución completa reemplaza los resultados parciales del 29/09 para la versión actual.
 - Pendientes de esta fase: medición de rendimiento, otros motores de navegador y comprobación en dispositivos físicos.
 
+## Rendimiento y otros navegadores
+
+La [línea base de rendimiento y compatibilidad](docs/performance.md) registra las mediciones, limitaciones y comandos. Lighthouse local: 74/100 móvil simulado y 96/100 escritorio en la entrada con splash, 441 KiB transferidos. Firefox pasó los cuatro casos aplicables y conservó la transparencia del video. WebKit está bloqueado por bibliotecas faltantes del entorno Windows; Safari y dispositivos físicos siguen pendientes.
+
 ## Organización
 
 - `app/page.tsx`: composición de la interfaz y estado de navegación.
