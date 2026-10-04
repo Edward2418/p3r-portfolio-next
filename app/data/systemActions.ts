@@ -8,17 +8,7 @@ export interface SystemAction {
   pending?: string
 }
 
-// CV: colocar el archivo en public/cv-edward.pdf y cambiar `pending` por undefined.
 export const SYSTEM_ACTIONS: SystemAction[] = [
-  {
-    icon: '▼',
-    title: 'Descargar Currículum',
-    description: 'CV completo en formato PDF',
-    href: '/cv-edward.pdf',
-    button: 'DOWNLOAD',
-    primary: true,
-    pending: 'PDF pendiente',
-  },
   {
     icon: '✉',
     title: 'Correo institucional',
@@ -32,13 +22,5 @@ export const SYSTEM_ACTIONS: SystemAction[] = [
     description: 'github.com/Edward2418',
     href: 'https://github.com/Edward2418',
     button: 'VISIT',
-  },
-  {
-    icon: 'LI',
-    title: 'LinkedIn',
-    description: 'Perfil profesional',
-    href: 'https://www.linkedin.com/in/',
-    button: 'VISIT',
-    pending: 'Falta enlace',
   },
 ]

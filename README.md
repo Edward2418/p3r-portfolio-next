@@ -124,11 +124,19 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 
 ## Estado
 
+### Alcance de la primera publicación
+
+- System ofrece correo institucional y GitHub. Por decisión de Edward, CV y LinkedIn quedan fuera del proyecto, sin avisos de recursos pendientes.
+- Proyectos conserva únicamente P3R Portfolio, el repositorio existente de este sitio. No se requieren proyectos adicionales para publicar.
+- Las imágenes de los otros Social Links están aplazadas y no bloquean el despliegue.
+- Antes de publicar: medir rendimiento, revisar dependencias y compatibilidad del video en otros motores, y confirmar los textos de perfil y Timeline.
+- Después: configurar alojamiento y URL pública, verificar enlaces y metadatos en producción.
+
 ### Interacción
 
 El recorrido menú ↔ ficha utiliza `SceneTransition`: barrido diagonal de cobertura (220 ms), cambio de escena y revelado (300 ms), con entrada coordinada de ilustración/opciones o del panel. Durante el cambio el contenido queda inerte y el foco se restaura al terminar. Movimiento reducido omite el barrido. Un identificador por fase evita avances duplicados por eventos tardíos y temporizadores de respaldo. La máquina de estados tiene pruebas con `node:test`; el ritmo visual queda pendiente de revisión en navegador.
 
-Nueva composición: después del splash se presenta un menú principal independiente con el personaje y las seis opciones. Las fichas conservan navegación lateral directa y un botón de regreso. En móvil las opciones se muestran sobre una ilustración atenuada. La entrada enfoca el botón de regreso; al volver se enfoca la última sección elegida. Pendiente de revisión visual e interactiva de este recorrido.
+Después del splash se presenta un menú principal independiente con el personaje y las seis opciones. Las fichas conservan navegación lateral directa y un botón de regreso. En móvil las opciones se muestran sobre una ilustración atenuada. La entrada enfoca el botón de regreso; al volver se enfoca la última sección elegida. El recorrido y la restauración de foco están cubiertos por las pruebas Playwright en tres tamaños.
 
 Las transiciones recuerdan el último destino solicitado y cuentan con un temporizador de respaldo si se cancela la animación. El audio se detiene al ocultar la pestaña, limita repeticiones de cursor a intervalos de 70 ms y limpia el sonido diferido de About al desmontar la sección. Comprobaciones aisladas con audio simulado: limitación de repeticiones, silencio, pestaña oculta y detención correctas; la revisión interactiva de navegación rápida y foco sigue pendiente en navegador.
 
@@ -136,7 +144,7 @@ El splash bloquea el contenido de fondo mediante `showModal()` y mantiene ese bl
 
 ### Dirección visual de referencia
 
-Fase 2, About y System: ambas fichas comparten `components/sections/ProfilePanel.module.css` para el panel oscuro y el encabezado blanco con acento rojo. Las estadísticas usan filas negras diagonales y etiquetas ampliadas; System conserva los enlaces pendientes y muestra Tab como control para recorrer sus acciones. Pendiente de revisión visual de esta iteración.
+About y System comparten `components/sections/ProfilePanel.module.css` para el panel oscuro y el encabezado blanco con acento rojo. Las estadísticas usan filas negras diagonales y etiquetas ampliadas; System ofrece correo y GitHub y muestra Tab como control para recorrer sus acciones. La revisión estética final sigue pendiente.
 
 Fase 2, Proyectos y Timeline: títulos claros con cortes diagonales, selección blanca con acento rojo y paneles oscuros. Los filtros de proyectos conservan su estado visible al pasar el ratón; el diálogo comparte el tratamiento visual de las tarjetas. Timeline amplía fechas y subtítulos y alinea el eje con los marcadores. Los ajustes compactos se basan en el ancho del panel; el diálogo usa el ancho de ventana. Pendiente de revisión visual.
 
@@ -170,7 +178,7 @@ La optimización también se comprobó en Brave headless: selección inicial de 
 | --- | --- |
 | A — Primera ficha de Oguri | Encuadre del panel aprobado. Video proporcionado por Edward integrado como versión provisional, sin audio y con croma retirado. Pulido del bucle definitivo diferido; revisar esta integración en móvil y escritorio. |
 | B — Completar Social Link | Imágenes de Leon, Persona 3 Reload, Resident Evil y Super Mario Galaxy aplazadas por Edward; se conservan las fichas de texto. |
-| C — Contenido y pulido global | Capturas reales incorporadas en la tarjeta, el diálogo de proyecto y este README. Pendiente confirmar Timeline y perfil, incorporar CV y LinkedIn si se incluyen, y completar el pulido visual. |
+| C — Contenido y pulido global | Capturas reales incorporadas. CV y LinkedIn retirados por decisión de Edward; único proyecto: este portafolio. Pendiente confirmar textos de Timeline y perfil y completar el pulido visual. |
 | D — Validación integral | Pruebas Playwright incorporadas para navegación, foco, diálogos, menú móvil, silencio persistente y video/movimiento reducido en tres tamaños. Pendientes otros motores, dispositivos físicos y medición de rendimiento. |
 | E — Publicación | Elegir alojamiento y URL, configurar `SITE_URL`, verificar enlaces y tarjetas sociales en producción y cerrar el README con capturas y enlace público. |
 
@@ -180,6 +188,6 @@ La nueva iteración toma como referencia los menús principal, Social Link y est
 
 El cursor personalizado se activa al mover el ratón; conserva el cursor nativo en diálogos y con movimiento reducido. Silenciar detiene también los efectos que ya se están reproduciendo.
 
-Las seis secciones cuentan con presentación: About, Proyectos, Skills, Social Link, Timeline y System, con navegación por teclado en las listas y estilos aislados en CSS Modules. Proyectos muestra el portafolio real con filtros y detalle enlazado a GitHub. Skills presenta Java, SQL/Bases de datos, HTML/CSS y JavaScript con porcentajes de autoevaluación y comparte esos datos con About y System. La interfaz reproduce efectos de sonido de Persona 3 Reload en menús, selecciones y cierres, con botón de silencio persistente; los navegadores solo permiten audio tras la primera interacción del usuario. La pantalla de inicio se muestra una vez por pestaña y anuncia la entrada con el sonido de apertura del menú, y en escritorio el cursor del sistema se sustituye por uno propio. Oguri aparece en el menú principal y exclusivamente en su ficha dentro de Social Link. El CV y el enlace de LinkedIn aparecen como pendientes hasta agregar sus archivos u otros datos definitivos.
+Las seis secciones cuentan con presentación: About, Proyectos, Skills, Social Link, Timeline y System, con navegación por teclado en las listas y estilos aislados en CSS Modules. Proyectos muestra únicamente este portafolio con filtros, capturas y detalle enlazado a GitHub. Skills presenta Java, SQL/Bases de datos, HTML/CSS y JavaScript con porcentajes de autoevaluación y comparte esos datos con About y System. La interfaz reproduce efectos de sonido de Persona 3 Reload en menús, selecciones y cierres, con botón de silencio persistente; los navegadores solo permiten audio tras la primera interacción del usuario. La pantalla de inicio se muestra una vez por pestaña y anuncia la entrada con el sonido de apertura del menú, y en escritorio el cursor del sistema se sustituye por uno propio. Oguri aparece en el menú principal y exclusivamente en su ficha dentro de Social Link. System conserva únicamente correo y GitHub.
 
 La inspiración visual en Persona 3 Reload es un homenaje personal; este proyecto no está afiliado a Atlus.
