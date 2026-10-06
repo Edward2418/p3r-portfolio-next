@@ -1,15 +1,10 @@
 'use client'
 
 import { useCallback, useRef, useState } from 'react'
+import dynamic from 'next/dynamic'
 import Background         from '@/components/Background'
 import Sidebar, { type SectionId } from '@/components/Sidebar'
 import SectionTransition  from '@/components/SectionTransition'
-import AboutSection       from '@/components/sections/AboutSection'
-import SkillsSection      from '@/components/sections/SkillsSection'
-import SocialSection      from '@/components/sections/SocialSection'
-import TimelineSection    from '@/components/sections/TimelineSection'
-import SystemSection      from '@/components/sections/SystemSection'
-import ProjectsSection    from '@/components/sections/ProjectsSection'
 import SoundControls      from '@/components/SoundControls'
 import SplashScreen       from '@/components/SplashScreen'
 import CustomCursor       from '@/components/CustomCursor'
@@ -17,6 +12,17 @@ import MainMenu from '@/components/MainMenu'
 import SceneTransition from '@/components/SceneTransition'
 import type { SceneView } from '@/lib/scene-transition'
 import { playSound } from '@/lib/sounds'
+
+function SectionLoading() {
+  return <p className="section-container" role="status">Cargando sección…</p>
+}
+
+const AboutSection = dynamic(() => import('@/components/sections/AboutSection'), { loading: SectionLoading })
+const SkillsSection = dynamic(() => import('@/components/sections/SkillsSection'), { loading: SectionLoading })
+const SocialSection = dynamic(() => import('@/components/sections/SocialSection'), { loading: SectionLoading })
+const TimelineSection = dynamic(() => import('@/components/sections/TimelineSection'), { loading: SectionLoading })
+const SystemSection = dynamic(() => import('@/components/sections/SystemSection'), { loading: SectionLoading })
+const ProjectsSection = dynamic(() => import('@/components/sections/ProjectsSection'), { loading: SectionLoading })
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<SectionId>('about')

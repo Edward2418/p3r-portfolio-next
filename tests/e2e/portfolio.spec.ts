@@ -129,8 +129,19 @@ test('Oguri playback, pause, loop and exclusive portrait', async ({ page }) => {
   expect(await video.evaluate(node => (node as HTMLVideoElement).currentTime)).toBe(time)
   await pause.click()
   await expect.poll(() => video.evaluate(node => (node as HTMLVideoElement).currentTime)).toBeGreaterThan(time)
-  await video.evaluate(node => { const media = node as HTMLVideoElement; media.currentTime = media.duration - 0.2 })
-  await expect.poll(() => video.evaluate(node => (node as HTMLVideoElement).currentTime)).toBeLessThan(1)
+  await video.evaluate(node => new Promise<void>((resolve, reject) => {
+    const media = node as HTMLVideoElement
+    const end = media.duration - 0.2
+    let reachedEnd = false
+    const timer = setTimeout(() => { cleanup(); reject(new Error('El video no reinició el bucle')) }, 15_000)
+    function cleanup() { clearTimeout(timer); media.removeEventListener('timeupdate', observe) }
+    function observe() {
+      if (media.currentTime >= end - 0.1) reachedEnd = true
+      if (reachedEnd && media.currentTime < end - 1) { cleanup(); resolve() }
+    }
+    media.addEventListener('timeupdate', observe)
+    media.currentTime = end
+  }))
   expect(await video.evaluate(node => (node as HTMLVideoElement).muted)).toBe(true)
   await page.locator('[aria-labelledby="social-title"] nav button').nth(1).click()
   await expect(page.locator('#social-detail-name')).toHaveText('Leon S. Kennedy')

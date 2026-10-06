@@ -42,6 +42,23 @@ El ahorro de transferencia es consistente en las seis ejecuciones: 79269 bytes, 
 
 Pruebas añadidas: ausencia de solicitudes de audio al entrar, solicitud de `open.mp3` al cerrar el splash y ninguna descarga de audio tras recargar una sesión silenciada y abrir About. Seis casos focalizados aprobados entre escritorio Chromium, móvil Chromium y Firefox (incluyen persistencia del silencio y movimiento reducido).
 
+## Secciones bajo demanda · 06/10/2026
+
+Las seis secciones usan `next/dynamic`: el menú se presenta primero y cada ficha solicita su código cuando se monta. Un mensaje de estado anuncia la carga si la conexión tarda. Se conserva el foco en «Volver al menú» durante la entrada.
+
+Medición de Resource Timing con contexto nuevo de Brave, viewport 390 × 844 y producción local, antes (puerto 3102) y después (3103). Se espera a que la red esté inactiva primero en el splash y después al reproducir el video de Social Link. Valores acumulados de `transferSize` de recursos; no incluyen el documento principal ni son puntuaciones Lighthouse.
+
+| Recurso | Antes | Después |
+| --- | --- | --- |
+| Recursos iniciales | 339494 bytes | 328524 bytes |
+| JavaScript inicial | 156973 bytes, 6 solicitudes | 149983 bytes, 7 solicitudes |
+| Recursos acumulados al abrir Social Link | 2257971 bytes | 2251705 bytes |
+| JavaScript acumulado en Social Link | 156973 bytes | 154687 bytes |
+
+Ahorro inicial observado: 10970 bytes (3.2 % de los recursos medidos). La ganancia es modesta y requiere una solicitud JS inicial adicional; no se atribuye una mejora de Lighthouse a este cambio. El video sigue siendo el recurso dominante al abrir Social Link.
+
+Validación: navegación, foco, galería, audio y movimiento reducido pasaron a 1280, 768 y 390 px. La comprobación del bucle cambió de sondeo con una ventana de un segundo a observación de `timeupdate`, para no perder el reinicio bajo carga; se verificó de nuevo en los tres tamaños. Lint y compilación de producción correctos.
+
 ## Compatibilidad
 
 - Brave/Chromium: recorrido probado a 1280, 768 y 390 px.

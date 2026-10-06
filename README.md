@@ -79,6 +79,8 @@ La [línea base de rendimiento y compatibilidad](docs/performance.md) registra l
 
 ## Organización
 
+Las seis fichas se cargan mediante `next/dynamic` al abrirlas, con un mensaje accesible durante la espera. La medición local encontró unos 11 KB menos de recursos iniciales; el detalle y las limitaciones están en `docs/performance.md`.
+
 - `app/page.tsx`: composición de la interfaz y estado de navegación.
 - `components/MainMenu.tsx`: pantalla principal con Oguri, selección por flechas/Home/End y apertura de las seis secciones. Volver restaura el foco en la última sección elegida.
 - `app/layout.tsx`: fuentes, idioma y metadatos.
