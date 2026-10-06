@@ -133,11 +133,14 @@ El progreso académico se calcula desde los **semestres completados**, no desde 
 
 ## Preparación del despliegue
 
+Consulta la [guía de publicación en Vercel](docs/deployment.md). El sitio está preparado localmente; falta conectar la cuenta, elegir el nombre del proyecto y confirmar la URL pública.
+
 - Define `SITE_URL` con la dirección pública completa (por ejemplo, `https://tu-dominio.example`) antes de compilar para producción. Consulta `.env.example`.
 - Si no se define, se utiliza `VERCEL_PROJECT_PRODUCTION_URL` en Vercel y `http://localhost:3000` en local.
 - Al cambiar el dominio, vuelve a compilar: los metadatos se generan estáticamente.
 - Revisa `/opengraph-image`, `/icon.svg` y `/favicon.ico`. Los metadatos incluyen URL canónica, Open Graph y tarjeta grande para Twitter/X.
 - La vista previa real en redes se comprobará con una URL pública; localhost solo permite revisar los archivos y etiquetas.
+- `/robots.txt` y `/sitemap.xml` se generan desde la misma URL base. El sitemap incluye únicamente `/`, porque las seis secciones son estados internos del menú.
 
 ## Estado
 
