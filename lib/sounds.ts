@@ -125,9 +125,3 @@ export function playSound(key: SoundKey) {
     /* audio no disponible */
   }
 }
-
-/** Precarga los archivos para que la primera reproducción sea inmediata. */
-export function preloadSounds() {
-  if (typeof window === 'undefined') return
-  (Object.keys(SOUNDS) as SoundKey[]).forEach(key => getAudio(key))
-}

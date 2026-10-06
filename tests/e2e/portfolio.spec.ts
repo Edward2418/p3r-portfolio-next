@@ -85,6 +85,26 @@ test('reduced motion avoids video download and silence survives reload', async (
   await expect(page.locator('dialog[open]')).toHaveCount(0)
 })
 
+test('audio downloads only when used and stays unloaded for a muted session', async ({ page }) => {
+  const sounds: string[] = []
+  page.on('request', request => { if (request.url().includes('/audio/')) sounds.push(request.url()) })
+  await page.goto('/')
+  const splash = page.getByRole('dialog', { name: 'Pantalla de bienvenida' })
+  await expect(splash).toBeVisible()
+  await page.waitForLoadState('networkidle')
+  expect(sounds).toHaveLength(0)
+  await splash.getByRole('button').click()
+  await expect.poll(() => sounds.some(url => url.endsWith('/open.mp3'))).toBe(true)
+  await expect(splash).not.toBeVisible()
+  await page.getByRole('button', { name: 'Silenciar sonidos de la interfaz' }).click()
+  sounds.length = 0
+  await page.reload()
+  await page.waitForLoadState('networkidle')
+  await openSection(page, 'about')
+  await page.waitForLoadState('networkidle')
+  expect(sounds).toHaveLength(0)
+})
+
 test('Oguri playback, pause, loop and exclusive portrait', async ({ page }) => {
   await enter(page)
   await openSection(page, 'social')

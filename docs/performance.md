@@ -21,8 +21,26 @@ Recursos principales en móvil: dos chunks JS de aproximadamente 72 y 48 KB, ilu
 ### Próxima optimización
 
 1. Medir el menú después de cerrar el splash y el recorrido hasta Social Link.
-2. Evaluar precarga de audio tras interacción y carga diferida de secciones; comparar varias ejecuciones bajo las mismas condiciones antes de adoptar cambios.
+2. Carga de audio bajo demanda implementada (ver comparación siguiente). Evaluar por separado la carga diferida de secciones.
 3. Repetir la medición con la URL pública para incluir red, caché y alojamiento reales.
+
+## Audio bajo demanda · 06/10/2026
+
+Se retiró `preloadSounds()` del montaje global. `playSound()` conserva sus comprobaciones de silencio y visibilidad, crea el elemento únicamente al usar el efecto y lo reutiliza después. Esto reduce tráfico previo a la interacción a cambio de una posible demora de la primera reproducción en redes lentas.
+
+Tres ejecuciones Lighthouse móviles antes y tres después, con producción local y splash, Brave headless y Lighthouse 13.5.0. La serie anterior se capturó antes de editar; la posterior después de compilar la optimización y validar las pruebas. Se usaron puertos locales 3101 y 3102 respectivamente. No son mediciones de usuarios reales ni sesiones de rendimiento aisladas del sistema operativo.
+
+| Métrica | Antes (mediana) | Después (mediana) |
+| --- | --- | --- |
+| Puntuación | 78 (78–80) | 84 (72–86) |
+| LCP | 3.87 s | 3.42 s |
+| TBT | 375 ms | 327 ms |
+| Transferencia inicial | 451521 bytes | 372252 bytes |
+| Audio antes de interactuar | 79257 bytes | 0 bytes |
+
+El ahorro de transferencia es consistente en las seis ejecuciones: 79269 bytes, aproximadamente 17.6 %. Las puntuaciones y tiempos varían, por lo que no se promete una mejora estable de seis puntos. La carga diferida de secciones y el recorrido posterior al splash siguen pendientes de medición.
+
+Pruebas añadidas: ausencia de solicitudes de audio al entrar, solicitud de `open.mp3` al cerrar el splash y ninguna descarga de audio tras recargar una sesión silenciada y abrir About. Seis casos focalizados aprobados entre escritorio Chromium, móvil Chromium y Firefox (incluyen persistencia del silencio y movimiento reducido).
 
 ## Compatibilidad
 

@@ -73,6 +73,8 @@ Verificación del 29/09/2026 en Brave local: 14 casos aplicables aprobados entre
 
 ## Rendimiento y otros navegadores
 
+Optimización del 06/10/2026: se eliminó la precarga global de sonidos. La transferencia inicial bajó de 441 a 364 KiB (aproximadamente 17.6 %); ya no se solicitan MP3 antes de usarlos. En tres mediciones móviles por versión, la mediana de Lighthouse pasó de 78 a 84, con variación entre ejecuciones. Las pruebas de red y silencio pasaron en Chromium de escritorio/móvil y Firefox. La primera reproducción puede necesitar esperar la descarga del efecto; después se reutiliza su elemento de audio.
+
 La [línea base de rendimiento y compatibilidad](docs/performance.md) registra las mediciones, limitaciones y comandos. Lighthouse local: 74/100 móvil simulado y 96/100 escritorio en la entrada con splash, 441 KiB transferidos. Firefox pasó los cuatro casos aplicables y conservó la transparencia del video. WebKit está bloqueado por bibliotecas faltantes del entorno Windows; Safari y dispositivos físicos siguen pendientes.
 
 ## Organización
@@ -91,7 +93,7 @@ La [línea base de rendimiento y compatibilidad](docs/performance.md) registra l
 - `components/SectionTransition.tsx`: transición entre secciones basada en eventos CSS.
 - `components/ProgressBar.tsx`: barras reutilizables con valores accesibles y animación CSS.
 - `components/ProjectDialog.tsx`: detalle de proyecto con diálogo nativo, Escape y restauración de foco.
-- `components/SoundControls.tsx`: precarga de audio y botón de silencio de la interfaz.
+- `components/SoundControls.tsx`: silencio persistente y detención del audio al ocultar la pestaña; los efectos se cargan al utilizarlos por primera vez.
 - `components/SplashScreen.tsx`: bienvenida modal nativa una vez por sesión, con botón de entrada y foco dirigido al menú al terminar.
 - `components/CustomCursor.tsx`: cursor propio (anillo con retardo + punto) activo solo con puntero fino; el nativo queda oculto en `app/globals.css`.
 - `components/OguriPortrait.tsx`: ilustración animada exclusiva de la ficha de Oguri en Social Link, con pausa, detección de visibilidad y movimiento reducido.

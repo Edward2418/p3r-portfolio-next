@@ -1,18 +1,16 @@
 'use client'
 
 import { useEffect } from 'react'
-import { preloadSounds, setSoundMuted, stopSounds, useSoundMuted } from '@/lib/sounds'
+import { setSoundMuted, stopSounds, useSoundMuted } from '@/lib/sounds'
 import styles from './SoundControls.module.css'
 
 /**
- * Control global de audio: precarga los efectos y expone el botón de silencio.
+ * Control global de audio. Cada efecto se carga cuando se utiliza por primera vez.
  */
 export default function SoundControls() {
   const muted = useSoundMuted()
 
   useEffect(() => {
-    preloadSounds()
-
     function handleVisibility() {
       if (document.hidden) stopSounds()
     }
